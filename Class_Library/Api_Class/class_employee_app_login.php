@@ -16,19 +16,20 @@ class LoginUser {
     /*     * ************************* dIf Valid the Api Returns the data of user needed by client  ************************************* */
 
     function detectValidUser($packageName = '', $username, $password) {
-//        echo "pack-".$packageName;
-//        echo "use=".$username;
-//        echo "passs-".$password;
+//        echo "pack-".$packageName."\n";
+//        echo "use=".$username."\n";
+//       echo "passs-".$password."\n";
         try {
-            $query = "select udp.userDOB,udp.userFatherName,udp.userMothername,udp.userSpouseName,udp.childrenName,ud.accessibility, bcd.defaultLocation, bcd.client_id,bcd.androidAppVersion,bcd.iosAppVersion, ASCII(SUBSTRING(bcd.defaultLocation, 1, 1)) as cityCode,bcd.clientType,if(bcd.logoImageName IS NULL or bcd.logoImageName='', '', concat('" . site_url . "',bcd.logoImageName)) as  logoImageName,if(bcd.welcomeImageName IS NULL or bcd.welcomeImageName='', '', concat('" . site_url . "',bcd.welcomeImageName)) as welcomeImageName,bcd.googleApiKey,ud.employeeId,ud.firstName,ud.middleName,ud.lastName,ud.emailId,ud.validity,ud.department,ud.designation, if(udp.userImage IS NULL or udp.userImage='','', concat('" . site_url . "',udp.userImage)) as  userImage from Tbl_EmployeeDetails_Master as ud join  Tbl_ClientDetails_Master as bcd on bcd.client_id = ud.clientId join Tbl_EmployeePersonalDetails as udp on udp.employeeId = ud.employeeId where (UPPER(ud.emailId)=:username or ud.contact=:username) and ud.password = :password and ud.status = 'Active' and bcd.status = 'Active'";
+            $query = "select udp.userDOB,udp.userFatherName,udp.userMothername,udp.userSpouseName,udp.childrenName,ud.accessibility, bcd.defaultLocation, bcd.client_id,bcd.androidAppVersion,bcd.iosAppVersion, ASCII(SUBSTRING(bcd.defaultLocation, 1, 1)) as cityCode,bcd.clientType,if(bcd.logoImageName IS NULL or bcd.logoImageName='', '', concat('" . site_url . "',bcd.logoImageName)) as  logoImageName,if(bcd.welcomeImageName IS NULL or bcd.welcomeImageName='', '', concat('" . site_url . "',bcd.welcomeImageName)) as welcomeImageName,bcd.googleApiKey,ud.employeeId,ud.firstName,ud.middleName,ud.lastName,ud.emailId,ud.validity,ud.department,ud.designation, if(udp.userImage IS NULL or udp.userImage='','', concat('" . site_url . "',udp.userImage)) as  userImage from Tbl_EmployeeDetails_Master as ud join  Tbl_ClientDetails_Master as bcd on bcd.client_id = ud.clientId join Tbl_EmployeePersonalDetails as udp on udp.employeeId = ud.employeeId where (UPPER(ud.employeeCode)=:ecode or ud.contact=:ecode) and ud.password = :password and ud.status = 'Active' and bcd.status = 'Active'";
 
             $password1 = md5($password);
             $stmt = $this->db_connect->prepare($query);
-            $stmt->bindParam(':username', trim(strtoupper($username)), PDO::PARAM_STR);
+            $stmt->bindParam(':ecode', trim(strtoupper($username)), PDO::PARAM_STR);
             $stmt->bindParam(':password', trim($password1), PDO::PARAM_STR);
           //  $stmt->bindParam(':pack',trim(strtoupper($packageName)), PDO::PARAM_STR);
             if ($stmt->execute()) {
                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
+               // print_r($result);die;
                 if ($result) {
                     $response = array();
                     $response["success"] = 1;

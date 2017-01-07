@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(E_ALL); ini_set('display_errors', 1);
 require_once('class_connect_db_Communication.php');
 
 class ForgotPassword {
@@ -11,18 +11,19 @@ class ForgotPassword {
         $this->db_connect = $dbh->getConnection_Communication();
     }
 
-    function forgotPasswordSentTo($packName, $username) {
-        $username = strtoupper($username);
+    function forgotPasswordSentTo($packName, $empcode) {
+        //$username = strtoupper($username);
         try {
-            $query = "select ud.firstName, ud.middleName, ud.lastName, ud.emailId, ud.contact,ud.employeeId,ud.employeeCode,cd.dedicated_mail,cd.client_id,cd.responseDecider,cd.program_name from Tbl_ClientDetails_Master as cd join Tbl_EmployeeDetails_Master as ud where cd.packageName=:package and cd.client_id= ud.clientId and (UPPER(ud.emailId)=:username or UPPER(ud.contact)=:username)";
+            $query = "select ud.firstName, ud.middleName, ud.lastName, ud.emailId, ud.contact,ud.employeeId,ud.employeeCode,cd.dedicated_mail,cd.client_id,cd.responseDecider,cd.program_name from Tbl_ClientDetails_Master as cd join Tbl_EmployeeDetails_Master as ud where cd.packageName=:package and cd.client_id= ud.clientId and (UPPER(ud.employeeCode)=:empcode or UPPER(ud.contact)=:empcode)";
             $stmt = $this->db_connect->prepare($query);
-            $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+            $stmt->bindParam(':empcode', $empcode, PDO::PARAM_STR);
             $stmt->bindParam(':package', $packName, PDO::PARAM_STR);
 
             if ($stmt->execute()) {
                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
-//                print_r($result);die;
-                if ($result) {
+              // print_r($result);die;
+                if ($result) 
+                    {
                     if ($result["responseDecider"] == 3 && !empty($result["emailId"]) && !empty($result["contact"])) {
 
                         $randomAlpha = self::randomalpha(6);
@@ -34,11 +35,11 @@ class ForgotPassword {
                         $clientId = $result["client_id"];
                         $uui = $result["employeeId"];
 
-                        $query = "update Tbl_EmployeeDetails_Master set password=:pass where clientId=:cli and employeeId=:emi and (UPPER(emailId)=:username or UPPER(contact)=:username)";
+                        $query = "update Tbl_EmployeeDetails_Master set password=:pass where clientId=:cli and employeeId=:emi and (UPPER(employeeCode)=:empcode or UPPER(contact)=:empcode)";
                         $stmt = $this->db_connect->prepare($query);
                         $stmt->bindParam(':cli', $clientId, PDO::PARAM_STR);
                         $stmt->bindParam(':emi', $uui, PDO::PARAM_STR);
-                        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+                        $stmt->bindParam(':empcode', $empcode, PDO::PARAM_STR);
                         $stmt->bindParam(':pass', $md5password, PDO::PARAM_STR);
                         if ($stmt->execute()) {
                             $response = array();
@@ -59,7 +60,7 @@ class ForgotPassword {
                     } else {
                         $response = array();
                         $response["success"] = 0;
-                        $response["message"] = "Please register with Manav-Rachna Connect first. ";
+                        $response["message"] = "Please register with Haier Connect first. ";
                     }
                 } else {
                     $response = array();

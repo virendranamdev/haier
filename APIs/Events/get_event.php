@@ -23,6 +23,11 @@ if ((!class_exists('Family') && include("../../Class_Library/Api_Class/class_fam
 
     $jsonArr = json_decode(file_get_contents("php://input"), true);
 	//print_r($jsonArr);
+   /* {
+        "clientid":"",
+                "uid":"",
+                "value":""
+    }*/
     if (!empty($jsonArr['clientid'])) {
 
         $obj = new Event();

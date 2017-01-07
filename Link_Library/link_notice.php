@@ -53,6 +53,7 @@ $createdby =  $_POST['uniqueuserid'];
 $pagename = $folder.$maxid.".html";
 $FLAG = $_POST['flag'];
 $flag_name = $_POST['flagvalue'];
+$device = 1; // 1: for panel 2 : Android 3: for ios;
 
 $ptime1 = $_POST['publish_date1']." ".$_POST['publish_time1'];
 $utime1 = $_POST['unpublish_date1']." ".$_POST['unpublish_time1'];
@@ -93,18 +94,18 @@ else
     
  // echo $PUSH_NOTIFICATION; 
   
-   $result = $obj1->addNotice($client,$maxid,$title,$pagename,$createdby,$ptime1,$utime1,$post_date);
+   $result = $obj1->addNotice($client,$maxid,$title,$pagename,$createdby,$ptime1,$utime1,$post_date, $FLAG, $device);
    
    $type = 'Notice';
    $img = "";
-$result1 = $welcome_obj->createWelcomeData($client,$maxid,$type,$title,$img,$post_date,$createdby);
+$result1 = $welcome_obj->createWelcomeData($client,$maxid,$type,$title,$img,$post_date,$createdby,$FLAG);
 
   // $result1 = $obj1->addNoticeLocation($client,$maxid,$User_Type,$myArray); //add location into database
      $groupcount = count($myArray);
 for($k=0;$k<$groupcount;$k++)
 {
 //echo "group id".$myArray[$k];
-$result2 = $read->noticeSentToGroup($client,$maxid,$myArray[$k]);
+$result2 = $read->noticeSentToGroup($client,$maxid,$myArray[$k],$FLAG);
 //echo $result1;
 }
 
@@ -179,7 +180,7 @@ if($PUSH_NOTIFICATION == 'PUSH_YES')
 
 /********************* send push by  push notification*********************/
 
-$hrimg = "http://admin.benepik.com/employee/virendra/benepik_admin/".$_SESSION['image_name'];
+$hrimg = dirname(SITE_URL).$_SESSION['image_name'];
 $sf = "successfully send";
 $ids = array();
 foreach($token1 as $row)

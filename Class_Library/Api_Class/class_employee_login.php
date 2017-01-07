@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL ^ E_NOTICE);
+error_reporting(E_ALL); ini_set('display_errors', 1);
 require_once('class_connect_db_Communication.php');
 require ('../../twilio-php-master/Services/Twilio.php');
 
@@ -16,21 +16,23 @@ class ClientEmployeeLogin {
     public $dob;
     public $doj;
 
-    function checkEmployeeLogin($name, $fname, $dob) {
-        $this->name  = $name;
-        $this->fname = $fname.'%';
-        $this->dob   = $dob;
-
+    function checkEmployeeLogin($empid, $dob) 
+                {
+       $this->empid = $empid;
+      //  $this->doj = $doj;
+        $this->dob = $dob;
+      $eid = strtoupper($this->empid);
         try {
-            $rt = "select ud.*,up.userFatherName,up.userDOB from Tbl_EmployeeDetails_Master as ud join Tbl_EmployeePersonalDetails as up on up.employeeId = ud.employeeId where
-ud.firstName =:name and  up.userFatherName like :fname and up.userDOB=:dob";
-
+            $rt = "select ud.*,up.userFatherName,up.userDOB from Tbl_EmployeeDetails_Master as ud join Tbl_EmployeePersonalDetails as up on ud.employeeId = up.employeeId where
+UPPER(ud.employeeCode) =:eid and up.userDOB=:dob";
+//echo $rt;
             $stmt = $this->db_connect->prepare($rt);
-            $stmt->bindParam(':name', $this->name, PDO::PARAM_STR);
-            $stmt->bindParam(':dob', $this->dob, PDO::PARAM_STR);
-            $stmt->bindParam(':fname', $this->fname, PDO::PARAM_STR);
-            if ($stmt->execute()) {
+            $stmt->bindParam(':eid',$eid, PDO::PARAM_STR);
+           // $stmt->bindParam(':doj', $this->doj, PDO::PARAM_STR);
+             $stmt->bindParam(':dob', $this->dob, PDO::PARAM_STR);
+             $stmt->execute();
                 $row = $stmt->fetchAll(PDO::PARAM_STR);
+             //  print_r($row);
                 if ($row) {
                     $response['success'] = 1;
                     $response['msg'] = "valid user";
@@ -40,12 +42,13 @@ ud.firstName =:name and  up.userFatherName like :fname and up.userDOB=:dob";
                     $response['emailid'] = $row[0]['emailId'];
                     $response['FatherName'] = $row[0]['userFatherName'];
                     $response['DOB'] = $row[0]['userDOB'];
-                } else {
+                    $response['employeeCode'] = $row[0]['employeeCode'];
+                } 
+                else {
                     $response['success'] = 0;
                     $response['msg'] = "Your registration details are not correct, please contact administrator with below details";
                     $response['username'] = "";
                 }
-            }
         } catch (PDOException $ex) {
             echo $ex;
         }
@@ -82,16 +85,19 @@ ud.firstName =:name and  up.userFatherName like :fname and up.userDOB=:dob";
             $stmt1->bindParam(':empid', $this->empid, PDO::PARAM_STR);
             $stmt1->execute();
 
-            $query1 = "select firstName from Tbl_EmployeeDetails_Master where employeeId = :empid";
+            $query1 = "select firstName,emailId,employeeCode from Tbl_EmployeeDetails_Master where employeeId = :empid";
             $stmt11 = $this->db_connect->prepare($query1);
             $stmt11->bindParam(':empid', $this->empid, PDO::PARAM_STR);
             $stmt11->execute();
             $name = $stmt11->fetch(PDO::FETCH_ASSOC);
             $username = $name['firstName'];
+            $emailid = $name['emailId'];
+            $empcode = $name['employeeCode'];
+            
 
             if ($rows_found > 0) {
 //echo $rows_found;
-                $loginsms = "Manav-Rachna Connect verification code is " . $password;
+                $loginsms = "Haier Connect verification code is " . $password;
 
                 $account_sid = 'AC6cada6ee591e119871888eecc7c759c5';
                 $auth_token = 'ed74429787ae54cb2af89120ccc4833f';
@@ -105,15 +111,16 @@ ud.firstName =:name and  up.userFatherName like :fname and up.userDOB=:dob";
                 $response['success'] = 1;
 
                 $response['msg'] = "Your Latest Password sent to Your mobile and Email id";
-                $response['emaild'] = $this->emailid;
+                $response['emaild'] = $emailid;
                 $response['contactno'] = "+91" . $this->mobile;
-                $response['empcode'] = $this->empid;
+                $response['empcode'] = $empcode;
+                 $response['empid'] = $this->empid;
                 $response['otp'] = $password;
 
 
                 /*                 * *******************************send mail***************************************** */
-                $to = $this->emailid;
-                $subject = 'Manav-Rachna Connect Login OTP';
+                $to = $emailid;
+                $subject = 'Haier Connect Login OTP';
                 $from = 'info@benepik.com';
 
                 // To send HTML mail, the Content-type header must be set
@@ -137,7 +144,7 @@ ud.firstName =:name and  up.userFatherName like :fname and up.userDOB=:dob";
 
                 $message .= '<p>Dear ' . $username . ',<p>';
 
-                $message .= '<p>Manav-Rachna Connect verification code is  ' . $password . '</p><br>';
+                $message .= '<p>Haier Connect verification code is  ' . $password . '</p><br>';
 
 
                 $message .= '<p>Regards,</p>';

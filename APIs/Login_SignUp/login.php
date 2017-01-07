@@ -25,18 +25,19 @@ if (!class_exists('LoginUser') && include("../../Class_Library/Api_Class/class_e
     $jsonArr = json_decode(file_get_contents("php://input"), true);
    /*{
 		"packageName":"",
-		"empCode":"",
-		"password":""
+		"empcode":"",
+		"password":"",
+                     "device":""
 	}*/
 	
     if ($jsonArr) {
         $obj = new LoginUser();
         
         $packageName = $jsonArr['packageName'];
-		$email = $jsonArr['username'];
+		$empcode = $jsonArr['empcode'];
 		$password = $jsonArr['password'];
 		$device = $jsonArr['device'];
-        $response = $obj->detectValidUser($packageName, $email, $password);
+        $response = $obj->detectValidUser($packageName, $empcode, $password);
         if ($response['success'] == 1){
             $obj->entryUserLogin($packageName, $response['posts']['employeeId'], $device);
         }

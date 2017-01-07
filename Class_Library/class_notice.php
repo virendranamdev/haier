@@ -37,7 +37,7 @@ class Notice {
     public $pdate;
     public $loc;
 
-    function addNotice($client, $maxid, $title, $noticename, $createdby, $ptime, $utime, $post_date) {
+    function addNotice($client, $maxid, $title, $noticename, $createdby, $ptime, $utime, $post_date, $flag, $device) {
         $this->id = $maxid;
         $this->title = $title;
         $this->noticename = $noticename;
@@ -50,8 +50,8 @@ class Notice {
 
         //echo $postid;
         try {
-            $qu = "insert into Tbl_C_NoticeDetails(ClientId,noticeId,noticeTitle,fileName,createdBy,status,publishingTime,unpublishingTime,createdDate)
-                values(:cid,:nid,:ntitle,:fname,:cb,:st,:pt,:upt,:cd)";
+            $qu = "insert into Tbl_C_NoticeDetails(ClientId,noticeId,noticeTitle,fileName,createdBy,status,device,flagType,publishingTime,unpublishingTime,createdDate)
+                values(:cid,:nid,:ntitle,:fname,:cb,:st,:device,:flagt,:pt,:upt,:cd)";
             $stmt = $this->DB->prepare($qu);
             $stmt->bindParam(':nid', $this->id, PDO::PARAM_STR);
             $stmt->bindParam(':ntitle', $this->title, PDO::PARAM_STR);
@@ -60,6 +60,8 @@ class Notice {
 
             $stmt->bindParam(':cb', $this->created_by, PDO::PARAM_STR);
             $stmt->bindParam(':st', $status, PDO::PARAM_STR);
+             $stmt->bindParam(':device',$device, PDO::PARAM_STR);
+             bindParam(':flagt',$flag, PDO::PARAM_STR);
             $stmt->bindParam(':pt', $this->pubtym, PDO::PARAM_STR);
             $stmt->bindParam(':upt', $this->unpubtym, PDO::PARAM_STR);
             $stmt->bindParam(':cd', $this->post_dat, PDO::PARAM_STR);

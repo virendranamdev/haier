@@ -25,14 +25,17 @@ if (file_exists("../../Class_Library/Api_Class/class_employee_forgetpassword.php
     }
 
     $jsonArr = json_decode(file_get_contents("php://input"), true);
-
+/*{
+    "packageName":""
+        "empcode":""
+}*/
     $mesg = new messageSent();
     $obj = new ForgotPassword();
-
+   // print_r($jsonArr);
     if (!empty($jsonArr["packageName"])) {
 
         extract($jsonArr);
-        $result = $obj->forgotPasswordSentTo($packageName, $username);
+        $result = $obj->forgotPasswordSentTo($packageName, $empcode);
         if ($result['success'] == 1) {
             $progNam = $result["progName"];
             $dedi = $result["dedicated_mail"];
@@ -57,7 +60,7 @@ if (file_exists("../../Class_Library/Api_Class/class_employee_forgetpassword.php
             <p>Regards,</p> Team " . $progNam . "
             </body>
             </html>";
-            $sub = "Manav-Rachna Connect Password Assistance ";
+            $sub = "Haier Connect Password Assistance ";
             $from = "From: " . $progNam . "<" . $dedi . ">";
 
             if ($deciderVal > 0) {

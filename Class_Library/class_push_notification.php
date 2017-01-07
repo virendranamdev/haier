@@ -425,8 +425,8 @@ class PushNotification {
     }
 
     function sendAPNSPush($post, $deviceToken, $pemFile, $device = '') {
-//        $apnsHost = 'gateway.sandbox.push.apple.com';       //dev
-        $apnsHost = 'gateway.push.apple.com';            //production
+      $apnsHost = 'gateway.sandbox.push.apple.com';       //dev
+     //   $apnsHost = 'gateway.push.apple.com';            //production
         $apnsPort = '2195';
         $apnsCert = (empty($device) || $device = '') ? BASE_PATH . '/' . $pemFile : dirname(BASE_PATH) . '/' . $pemFile; //dev
 //        echo $apnsCert;die;

@@ -23,12 +23,18 @@ if (file_exists("../../Class_Library/Api_Class/class_employee_forgetpassword.php
     }
 
     $jsonArr = json_decode(file_get_contents("php://input"), true);
-
+/*{
+    "clientid":"",
+            "uuid":"",
+            "oldp":"",
+            "newp":"",
+            "confirmp":""
+}*/
     if ($jsonArr["clientid"]) {
         $obj = new ForgotPassword();
 
         extract($jsonArr);
-        $response = $obj->resetPassword($clientid, $uui, $oldp, $newp, $confirmp);
+        $response = $obj->resetPassword($clientid, $uuid, $oldp, $newp, $confirmp);
     } else {
         $response['success'] = 0;
         $response['result'] = "Invalid json";

@@ -69,7 +69,7 @@ class Post {
             trigger_error('Error occured fetching max autoid : ' . $e->getMessage(), E_USER_ERROR);
         }
     }
-
+           $clientid, $POST_ID, $POST_TITLE, $POST_IMG,$POST_THUMB_IMG, $POST_CONTENT, $DATE, $USERID, $BY, $FLAG, $like, $comment
     function create_Post($cid, $pid, $ptitle, $pimg, $thumb_img, $pcontent, $pdate, $mail, $by, $flag, $like, $comment) {
         $this->postid = $pid;
         $this->posttitle = $ptitle;

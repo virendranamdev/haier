@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(E_ALL); ini_set('display_errors', 1);
 if (!class_exists('ClientEmployeeLogin') && include("../../Class_Library/Api_Class/class_employee_login.php")) {
 
     if (isset($_SERVER['HTTP_ORIGIN'])) {
@@ -22,13 +22,21 @@ if (!class_exists('ClientEmployeeLogin') && include("../../Class_Library/Api_Cla
     }
 
     $jsonArr = json_decode(file_get_contents("php://input"), true);
-
-    if ($jsonArr['name'] != "") {
-        $obj = new ClientEmployeeLogin();
-        extract($jsonArr);
+  /* {
+       "empid":"",
+               "dob":"",
+             
+   }*/ 
+//print_r($jsonArr);
+    if ($jsonArr['empid'] != "") 
+        {
         
-        $fname = explode(' ', $fname);
-        $response = $obj->checkEmployeeLogin($name, $fname[0], $dob);
+        $obj = new ClientEmployeeLogin();
+        $empid = $jsonArr['empid'];
+        $dob = $jsonArr['dob'];
+        //$doj = $jsonArr['doj'];
+
+        $response = $obj->checkEmployeeLogin($empid, $dob);
     } else {
         $result['success'] = 0;
         $result['result'] = "Invalid json";

@@ -26,6 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 $jsonArr = json_decode(file_get_contents("php://input"), true);
+/*{
+    "clientid":"",
+            "enployeeid":""
+}*/
 
 if (!empty($jsonArr['clientid'])) {
     $comments = new Comment();
@@ -39,7 +43,7 @@ if (!empty($jsonArr['clientid'])) {
 
     $maxid = $obj->maxID();  //---------get latest post_id
 
-    /*     * ******************************************* Get GoogleAPIKey and IOSPEM file ********************************* */
+    /********************************************* Get GoogleAPIKey and IOSPEM file ********************************* */
 
     $googleapiIOSPem = $push->getKeysPem($clientid);
 

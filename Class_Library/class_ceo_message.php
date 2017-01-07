@@ -82,8 +82,8 @@ function compress_image($source_url, $destination_url, $quality) {
       
   }
 
-
-  function create_Post($cid,$pid,$ptitle,$pimg,$pteaser,$pcontent,$pdate,$mail,$by,$flag,$like,$comment)
+               //  $clientid, $POST_ID, $POST_TITLE, $POST_IMG, $POST_IMG_THUMB, $POST_CONTENT, $DATE, $USERID, $BY, $FLAG, $like, $comment
+  function create_Post($cid,$pid,$ptitle,$pimg,$POST_IMG_THUMB,$pcontent,$pdate,$mail,$by,$flag,$like,$comment)
   {
      $this->postid = $pid;
      $this->posttitle = $ptitle;
@@ -100,14 +100,15 @@ function compress_image($source_url, $destination_url, $quality) {
      $this->client = $cid;
     
      try{
-     $query = "insert into Tbl_C_PostDetails(clientId,post_id,post_title,post_img,postTeaser,post_content,created_date,created_by,userUniqueId,flagcheck,likeSetting,comment,status)
-            values(:cid,:pid,:pt,:pi,:ptt,:pc,:cd,:cb,:em,:fl,:lk,:ck,:st)";
+     $query = "insert into Tbl_C_PostDetails(clientId,post_id,post_title,post_img,thumb_post_img,post_content,created_date,created_by,userUniqueId,flagcheck,likeSetting,comment,status)
+                                      values(:cid,:pid,:pt,:pi,:thumbimg,:pc,:cd,:cb,:em,:fl,:lk,:ck,:st)";
              $stmt = $this->DB->prepare($query);
              $stmt->bindParam(':cid',$this->client, PDO::PARAM_STR);
               $stmt->bindParam(':pid',$this->postid, PDO::PARAM_STR);
              $stmt->bindParam(':pt',$this->posttitle, PDO::PARAM_STR);
              $stmt->bindParam(':pi',$this->imgpath, PDO::PARAM_STR);
-             $stmt->bindParam(':ptt',$this->teaser, PDO::PARAM_STR);
+             $stmt->bindParam(':thumbimg',$POST_IMG_THUMB, PDO::PARAM_STR);
+             
              $stmt->bindParam(':pc',$this->postcontent, PDO::PARAM_STR);
              $stmt->bindParam(':cd',$this->pdate, PDO::PARAM_STR);
              $stmt->bindParam(':cb',$this->author, PDO::PARAM_STR);
@@ -309,7 +310,7 @@ $this->id_post = $com;
   } 
   public $type;
   public $id;
-  function createWelcomeData($cid,$id,$type,$ptitle,$pimg,$pdate,$by)
+  function createWelcomeData($cid,$id,$type,$ptitle,$pimg,$pdate,$by,$flag)
   {
      $this->client = $cid;
      $this->id = $id;
@@ -319,8 +320,8 @@ $this->id_post = $com;
      $this->pdate = $pdate; 
       $this->author = $by;  
      try{
-     $query = "insert into Tbl_C_WelcomeDetails(clientId,id,type,title,image,createdDate,createdBy)
-            values(:cid,:id,:type,:title,:img,:cd,:cb)";
+     $query = "insert into Tbl_C_WelcomeDetails(clientId,id,type,title,image,createdDate,createdBy,flagType)
+            values(:cid,:id,:type,:title,:img,:cd,:cb,:flagtype)";
              $stmt = $this->DB->prepare($query);
              $stmt->bindParam(':cid',$this->client, PDO::PARAM_STR);
               $stmt->bindParam(':id',$this->id, PDO::PARAM_STR);
@@ -329,6 +330,7 @@ $this->id_post = $com;
              $stmt->bindParam(':img',$this->imgpath, PDO::PARAM_STR);
              $stmt->bindParam(':cd',$this->pdate, PDO::PARAM_STR);
              $stmt->bindParam(':cb',$this->author, PDO::PARAM_STR);     
+             $stmt->bindParam(':flagtype',$flag, PDO::PARAM_STR);     
                if($stmt->execute())
                   {
                   $ft = 'True';
