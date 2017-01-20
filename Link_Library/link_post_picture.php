@@ -25,7 +25,7 @@ if (!empty($_POST)) {
 //extract($_POST);
 
 
-        /*         * **************************if condition 2 end**************************************************************** */
+  /****************************if condition 2 end*****************************************************************/
         if ($flag_value == 3) {
 
             $dev = $_POST['device'];
@@ -127,7 +127,8 @@ if (!empty($_POST)) {
 
             /*             * ********************* insert into database ************************************************ */
                                      // $clientid, $POST_ID, $POST_TITLE, $POST_IMG, $POST_IMG_THUMB, $POST_CONTENT, $DATE, $USERID, $BY, $FLAG, $like, $comment
-            $result = $obj->create_Post($clientid, $POST_ID, $POST_TITLE, $POST_IMG, $POST_IMG_THUMB, $POST_CONTENT, $DATE, $USERID, $BY, $FLAG, $like, $comment);
+            $device = 1;
+            $result = $obj->create_Post($clientid, $POST_ID, $POST_TITLE, $POST_IMG, $POST_IMG_THUMB,$POST_TEASER, $POST_CONTENT, $DATE, $USERID, $BY, $FLAG, $like, $comment,$device);
 
             $type = 'Picture';
             $result1 = $obj->createWelcomeData($clientid, $POST_ID, $type, $POST_CONTENT, $POST_IMG, $DATE, $USERID,$FLAG);

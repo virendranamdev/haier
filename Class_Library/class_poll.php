@@ -274,7 +274,8 @@ class Poll {
             } catch (PDOException $e) {
                 echo $e;
             }
-        } else {
+        } 
+        else {
             try {
                 $query = "select * from Tbl_C_PollDetails where clientId=:cli order by autoId desc";
                 $stmt = $this->DB->prepare($query);

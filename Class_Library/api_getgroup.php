@@ -31,7 +31,6 @@ else{
     extract($jsonArr);
 }
 
-//initial query
 if (!empty($userid) && !empty($clientid)) {
 
     $accessibleGroups = "";
@@ -45,12 +44,13 @@ if (!empty($userid) && !empty($clientid)) {
         if ($stmt5->execute()) {
 
             $rows = $stmt5->fetchAll(PDO::FETCH_ASSOC);
+           
             if (count($rows) > 0) {
                 $response["success"] = 1;
                 $response["message"] = "Group Available";
                 $response["posts"] = $rows;
             } else {
-                $response["success"] = 1;
+                $response["success"] = 0    ;
                 $response["message"] = "No Group Available";
                 $response["posts"] = $rows;
             }

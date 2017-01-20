@@ -194,7 +194,7 @@
 
             <div class="row " >
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <h3><strong>Post Whats Up</strong></h3><hr>
+                    <h3><strong> News </strong></h3><hr>
                 </div>
             </div>
 
@@ -214,7 +214,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group"  style="margin-left:14px;">
                                     <label for="TITLE">TITLE</label>
-                                    <input style="width:98%;" type="text" name="title" id="title" class="form-control" placeholder=" Choose a heading for this article..." />
+                                    <input style="width:98%;" type="text" name="title" id="title" class="form-control" placeholder=" Choose a heading for this news..." />
                                 </div>
                             </div>
                         </div>
@@ -225,7 +225,7 @@
                                 <script src="http://cdn.ckeditor.com/4.5.7/standard-all/ckeditor.js"></script>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
-                                        <label for="Articlecontent">ARTICLE  CONTENT</label>
+                                        <label for="Articlecontent">NEWS CONTENT</label>
                                         <div><textarea cols="120" id="editor1" name="content"  rows="10" required>	
                                             </textarea>
                                         </div>
@@ -465,7 +465,7 @@
 
                                 </div>
                             </div>
-							<div class="publication"><p id="publication_heading">Popup</p><hr>
+						<!--	<div class="publication"><p id="publication_heading">Popup</p><hr>
  
 							<div class="row">
 							  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"id="rightpublicationdiv6">
@@ -478,7 +478,7 @@
 							  </div>
 							 
 							</div>
-							</div>
+							</div>  ----->
 
                         </div>
 

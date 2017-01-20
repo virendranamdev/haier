@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(E_ALL); ini_set('display_errors', 1);
 if (!class_exists("Connection_Communication")) {
     include_once('../../Class_Library/Api_Class/class_connect_db_Communication.php');
 }
@@ -16,6 +16,9 @@ class Car {
     }
 
     function addCar($clientid, $employeeid, $carModel, $modelNo, $RegisNo, $name) {
+        
+        date_default_timezone_set('Asia/Kolkata');
+        $_date = date('Y-m-d H:i:s');
         try {
             $max = "select max(autoId) from Tbl_EmployeeCarDetails";
             $stmt = $this->db_connect->prepare($max);
@@ -38,17 +41,20 @@ class Car {
             $stmt->bindParam(':empid', $employeeid, PDO::PARAM_STR);
             $stmt->execute();
             $result1 = $stmt->fetch(PDO::FETCH_ASSOC);
-
+          
             if ($result1) {
-                $query = "insert into Tbl_EmployeeCarDetails (carId,clientId,employeeId,carModel,modelNo,registrationNo,ownerName) values(:bd,:cli,:empid,:bnam,:ifs,:ano,:cnam)";
+                $query = "insert into Tbl_EmployeeCarDetails (carId,clientId,emailId,employeeId,carModel,modelNo,registrationNo,ownerName,insertedDate,insertedBy) values(:bd,:cli,:eml,:empid,:bnam,:ifs,:ano,:cnam,:insdte,:insby)";
                 $stmt = $this->db_connect->prepare($query);
                 $stmt->bindParam(':bd', $carid, PDO::PARAM_STR);
                 $stmt->bindParam(':cli', $clientid, PDO::PARAM_STR);
+                 $stmt->bindParam(':eml', $result1['emailId'], PDO::PARAM_STR);
                 $stmt->bindParam(':empid', $employeeid, PDO::PARAM_STR);
                 $stmt->bindParam(':bnam', $carModel, PDO::PARAM_STR);
                 $stmt->bindParam(':ifs', $modelNo, PDO::PARAM_STR);
                 $stmt->bindParam(':ano', $RegisNo, PDO::PARAM_STR);
                 $stmt->bindParam(':cnam', $name, PDO::PARAM_STR);
+                 $stmt->bindParam(':insdte', $_date, PDO::PARAM_STR);
+                  $stmt->bindParam(':insby', $employeeid, PDO::PARAM_STR);
 
                 if ($stmt->execute()) {
                     $info = self::GetCars($clientid, $employeeid);
@@ -114,20 +120,22 @@ class Car {
     }
 
     function updateCar($clientid, $employeeid, $carid, $carModel, $modelNo, $RegisNo, $name) {
+         date_default_timezone_set('Asia/Kolkata');
+        $_date1 = date('Y-m-d H:i:s');
 
         try {
 
-            $query = "select Tbl_EmployeeCarDetails.* from Tbl_EmployeeCarDetails join Tbl_EmployeeDetails_Master where Tbl_EmployeeDetails_Master.clientId =:cli and Tbl_EmployeeDetails_Master.employeeId=:empid and Tbl_EmployeeCarDetails.carId=:idcar";
+            $query = "select Tbl_EmployeeCarDetails.* from Tbl_EmployeeCarDetails join Tbl_EmployeeDetails_Master on  Tbl_EmployeeCarDetails.employeeId =  Tbl_EmployeeDetails_Master.employeeId
+where Tbl_EmployeeDetails_Master.clientId =:cli and Tbl_EmployeeDetails_Master.employeeId=:empid and Tbl_EmployeeCarDetails.carId=:idcar";
             $stmt = $this->db_connect->prepare($query);
             $stmt->bindParam(':cli', $clientid, PDO::PARAM_STR);
             $stmt->bindParam(':empid', $employeeid, PDO::PARAM_STR);
             $stmt->bindParam(':idcar', $carid, PDO::PARAM_STR);
-
             $stmt->execute();
             $result1 = $stmt->fetch(PDO::FETCH_ASSOC);
-
+           
             if ($result1) {
-                $query = "update Tbl_EmployeeCarDetails set carModel=:bnam,modelNo=:ifs,registrationNo=:ano,ownerName=:cnam where clientId=:cli and employeeId=:empid and carId=:bd";
+                $query = "update Tbl_EmployeeCarDetails set carModel=:bnam,modelNo=:ifs,registrationNo=:ano,ownerName=:cnam,updatedDate=:udte,updatedBy=:uby where clientId=:cli and employeeId=:empid and carId=:bd ";
                 $stmt = $this->db_connect->prepare($query);
                 $stmt->bindParam(':bd', $carid, PDO::PARAM_STR);
                 $stmt->bindParam(':cli', $clientid, PDO::PARAM_STR);
@@ -136,6 +144,8 @@ class Car {
                 $stmt->bindParam(':ifs', $modelNo, PDO::PARAM_STR);
                 $stmt->bindParam(':ano', $RegisNo, PDO::PARAM_STR);
                 $stmt->bindParam(':cnam', $name, PDO::PARAM_STR);
+                $stmt->bindParam(':udte', $_date1, PDO::PARAM_STR);
+                $stmt->bindParam(':uby', $employeeid, PDO::PARAM_STR);
 
                 if ($stmt->execute()) {
                     $response = array();

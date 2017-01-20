@@ -1,5 +1,5 @@
-function MainCtrl($scope, $http) {
-​
+function MainCtrl($scope, $http) 
+{
   $scope.choices = [];
   
   $scope.addNewChoice = function() {
@@ -11,14 +11,11 @@ function MainCtrl($scope, $http) {
     var lastItem = $scope.choices.length-1;
     $scope.choices.splice(lastItem);
   };
-​
   $scope.jsonp_example = function(){
-​
 };
   
 }
-​
-​
+
 function jsonp_example($scope, $http) {
  $scope.values = [];
  

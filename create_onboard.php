@@ -222,13 +222,12 @@ $(document).ready(function(){
 
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <h3><strong>Welcome Onboard</strong></h3><hr>
-    </div>
+    <h3><strong>Welcome Aboard</strong></h3><hr>
+    </div>  
 
   </div>
   
   
-
 <!--****************************code start for PopUp**************************************-->
 <!--
 

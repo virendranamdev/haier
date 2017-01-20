@@ -120,8 +120,8 @@ FROM Tbl_C_PostDetails where Tbl_C_PostDetails.flagCheck = 9 and Tbl_C_PostDetai
         $this->value = $val;
 //$path = "http://admin.benepik.com/employee/virendra/benepik_client/";
         try {
-            $server_name = SITE_URL;
-            $query = "select *,Concat('" . $server_name . "', post_img) as post_img, DATE_FORMAT(Tbl_C_PostDetails.created_date,'%d %b %Y') as created_date from Tbl_C_PostDetails where clientId=:cli and flagCheck = 9 order by auto_id desc limit " . $this->value . " , 5";
+            $server_name = dirname(SITE_URL)."/";
+            $query = "select *,if(thumb_post_img IS NULL or thumb_post_img = '',Concat('" . $server_name . "', post_img), Concat('" . $server_name . "', thumb_post_img)) as post_img, DATE_FORMAT(Tbl_C_PostDetails.created_date,'%d %b %Y') as created_date from Tbl_C_PostDetails where clientId=:cli and flagCheck = 9 order by auto_id desc limit " . $this->value . " , 5";
             $stmt = $this->DB->prepare($query);
             $stmt->bindParam(':cli', $this->idclient, PDO::PARAM_STR);
             $stmt->execute();
@@ -167,7 +167,7 @@ FROM Tbl_C_PostDetails where Tbl_C_PostDetails.flagCheck = 9 and Tbl_C_PostDetai
         } catch (PDOException $e) {
             //  echo $e;
             $response["success"] = 0;
-            $response["message"] = "client id or initial value is incorrect";
+            $response["message"] = "client id or initial value is incorrect".$e;
             return json_encode($response);
         }
 

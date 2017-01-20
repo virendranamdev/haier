@@ -46,9 +46,9 @@ echo $count;
                                             <tr>
                                                 <th>Image</th>
                                                 <th>Name</th>
-                                                <th>Enrollment No.</th>
+                                                <th>Employee Id</th>
                                                 <th>Email Id </th>
-                                                <th>Course</th>
+                                                <th>Department</th>
                                                 <th>Designation</th>
                                                
                                               
@@ -58,9 +58,9 @@ echo $count;
                                             <tr>
                                               <th>Image</th>
                                                 <th>Name</th>
-                                                 <th>Enrollment No.</th>
+                                                 <th>Employee Id</th>
                                                 <th>Email Id </th>
-                                                <th>Course</th>
+                                                <th>Department</th>
                                                 <th>Designation</th>
                                                
                                             </tr>

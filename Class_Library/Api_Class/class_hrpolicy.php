@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL ^ E_NOTICE);
+
 include_once('class_connect_db_Communication.php');
 
 class GetPages
@@ -35,7 +37,7 @@ class GetPages
       
   }
 /*********************************************************************************/
-  function getAllpagesFORandroid($idclient,$val,$module)
+  function getAllpagesFORandroid($idclient,$val,$module ="")
   {
 	  /****************************************
     $module  = 1

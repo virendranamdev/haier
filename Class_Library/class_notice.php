@@ -1,6 +1,7 @@
 <?php
-
-session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+//session_start();
 include_once('class_connect_db_Communication.php');
 
 class Notice {
@@ -61,17 +62,21 @@ class Notice {
             $stmt->bindParam(':cb', $this->created_by, PDO::PARAM_STR);
             $stmt->bindParam(':st', $status, PDO::PARAM_STR);
              $stmt->bindParam(':device',$device, PDO::PARAM_STR);
-             bindParam(':flagt',$flag, PDO::PARAM_STR);
+            $stmt->bindParam(':flagt',$flag, PDO::PARAM_STR);
             $stmt->bindParam(':pt', $this->pubtym, PDO::PARAM_STR);
             $stmt->bindParam(':upt', $this->unpubtym, PDO::PARAM_STR);
             $stmt->bindParam(':cd', $this->post_dat, PDO::PARAM_STR);
 
             if ($stmt->execute()) {
-                
+                $response['success'] = 1;
+                        $response['msg'] = 'Notice Successfully Createdd';
             }
         } catch (PDOException $ex) {
             echo $ex;
+            $response['success'] = 0;
+                        $response['msg'] = 'Notice not Successfully Createdd';
         }
+        return $response;   
     }
 
     public $selection;

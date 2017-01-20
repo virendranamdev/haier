@@ -53,6 +53,7 @@ class PostDisplayWelcome {
                     $welstmt->bindParam(':cid', $this->idclient, PDO::PARAM_STR);
                     $welstmt->execute();
                     $welrows = $welstmt->fetchAll(PDO::FETCH_ASSOC);
+                   // print_r($welrows);
                     $welcomearray = array();
                     $welcount = count($welrows);
 //echo "total post ".$welcount."<br/>";
@@ -64,7 +65,40 @@ class PostDisplayWelcome {
                         $welid = $welrows[$w]['id'];
                         $site_url = site_url;
                         switch ($weltype) 
-						{
+		         {
+                             case "Notice":
+                                $noticequery = "select * from Tbl_Analytic_NoticeSentToGroup where groupId IN('" . $in . "') and noticeId =:id and clientId =:cid";
+                                $nstmt = $this->DB->prepare($noticequery);
+                                $nstmt->bindParam(':cid', $this->idclient, PDO::PARAM_STR);
+                                $nstmt->bindParam(':id', $welid, PDO::PARAM_STR);
+                                $nstmt->execute();
+                                $noticerows = $nstmt->fetchAll(PDO::FETCH_ASSOC);
+
+                                if (count($noticerows) > 0) {
+                                    $noticequery1 = "select *, Concat('Notice','') as type, Concat('7','') as flagCheck, Concat('$site_url','notice/notice_img/notice-min.jpg') as noticeImage,
+             Concat('$site_url',fileName) as fileName, DATE_FORMAT(createdDate,'%d %b %Y') as createdDate, DATE_FORMAT(publishingTime,'%d %b %Y') as publishingTime, DATE_FORMAT(unpublishingTime,'%d %b %Y') as unpublishingTime from Tbl_C_NoticeDetails where noticeId =:id and clientId =:cid";
+                                    $nstmt = $this->DB->prepare($noticequery1);
+                                    $nstmt->bindParam(':cid', $this->idclient, PDO::PARAM_STR);
+                                    $nstmt->bindParam(':id', $welid, PDO::PARAM_STR);
+                                    $nstmt->execute();
+                                    $noticedata = $nstmt->fetch(PDO::FETCH_ASSOC);
+                                    $userid = $noticedata['createdBy'];
+                                    
+                                    $query = "select emp_master.firstName,emp_master.lastName,if(emp_personal.userImage IS NULL or emp_personal.userImage='', '', if(emp_personal.linkedIn = '1', emp_personal.userImage, Concat('".$site_url."',emp_personal.userImage))) as userImage from Tbl_EmployeeDetails_Master as emp_master left join Tbl_EmployeePersonalDetails as emp_personal on emp_personal.employeeId=emp_master.employeeId where emp_master.employeeId =:eid";
+                                    $stmt12 = $this->DB->prepare($query);
+                                    $stmt12->bindparam('eid', $userid, PDO::PARAM_STR);
+                                    $stmt12->execute();
+                                    $noticedata1 = $stmt12->fetch(PDO::FETCH_ASSOC);
+                                    $username = $noticedata1['firstName'] . " " . $noticedata1['lastName'];
+
+                                    $noticedata['postedBy'] = $noticedata1['userImage'];
+                                    $noticedata['posted'] = $username;
+                                    $noticedata['module'] = 'Notice';
+                                    
+                                    array_push($welcomearray,$noticedata );
+                                }
+                                break;
+                                                       
 //                        Display Event Code                            
                             case "Event":
                                 $eventquery = "select * from Tbl_Analytic_EventSentToGroup where groupId IN('" . $in . "') and eventId =:id and clientId =:cid";
@@ -131,7 +165,7 @@ class PostDisplayWelcome {
                                 break;
 
 //                        Display Poll Code                                                            
-                            case "Poll":
+                       /*     case "Poll":
                                 $pollquery = "select * from Tbl_Analytic_PollSentToGroup where groupId IN('" . $in . "') and pollId =:id and clientId =:cid";
                                 $nstmt = $this->DB->prepare($pollquery);
                                 $nstmt->bindParam(':cid', $this->idclient, PDO::PARAM_STR);
@@ -148,7 +182,7 @@ class PostDisplayWelcome {
                                     $userid = $polldata['createdBy'];
 									$pollId = $polldata['pollId']; 
 									
- /***********************************************poll option **********************************/
+ /***********************************************poll option **********************************
  $polldata['option'] = array();
  
    $query = "select *,if(ansInImage IS NULL or ansInImage='', '', Concat('$site_url',ansInImage)) as ansInImage from Tbl_C_PollOption where pollId=:pid";
@@ -158,7 +192,7 @@ class PostDisplayWelcome {
                             $polloption = $stmt->fetchAll(PDO::FETCH_ASSOC);
    // array_push($polldata['option'], $polloption);
 	$polldata['option'] = $polloption;
- /**********************************************************************************/
+ /**********************************************************************************
 									
 									
                                     $query = "select emp_master.firstName,emp_master.lastName,if(emp_personal.userImage IS NULL or emp_personal.userImage='', '', if(emp_personal.linkedIn = '1', emp_personal.userImage, Concat('$site_url',emp_personal.userImage))) as userImage from Tbl_EmployeeDetails_Master as emp_master left join Tbl_EmployeePersonalDetails as emp_personal on emp_personal.employeeId=emp_master.employeeId where emp_master.employeeId =:eid";
@@ -175,19 +209,24 @@ class PostDisplayWelcome {
                                     array_push($welcomearray, $polldata);
                                 }
 
-                                break;
+                                break;  */
 
 //                        Display News Code                                                                                            
                             case "News":
-                                $eventquery = "select * from Tbl_Analytic_PostSentToGroup where groupId IN('" . $in . "') and postId =:id and clientId =:cid";
+                             case ($weltype == "News" || $weltype == "Message" || $weltype == "Picture"):
+
+
+//$status = "Publish";
+                                $eventquery = "select * from Tbl_Analytic_PostSentToGroup where groupId IN('" . $in . "') and postId =:id and clientId =:cid and status = 1";
                                 $nstmt = $this->DB->prepare($eventquery);
                                 $nstmt->bindParam(':cid', $this->idclient, PDO::PARAM_STR);
                                 $nstmt->bindParam(':id', $welid, PDO::PARAM_STR);
                                 $nstmt->execute();
                                 $postrows = $nstmt->fetchAll(PDO::FETCH_ASSOC);
-//                                if(post_img IS NULL or post_img='' ,'',Concat('$site_url',post_img) ) as post_img,
-                                if (count($postrows) > 0) {
-                                    $newsquery = "select *, Concat(:type,'') as type ,  if(thumb_post_img IS NULL or thumb_post_img='' ,'',Concat('$site_url',thumb_post_img) ) as post_img, DATE_FORMAT(created_date,'%d %b %Y') as created_date ,REPLACE(post_content,'\r\n','') as post_content from Tbl_C_PostDetails  where post_id =:id and clientId =:cid";
+//                                Concat('$site_url', post_img) as post_img
+                                if (count($postrows) > 0) 
+                                    {
+                                    $newsquery = "select *, Concat(:type,'') as type ,  if(thumb_post_img IS NULL or thumb_post_img='' , Concat('$site_url',post_img),Concat('$site_url',thumb_post_img) ) as post_img, DATE_FORMAT(created_date,'%d %b %Y') as created_date from Tbl_C_PostDetails  where post_id =:id and clientId =:cid";
                                     $nstmt = $this->DB->prepare($newsquery);
                                     $nstmt->bindParam(':cid', $this->idclient, PDO::PARAM_STR);
                                     $nstmt->bindParam(':id', $welid, PDO::PARAM_STR);
@@ -197,24 +236,101 @@ class PostDisplayWelcome {
                                     $val = $nstmt->fetch(PDO::FETCH_ASSOC);
                                     $userid = $val['userUniqueId'];
 
-                                    $imgquery = "select emp_master.firstName,emp_master.lastName,if(emp_personal.userImage IS NULL or emp_personal.userImage='', '', if(emp_personal.linkedIn = '1', emp_personal.userImage, Concat('$site_url',emp_personal.userImage))) as userImage from Tbl_EmployeeDetails_Master as emp_master left join Tbl_EmployeePersonalDetails as emp_personal on emp_personal.employeeId=emp_master.employeeId where emp_master.clientId=:cli and emp_master.employeeId=:empid";
+                                    $imgquery = "select ud.firstName, concat('$site_url',up.userImage) as UserImage from Tbl_EmployeeDetails_Master as ud join Tbl_EmployeePersonalDetails as up on up.employeeId = ud.employeeId where ud.clientId=:cli and ud.employeeId=:empid";
                                     $stmt = $this->DB->prepare($imgquery);
                                     $stmt->bindParam(':cli', $this->idclient, PDO::PARAM_STR);
                                     $stmt->bindParam(':empid', $userid, PDO::PARAM_STR);
                                     $stmt->execute();
                                     $rows = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                                    $username = $rows['firstName'] . " " . $rows['lastName'];
-                                    $eventdata['posted'] = $username;
-                                    $val["postedBy"] = $rows["userImage"];
-                                    $val['module'] = 'Whats Up';
+//$val["UserName"]=$rows["firstName"];
+                                    $val["UserImage"] = $rows["UserImage"];
 
                                     array_push($welcomearray, $val);
+                                    
+                                 //   print_r($val);
                                 }
                                 break;
-								
-								//Display  Contributor Code                                                                                            
-                            case "Contributor":
+
+                              
+				  case "CEOMessage":
+                                $eventquery1 = "select *,Concat('CEOMessage','') as type, DATE_FORMAT(created_date,'%d %b %Y') as created_date, if(thumb_post_img IS NULL or thumb_post_img='' , Concat('$site_url',post_img),Concat('$site_url',thumb_post_img) ) as post_img from Tbl_C_PostDetails where Post_id =:id and clientId =:cid and flagCheck = 9";
+                                $nstmt = $this->DB->prepare($eventquery1);
+                                $nstmt->bindParam(':cid', $this->idclient, PDO::PARAM_STR);
+                                $nstmt->bindParam(':id', $welid, PDO::PARAM_STR);
+                                $nstmt->execute();
+                                $val1 =  $nstmt->fetch(PDO::FETCH_ASSOC);
+                                 $userid = $val1['userUniqueId'];
+                                
+                                 $imgquery = "select ud.firstName, concat('$site_url',up.userImage) as UserImage from Tbl_EmployeeDetails_Master as ud join Tbl_EmployeePersonalDetails as up on up.employeeId = ud.employeeId where ud.clientId=:cli and ud.employeeId=:empid";
+                                    $stmt = $this->DB->prepare($imgquery);
+                                    $stmt->bindParam(':cli', $this->idclient, PDO::PARAM_STR);
+                                    $stmt->bindParam(':empid', $userid, PDO::PARAM_STR);
+                                    $stmt->execute();
+                                    $rows = $stmt->fetch(PDO::FETCH_ASSOC);
+//$val["UserName"]=$rows["firstName"];
+                                    $val1["UserImage"] = $rows["UserImage"];
+                                
+                                array_push($welcomearray,$val1);
+                                break;
+				
+                             case "Onboard":
+                                $noticequery = "select * from Tbl_Analytic_PostSentToGroup where groupId IN('" . $in . "') and 
+    postId =:id and clientId =:cid";
+                                $nstmt = $this->DB->prepare($noticequery);
+                                $nstmt->bindParam(':cid', $this->idclient, PDO::PARAM_STR);
+                                $nstmt->bindParam(':id', $welid, PDO::PARAM_STR);
+                                $nstmt->execute();
+                                $onboardrows = $nstmt->fetchAll(PDO::FETCH_ASSOC);
+
+                                if (count($onboardrows) > 0) {
+                                    $noticequery1 = "select *, Concat('Post','') as type, Concat('12','') as flagCheck, Concat('$site_url','notice/notice_img/notice-min.jpg') as userImage,
+             if(thumb_post_img IS NULL or thumb_post_img='' , Concat('$site_url',post_img),Concat('$site_url',thumb_post_img) ) as post_img, DATE_FORMAT(created_date,'%d %b %Y') as created_date from Tbl_C_PostDetails where post_id=:id and clientId =:cid";
+                                    $nstmt = $this->DB->prepare($noticequery1);
+                                    $nstmt->bindParam(':cid', $this->idclient, PDO::PARAM_STR);
+                                    $nstmt->bindParam(':id', $welid, PDO::PARAM_STR);
+                                    $nstmt->execute();
+                                    $onboardData = $nstmt->fetchAll(PDO::FETCH_ASSOC);
+                                    //echo'<pre>';print_r($onboardData);die;
+                                    foreach ($onboardData as $values) {
+                                        //echo '<pre>';print_r($values);die;
+                                        $post_content_keys = explode("#Benepik#", $values['post_content']);
+
+                                        //echo '<pre>';print_r($post_content_keys);die;
+
+                                        unset($post_content_keys[0]);
+                                        $post_content_keys = array_values($post_content_keys);
+                                        //echo'<pre>';print_r($post_content_keys);die;
+                                        $final_data_keys = array();
+                                        $final_data_value = array();
+                                        foreach ($post_content_keys as $keys => $val) {
+
+                                            $key_data = explode("###", $val);
+
+                                            array_push($final_data_keys, trim($key_data[0], " "));
+                                            array_push($final_data_value, strip_tags(trim($key_data[1], " \n\t\t "), ""));
+                                        }
+                                        $final_data_value[2] = date('d M Y', strtotime($final_data_value[2]));
+                                        array_push($final_data_keys, 'user_image', 'user_name');
+                                        array_push($final_data_value, $values['post_img'], $values['post_title']);
+
+                                        $response_data = array_combine($final_data_keys, $final_data_value);
+                                        $response_data['auto_id'] = $values['auto_id'];
+                                        $response_data['post_id'] = $welid;
+                                        $response_data['clientId'] = $this->idclient;
+                                        $response_data['type'] = "Onboard";
+                                        $response_data['flagCheck'] = $values['flagCheck'];
+
+                                        $response_data['username'] = $response_data['user_name'];
+                                        $response_data['user_name'] = 'Welcome Aboard : ' . $response_data['user_name'];
+                                    }
+                                    //echo'<pre>';print_r($response_data);die;
+
+                                    array_push($welcomearray, $response_data);
+                                }
+                                break;
+                                       
+	      //Display  Contributor Code                                                                                            
+                        /*   case "Contributor":
                                 $contributorquery = "select * from Tbl_Analytic_PostSentToGroup where groupId IN('" . $in . "') and postId =:id and clientId =:cid";
                                 $nstmt = $this->DB->prepare($contributorquery);
                                 $nstmt->bindParam(':cid', $this->idclient, PDO::PARAM_STR);
@@ -248,10 +364,10 @@ class PostDisplayWelcome {
 
                                     array_push($welcomearray, $val1);
                                 }
-                                break;
+                                break;*/
 
 //                        Display AchiverStory Code                                                                                            
-                            case "AStory":
+                       /*     case "AStory":
                                 $eventquery1 = "select *,Concat('AStory','') as type, DATE_FORMAT(createdDate,'%d %b %Y') as createdDate, Concat('$site_url',imagePath) as imagePath, flagType as flagCheck, REPLACE(story,'\r\n','') as story from Tbl_C_AchiverStory where storyId =:id and clientId =:cid and flagType = 16";
                                 $nstmt = $this->DB->prepare($eventquery1);
                                 $nstmt->bindParam(':cid', $this->idclient, PDO::PARAM_STR);
@@ -274,10 +390,10 @@ class PostDisplayWelcome {
                                 $val['module'] = 'Hall of Fame';
 
                                 array_push($welcomearray, $val);
-                                break;
+                                break;*/
 
 //                        Display JobPost Code                                                                                            
-                            case "JobPost":
+                          /*  case "JobPost":
                                 $eventquery1 = "select *,Concat('JobPost','') as type, Concat('15','') as flagCheck, DATE_FORMAT(createdDate,'%d %b %Y') as created_date from Tbl_C_JobPost where jobId =:id and clientId =:cid and status = 1";
                                 $nstmt = $this->DB->prepare($eventquery1);
                                 $nstmt->bindParam(':cid', $this->idclient, PDO::PARAM_STR);
@@ -299,7 +415,7 @@ class PostDisplayWelcome {
                                 $val['module'] = 'Opportunities';
 
                                 array_push($welcomearray, $val);
-                                break;
+                                break;*/
 
                             default: "Invalid data";
                         }
@@ -311,7 +427,7 @@ class PostDisplayWelcome {
                     return $result;
                 }
 
-                /*                 * ********************************************************************************************* */
+       /*********************************************************************************************** */
 //$uniquedata = array_values(array_unique($welcomearray));
                 $datacount = count($welcomearray);
 //echo "array of user ".$datacount."<br>";

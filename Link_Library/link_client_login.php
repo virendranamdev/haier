@@ -12,7 +12,7 @@ $db = new ClientLogin();
  
 $result = $db->clientLoginCheck($email,$pass);
 $res = json_decode($result, true);
-
+//print_r($res);die;
 if($res['success'] == '0')
 {
 echo "<script>alert('Sorry ! you are not authorized user please check ur email id')</script>";

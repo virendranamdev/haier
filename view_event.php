@@ -28,15 +28,13 @@ $count  = count($val['Data']);
                                 <div class="card-header">
 
                                     <div class="card-title">
-                                    <div class="title"><strong>
-									
-									All Event Details</strong></div>
+                                    <div class="title"><strong>All Event Details</strong></div>
                                     </div>
-                                    <div style="float:left; margin-top:13px; font-size:20px;"> 
+                                 <!--   <div style="float:left; margin-top:13px; font-size:20px;"> 
                                     <a href="create_event.php">
                  <button type="button" class="btn btn-primary btn-sm">Create New Event</button>
                                     </a>
-                                     </div>
+                                     </div>-->
                                 </div>
                                 
 
@@ -135,7 +133,6 @@ $count  = count($val['Data']);
 </button>
 </a>-->
 
-<!--
 <a href="view_event_registration.php?eventid=<?php echo $val['Data'][$i]['eventId']; ?>&clientid=<?php echo $val['Data'][$i]['clientId']; ?>">
 <button type="button" class="btn btn-sm btn-danger unpublishBtn" 
 <?php 
@@ -145,15 +142,14 @@ echo $res; ?>
 Registration report
 </button>
 </a>
--->
 <a href="Full_view_event.php?eventid=<?php echo $val['Data'][$i]['eventId']; ?>&clientid=<?php echo $val['Data'][$i]['clientId']; ?>" style="color:#00a4fd;margin-left:30px !important">
 View
 </a>
-<a href="view_queriesreport.php?eventid=<?php echo $val['Data'][$i]['eventId']; ?>&clientid=<?php echo $val['Data'][$i]['clientId']; ?>" style="color:#00a4fd;margin-left:30px !important">
+<!--<a href="view_queriesreport.php?eventid=<?php echo $val['Data'][$i]['eventId']; ?>&clientid=<?php echo $val['Data'][$i]['clientId']; ?>" style="color:#00a4fd;margin-left:30px !important">
 <button type="button" class="btn btn-sm btn-danger unpublishBtn">
 Queries Report
 </button>
-</a>
+</a>-->
 
 
 

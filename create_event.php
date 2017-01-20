@@ -407,7 +407,7 @@ function ValidatePostEvent()
                                 </div>
                             </div>
                             
-							<div class="publication"><p id="publication_heading">Popup</p><hr>
+							<!---<div class="publication"><p id="publication_heading">Popup</p><hr>
  
 							<div class="row">
 							  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"id="rightpublicationdiv6">
@@ -420,7 +420,7 @@ function ValidatePostEvent()
 							  </div>
 							 
 							</div>
-							</div>
+							</div> ---->
                         </div>
 
                     </div>

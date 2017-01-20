@@ -71,7 +71,7 @@ class Post
    $this->number = $num;
   $img = imagecreatefromstring(base64_decode($this->img));
   
-  $imgpath = '../images/post_img/'.$this->postid."-".$this->number.'.jpg';
+  $imgpath = '../../images/post_img/'.$this->postid."-".$this->number.'.jpg';
   imagejpeg( $img , $imgpath ); //for converting jpeg of image
     
     $imgpath1 = 'images/post_img/'.$this->postid."-".$this->number.'.jpg';
@@ -81,7 +81,8 @@ class Post
  /*****************************************************************************/
 public $clientid;
 public $useruniqueid;
-  function create_Post($clid,$pid,$ptitle,$pimg,$pteaser,$pcontent,$pdate,$uid,$by,$flag,$commen,$lik)
+//$clientid, $POST_ID, $POST_TITLE, $imgname,$POST_IMG_THUMB, $POST_TEASER, $POST_CONTENT, $DATE, $USERID, $BY, $FLAG, $comment, $like,$device
+  function create_Post($clid,$pid,$ptitle,$pimg,$POST_IMG_THUMB,$pteaser,$pcontent,$pdate,$uid,$by,$flag,$commen,$lik,$device)
   {
     $this->clientid = $clid;
      $this->postid = $pid;
@@ -99,14 +100,15 @@ public $useruniqueid;
      $this->like = $lik;
 
      try{
-     $query = "insert into Tbl_C_PostDetails(clientId,post_id,post_title,post_img,postTeaser,post_content,created_date,
-                                 created_by,userUniqueId,flagcheck,likeSetting,comment,status)
-            values(:cid,:pid,:pt,:pi,:ptt,:pc,:cd,:cb,:uuid,:fl,:lik,:comm,:st)";
+     $query = "insert into Tbl_C_PostDetails(clientId,post_id,post_title,post_img,thumb_post_img,postTeaser,post_content,created_date,
+                                 created_by,userUniqueId,flagcheck,likeSetting,comment,status,device)
+            values(:cid,:pid,:pt,:pi,:pthi,:ptt,:pc,:cd,:cb,:uuid,:fl,:lik,:comm,:st,:device)";
              $stmt = $this->connect->prepare($query);
              $stmt->bindParam(':cid', $this->clientid, PDO::PARAM_STR);
               $stmt->bindParam(':pid',$this->postid, PDO::PARAM_STR);
              $stmt->bindParam(':pt',$this->posttitle, PDO::PARAM_STR);
              $stmt->bindParam(':pi',$this->imgpath, PDO::PARAM_STR);
+              $stmt->bindParam(':pthi',$POST_IMG_THUMB, PDO::PARAM_STR);
              $stmt->bindParam(':ptt',$this->teaser, PDO::PARAM_STR);
              $stmt->bindParam(':pc',$this->postcontent, PDO::PARAM_STR);
              $stmt->bindParam(':cd',$this->pdate, PDO::PARAM_STR);
@@ -115,7 +117,8 @@ public $useruniqueid;
              $stmt->bindParam(':fl',$this->flag, PDO::PARAM_INT);
              $stmt->bindParam(':lik',$this->like, PDO::PARAM_STR);
              $stmt->bindParam(':comm',$this->comment, PDO::PARAM_STR);
-             $stmt->bindParam(':st',$stat, PDO::PARAM_STR);          
+             $stmt->bindParam(':st',$stat, PDO::PARAM_STR);      
+              $stmt->bindParam(':device',$device, PDO::PARAM_STR);      
              if($stmt->execute())
                   {
                   return  $imgpath1;

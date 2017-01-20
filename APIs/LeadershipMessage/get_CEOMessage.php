@@ -1,7 +1,6 @@
 <?php
-
 error_reporting(E_ALL ^ E_NOTICE);
-if (!class_exists('Family') && include("../../Class_Library/Api_Class/class_family.php")) {
+if (file_exists("../../Class_Library/class_get_ceomessage.php") && include("../../Class_Library/class_get_ceomessage.php")) {
 
     if (isset($_SERVER['HTTP_ORIGIN'])) {
         header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
@@ -23,25 +22,24 @@ if (!class_exists('Family') && include("../../Class_Library/Api_Class/class_fami
     }
 
     $jsonArr = json_decode(file_get_contents("php://input"), true);
-    
-   /* {
-        "employee_id":"",
-                "father_name":"",
-                "mother_name":"",
-                "spouse_name":"",
-                "children_name":""
-    }*/
+/*{
+"clientid":"CO-25",
+"value":"0"
+}*/
 
-    if (!empty($jsonArr['employee_id'])) {
+    if (!empty($jsonArr['clientid'])) {
+        $obj = new GetCEOMessage();
+
         extract($jsonArr);
-        $obj = new Family();
-
-        $response = $obj->entryFamily($employee_id, $father_name, $mother_name, $spouse_name, $children_name);
+        $response = $obj->getAllCEOMessageFORandroid($clientid, $value);
     } else {
-        $response['success'] = 0;
-        $response['result'] = "Invalid json";
+        $result['success'] = 0;
+        $result['result'] = "Invalid json";
+        
+        $response = json_encode($result);
     }
+
     header('Content-type: application/json');
-    echo json_encode($response);
+    echo $response;
 }
 ?>

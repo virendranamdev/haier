@@ -159,7 +159,7 @@ $username = $_SESSION['user_name'];
 
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <h3><strong>Post Message</strong></h3><hr>
+                    <h3><strong> Message</strong></h3><hr>
                 </div>
 
 

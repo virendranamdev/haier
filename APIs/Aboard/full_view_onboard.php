@@ -1,24 +1,21 @@
 <?php
-//@session_start();
-require_once('Class_Library/class_get_onboard.php');
+error_reporting(E_ALL); ini_set('display_errors', 1);
+require_once('../../Class_Library/class_get_onboard.php');
 $dev = !empty($_GET['dev']) ? $_GET['dev'] : '';
-
 $obj = new GetWelcomeOnboard();
 
 if ($dev == 'd2') {
-    include 'navigationbar.php';
-    include 'leftSideSlide.php';
+   // include '../navigationbar.php';
+   // include '../leftSideSlide.php';
 
     $clientid = $_SESSION['client_id'];
     $value = $_GET['idonboard'];
 
     $result = $obj->getSingleOnboard($value, $clientid);
     $value = json_decode($result, true);
-      //  echo'<pre>';print_r($value);die;
-} else {
-    /**************** this is code is useles**************************/
-    
- /*   if (isset($_SERVER['HTTP_ORIGIN'])) {
+} 
+else {
+    if (isset($_SERVER['HTTP_ORIGIN'])) {
         header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
         header('Access-Control-Allow-Credentials: true');
         header('Access-Control-Max-Age: 86400');    // cache for 1 day
@@ -42,14 +39,13 @@ if ($dev == 'd2') {
     $val = $jsonArr['val'];
     $clientid = $jsonArr['comp'];
 
-    /*
+    /*{
       $val = 0;
       $clientid = 'CO-16';
-     
+     }*/
 
     $result = $obj->getAllOnboardFORandroid($clientid, $val);
     $value = json_decode($result, true);
-//print_r($value);*/
 }
 ?>
 
@@ -77,7 +73,7 @@ $total_like = $getcat['total_like'];
 $postid = !empty($_GET['idonboard']) ? $_GET['idonboard'] : '';
 $string = "post=$postid";
 
-$sub_req_url = SITE."Link_Library/android_comment_display.php";
+$sub_req_url = "http://admin.benepik.com/employee/virendra/benepik_admin/lib/android_comment_display.php";
 $ch = curl_init($sub_req_url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_POSTFIELDS, "$string");
@@ -87,11 +83,12 @@ curl_setopt($ch, CURLOPT_POST, 1);
 $resp = curl_exec($ch);
 curl_close($ch);
 $get = json_decode($resp, true);
-//echo "<pre>";
-//print_r($get);
+
 $resul = count($get['posts']);
 
 if ($dev == 'd2') {
+
+    echo $resul;
     ?>
 
 
@@ -102,7 +99,7 @@ if ($dev == 'd2') {
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <?php echo "<h4>" . $value[0]['post_title'] . "</h4>"; ?>
                     <?php echo "<div style='font-size: 11px; font-weight: bold;color: gray; margin-bottom: 1%;'>" . $value[0]['created_date'] . "</div>"; ?>
-                    <img src="<?php echo $value[0]['post_img']; ?>"class="img img-responsive" style="box-shadow: gray 0px -1px 10px 1px;max-height: 250px; width: 100%" onerror='this.src="images/u.png"'/>
+                    <img src="<?php echo $value[0]['post_img']; ?>"class="img img-responsive" style="box-shadow: gray 0px -1px 10px 1px;max-height: 250px; width: 100%"/>
 
                     <?php
                     $post_content_keys = explode("#Benepik#", $value[0]['post_content']);
@@ -118,12 +115,7 @@ if ($dev == 'd2') {
                         array_push($final_data_keys, trim($key_data[0], " "));
                         array_push($final_data_value, strip_tags(trim($key_data[1], " "), ""));
                         ?>
-                        <br>
-                        <div style="font-size: 16px;font-family: calibri, sans-serif; text-align: justify;"><?php
-                            if (!empty($final_data_value[$keys])) {
-                                echo "<b>" . ucfirst($final_data_keys[$keys]) . "</b> <p>" . ucfirst($final_data_value[$keys]) . "</p>";
-                            }
-                            ?></div>
+                        <div style="font-size: 16px;font-family: calibri, sans-serif; text-align: justify;"><?php echo "<b>" . $final_data_keys[$keys] . "</b> <p>" . $final_data_value[$keys] . "</p>"; ?></div>
                         <?php
                     }
                 } else {
@@ -146,17 +138,17 @@ if ($dev == 'd2') {
                             array_push($final_data_value, strip_tags(trim($key_data[1], " \n\t\t "), ""));
                         }
 
-                        array_push($final_data_keys, 'user_image', 'user_name', 'postid');
-                        array_push($final_data_value, $values['post_img'], $values['post_title'], $values['post_id']);
+                        array_push($final_data_keys, 'user_image', 'user_name', 'postid', 'flagCheck');
+                        array_push($final_data_value, $values['post_img'], $values['post_title'], $values['post_id'], "12");
+                        $final_data_value[2] = date('d M Y', strtotime($final_data_value[2]));
 
                         $response_data[] = array_combine($final_data_keys, $final_data_value);
                     }
-
-//                    echo '<pre>';print_r($response_data);die;
                     //echo'<pre>';print_r($response_data);die;
                     if (!empty($response_data)) {
                         $response['success'] = 1;
                         $response['message'] = "Onboard Data Available";
+                        $response['total_post'] = $value['totals'];
                         $response['post'] = $response_data;
                     } else {
                         $response['success'] = 0;
@@ -171,48 +163,41 @@ if ($dev == 'd2') {
             </div>
         </div>
 
-<!--        <div class="row">
+        <!--<div class="row">
+          
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <button type="button" class="btn  btn-sm likeBTN" data-toggle="modal" data-target="#myModalLikepop">
+                                <span class="glyphicon glyphicon-thumbs-up"></span>  Likes : <?php echo $total_like; ?>
+                        </button>
+                        
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <button type="button" class="btn CommentBTN  btn-sm">
+                                <span class="glyphicon glyphicon-comment"></span> Comments : <?php echo $resul; ?>
+                        </button>
+                        
+                </div>
+        </div>
+        ---->
 
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <button type="button" class="btn  btn-sm likeBTN" data-toggle="modal" data-target="#myModalLikepop">
-                        <span class="glyphicon glyphicon-thumbs-up"></span>  Likes : <?php echo $total_like; ?>
-                </button>
-                --
-
-            </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <button type="button" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-comment"></span> Comments
-                </button>
-                <?php
-//echo "<pre>";
-//print_r($get);
-                echo $resul;
-                ?>
-            </div>
-        </div>-->
-
-
-<!--        <div class="row">
+        <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
                 <div id="RecentComment">
-                    <p class="LatestActivitiesHeading">Total comment </p>
+                    <p class="LatestActivitiesHeading"> Comment </p>
                     <hr>
                     <?php
                     for ($i = 0; $i < $resul; $i++) {
                         echo "<div class='row'><div class='col-xs-6 col-sm-4 col-md-2 col-lg-2'>";
-                        //echo "<button type='button' class='btn btn-default btn-circle btn-lg'>";
                         echo "<img src=" . $get['posts'][0]['userimage'] . " class='img img-circle' style='width:60px !important;height:60px !important'/>";
-                        //echo "</button>";
-                        echo "</div>";
+                        echo "</button></div>";
                         echo "<div class='col-xs-6 col-sm-8 col-md-10 col-lg-10'> ";
-                        echo "<p class='LatestActivitiesSub-Heading'>" . $get['posts'][$i]['firstname'] . "&nbsp;&nbsp;&nbsp;&nbsp;" . $get['posts'][$i]['cdate'] . "</p>";
+                        echo "<p class='LatestActivitiesSub-Heading'>" . $get['posts'][$i]['firstname'] . "&nbsp;&nbsp;&nbsp;&nbsp;" . $get['posts'][$i]['cdate'] . "</p><hr/>";
                         echo "<p class='LatestActivitiesDate'>" . $get['posts'][$i]['content'] . "</p></div></div><hr>";
                     }
                     ?>
                 </div>
             </div>	
-        </div>-->
+        </div>
 
 
 
@@ -275,8 +260,4 @@ if ($dev == 'd2') {
 </div>
 <!--**********pop up for like (end)***********-->
 
-
-
-
-
-<?php include 'footer.php'; ?>
+<?php include '../footer.php'; ?>

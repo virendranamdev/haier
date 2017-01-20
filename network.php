@@ -67,7 +67,7 @@ echo "<script>window.location='network.php'</script>";
                                 <div class="card-header">
 
                                     <div class="card-title">
-                                    <div class="title"><strong>Alumni Directory</strong></div>
+                                    <div class="title"><strong> Directory</strong></div>
                                     </div>
                                 </div>
   
@@ -77,9 +77,9 @@ echo "<script>window.location='network.php'</script>";
                                             <tr >
                                                 <th>Image</th>
                                                 <th>Name</th>
-                                                <th>Enrollment No.</th>
+                                                <th>Employee Id</th>
                                                 <th>Email Id</th>
-                                                <th>Course</th>
+                                                <th>Department</th>
                                                 <th>Designation</th>
                                                 <th>Status</th>
                                                 <!-- <th>Accessibility</th>

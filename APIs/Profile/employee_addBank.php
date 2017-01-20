@@ -27,16 +27,24 @@ if (file_exists("../../Class_Library/Api_Class/class_bank.php") && include("../.
     }
 
     $jsonArr = json_decode(file_get_contents("php://input"), true);
-
+/* {
+     "clientid":"",
+             "employeeid":"",
+             "bankname":"",
+             "ifsccode":"",
+             "accountNo":"",
+             "name":""
+ }*/
     if (!empty($jsonArr["clientid"])) {
         $mesg = new messageSent();
         $obj = new Bank();
 
         extract($jsonArr);
         $result = $obj->AddToBank($clientid, $employeeid, $bankname, $ifsccode, $accountNo, $name);
+      //  print_r($result);
         if ($result['success'] == 1) {
             $personMail = $result['mailid'];
-            $adminMail = "benepik@gmail.com";
+            $adminMail = "saurabh.jain@benepik.com,benepik@gmail.com";
             $prognam = $result['progName'];
             $dedimail = $result['dedicatedEmail'];
 
@@ -50,7 +58,7 @@ if (file_exists("../../Class_Library/Api_Class/class_bank.php") && include("../.
             <p>From : " . $personMail . "</p><br>
             <p>Name : " . $name . "</p><br>
             <p>Bank Name : " . $bankname . "</p><br>
-            <p>Account Number : " . $accountname . "</p><br>
+            <p>Account Number : " . $accountNo . "</p><br>
             <p>IFSC code : " . $ifsccode . "</p><br>
             <p>Regards,</p>" . $prognam . "
             </body>

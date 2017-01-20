@@ -303,8 +303,8 @@ class PushNotification {
         curl_close($ch);
 
         // Debug GCM response   
-        $response['result'] = $result;
-        $response['postdata'] = $post;
+     //   $response['result'] = $result;
+     //   $response['postdata'] = $post;
         $response['success'] = 1;
         $response['msg'] = 'post send';
 

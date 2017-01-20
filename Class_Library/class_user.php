@@ -95,7 +95,7 @@ class User {
             for ($row = 1; $row < $countrows; $row++) 
 			{
 
-                $user_name = $userdata[$row][0] . " " . $userdata[$row][1] . " " . $userdata[$row][2];
+                $user_name = ucfirst($userdata[$row][0]) . " " . $userdata[$row][1] . " " . ucfirst($userdata[$row][2]);
 
                 $randomAlpha = self::randomalpha(6);
                 $randomDigit = self::randomdigit(2);
@@ -132,9 +132,9 @@ location,branch,grade,status,accessibility,createdDate,createdBy) values(:uid,:c
                     $stmt->bindParam(':cid', $clientid, PDO::PARAM_STR);
                     $stmt->bindParam(':eid', $randomempid, PDO::PARAM_STR);
 
-                    $stmt->bindParam(':fname', $userdata[$row][0], PDO::PARAM_STR);
+                    $stmt->bindParam(':fname', ucfirst($userdata[$row][0]), PDO::PARAM_STR);
                     $stmt->bindParam(':mname', $userdata[$row][1], PDO::PARAM_STR);
-                    $stmt->bindParam(':lname', $userdata[$row][2], PDO::PARAM_STR);
+                    $stmt->bindParam(':lname', ucfirst($userdata[$row][2]), PDO::PARAM_STR);
 
                     $stmt->bindParam(':gen', $userdata[$row][3], PDO::PARAM_STR);
                     $stmt->bindParam(':email', $userdata[$row][12], PDO::PARAM_STR);
@@ -416,9 +416,9 @@ location,branch,grade,status,accessibility,createdDate,createdBy) values(:uid,:c
     }
 
     function userForm($clientid1, $user, $fname, $mname, $lname, $emp_code, $dob, $father, $email_id, $designation, $department, $contact, $location, $branch, $grade, $gender) {
-        $this->first_name = $fname;
+        $this->first_name = ucfirst($fname);
         $this->middle_name = $mname;
-        $this->last_name = $lname;
+        $this->last_name = ucfirst($lname);
         $this->empCode = $emp_code;
         $this->dobirth = $dob;
         $this->mail1 = $email_id;

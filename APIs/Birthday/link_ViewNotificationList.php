@@ -1,5 +1,4 @@
 <?php
-
 /*
   Description :- link files contain all fields from HTML file and create object of class files . call functions help of object and pass parameter into function .
  */
@@ -47,7 +46,7 @@ if (!empty($indata)) {
 
     $notilistdetails = $obj->workAndBirthNotiListDetails($clientid, $empid, $startlimit);
     $Data = json_decode($notilistdetails, true);
-
+    
     $Count = count($Data['Data']);
     for ($intRow = 0; $intRow < $Count; $intRow++) {
         $Data['Data'][$intRow]['userImage'] = (!empty($Data['Data'][$intRow]['userImage']))?site_url . $Data['Data'][$intRow]['userImage']:"";

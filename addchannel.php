@@ -20,9 +20,6 @@
 				</div>
 
 			</div>
-	<br>
-	
-	
 	
 <!------------------------------------------message portal start from here------------------------------------------------>	
  <div class="row">
@@ -37,7 +34,7 @@
 			<input type="hidden"  name = "id_author" ng-model="clientid" ng-init="clientid='<?php echo $_SESSION['client_id']; ?>'" value="<?php echo $_SESSION['client_id']; ?>">
 			 <input type="hidden" name = "device" value="d2">	
 				
-					<div class="col-md-12">
+				<!--	<div class="col-md-12">
                      <label for="exampleInputPassword1"> Group Admin Id</label>
 
                        <div >
@@ -56,7 +53,7 @@
 				   <button type="button" class="btn btn-success btn-midium" ng-click="addNewChoice()">Create Group Admin</button>
 				       
 				</div>
-                 </div>
+                 </div> --->
                                        
 					         <div class="form-group col-sm-6">
                                <label for="exampleInputPassword1">Group Name</label>
@@ -77,7 +74,7 @@
                              <div ng-repeat = "singleColumnValues in posts">
 		                       <div class="col-md-6" >
 <div style="border:1px solid #dcdcdc;padding:8px;">
-			           <p style="font-size:12px,font-weigtht:bold;text-transform:capitalize;">{{singleColumnValues.columnName}}</p>
+			           <p style="font-size:12px;font-weigtht:bold;text-transform:capitalize;">{{singleColumnValues.columnName}}</p>
 					<hr />
                                            <input type="text" style="display:none;" name="countvalue" ng-model=posts.length />
                                           
@@ -92,9 +89,9 @@
                                </div>
                             </div>
                                         </div>
-      <!---------------------this script for show textbox on select radio button---------------------->                        
+      <!---------------------this script for show text box on select radio button---------------------->                        
 			
-	  <!------------Abobe script for show textbox on select radio button---------------------->
+	  <!------------Adobe script for show text box on select radio button---------------------->
 	                              
 					<div class="form-group col-sm-12">
 						<input type="submit" name ="news_post" class="btn btn-md btn-info" style="text-shadow:none;font-weight:normal;" value="Create Group" id="getData" />
@@ -114,4 +111,4 @@
 </div>
                    
             </div> </div></div>
-				<?php include 'footer.php';?>
+<?php include 'footer.php';?>

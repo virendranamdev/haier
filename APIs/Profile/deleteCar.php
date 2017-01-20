@@ -22,6 +22,12 @@ if (file_exists("../../Class_Library/Api_Class/class_car.php") && include("../..
     }
 
     $jsonArr = json_decode(file_get_contents("php://input"), true);
+    
+ /*   {
+       "clientid":"",
+               "employeeid":"",
+               "carid":""
+    }*/
     $obj = new Car();
     if ($jsonArr["clientid"]) {
         extract($jsonArr);

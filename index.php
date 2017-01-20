@@ -40,7 +40,7 @@ $obj = new Auth();
         }
         ?>
 
-        <div align="center"><img src="img/banner.jpg" class="bg img img-responsive"></div>
+        <div align="center"><img src="img/HaierBG.jpg" class="bg img img-responsive"></div>
         <div class="container-fluid">
             <div class="loginDiv">
                 <div class="row">

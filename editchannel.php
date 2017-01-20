@@ -104,7 +104,7 @@ echo $getcat['groupDescription'];
 					
                              <div ng-repeat = "singleColumnValues in posts">
 		                       <div class="col-md-6" style="border:1px solid; border-radius:5px">
-			           <p style="font-size:12px,font-weigtht:600">{{singleColumnValues.columnName}}</p>
+			           <p style="font-size:12px;font-weigtht:600">{{singleColumnValues.columnName}}</p>
 					<hr />
                                            <input type="text" style="display:none;" name="countvalue" ng-model=posts.length />
                                           

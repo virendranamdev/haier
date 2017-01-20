@@ -126,11 +126,12 @@ if (!empty($_POST)) {
     /*     * ********************************************************************************** */
 
     /*     * ********************* insert into database ************************************************ */
-
-    $result = $obj->create_Post($clientid, $POST_ID, $POST_TITLE, $POST_IMG, $thumb_img, $POST_CONTENT, $DATE, $USERID, $BY, $FLAG, $like, $comment);
+$teaser = "";
+$device = 1;
+    $result = $obj->create_Post($clientid, $POST_ID, $POST_TITLE, $POST_IMG, $thumb_img, $teaser, $POST_CONTENT, $DATE, $USERID, $BY, $FLAG, $like, $comment,$device);
 
     $type = 'Message';
-    //$result1 = $obj->createWelcomeData($clientid, $POST_ID, $type, $POST_TITLE, $POST_IMG, $DATE, $USERID, $FLAG);
+    $result1 = $obj->createWelcomeData($clientid, $POST_ID, $type, $POST_TITLE, $POST_IMG, $DATE, $USERID, $FLAG);
 
     $groupcount = count($myArray);
     for ($k = 0; $k < $groupcount; $k++) {

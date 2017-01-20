@@ -237,7 +237,7 @@ Location Name : <input type="text" name="locname" id="locname"><br><br>
                                                <div class="row">
                                                  <div class="col-sm-12">
                                                   
-                                                  <div class="text-center" style="border:1px solid $e6e6e6; box-shadow:0 1px 5px rgba(0, 0, 0, 0.1); padding:10px;height:380px !important">
+                                                  <div class="text-center" style="border:1px solid #e6e6e6; box-shadow:0 1px 5px rgba(0, 0, 0, 0.1); padding:10px;height:380px !important">
                                                 <!--<form role="form" method="post" enctype="multipart/form-data" action="Link_Library/link_create_location.php">-->
                                                  <div class="form-group col-sm-6">
                                                  <input type="hidden" name="clientid" value="<?php echo $_SESSION['client_id']; ?>">

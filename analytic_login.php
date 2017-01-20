@@ -4,7 +4,8 @@ include 'leftSideSlide.php';
 $clientid = $_SESSION['client_id'];
 ?>
 <script type="text/javascript">
-    $(document).ready(function(){
+    $(document).ready(function()
+    {
 		  
 		//alert("hello");
         
@@ -100,8 +101,8 @@ function check(){
 			<label for="sel1" style="margin-left:80px;">Device :</label>
 				<select style="color:#2d2a3b;" name="device" class="form-control" id="device">
 					<option value ="All">All</option>
-					<option value ="android">Android</option>
-					<option value ="ios">iphone</option>
+					<option value ="2">Android</option>
+					<option value ="3">iphone</option>
     
 				</select>
 

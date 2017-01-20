@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL); ini_set('display_errors', 1);
 if (!class_exists("Connection_Communication")) {
     include_once('../../Class_Library/Api_Class/class_connect_db_Communication.php');
 }
@@ -181,15 +182,20 @@ class Family {
         $this->mname = $mnam;
         $this->sname = $snam;
         $this->childrenName = $cname;
+        
+         date_default_timezone_set('Asia/Kolkata');
+        $_date = date('Y-m-d H:i:s');
 
         try {
-            $query = "update Tbl_EmployeePersonalDetails set userFatherName=:fnam, userMotherName=:mnam, userSpouseName=:snam,childrenName=:children where employeeId=:empid";
+            $query = "update Tbl_EmployeePersonalDetails set userFatherName=:fnam, userMotherName=:mnam, userSpouseName=:snam,childrenName=:children,updatedDate = :udte,updatedBy=:uby where employeeId=:empid";
             $stmt = $this->db_connect->prepare($query);
             $stmt->bindParam(':empid', $this->employeeid, PDO::PARAM_STR);
             $stmt->bindParam(':fnam', $this->fname, PDO::PARAM_STR);
             $stmt->bindParam(':mnam', $this->mname, PDO::PARAM_STR);
             $stmt->bindParam(':snam', $this->sname, PDO::PARAM_STR);
             $stmt->bindParam(':children', $this->childrenName, PDO::PARAM_STR);
+             $stmt->bindParam(':udte', $_date, PDO::PARAM_STR);
+              $stmt->bindParam(':uby', $this->employeeid, PDO::PARAM_STR);
 
             if ($stmt->execute()) {
 

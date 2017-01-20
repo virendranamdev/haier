@@ -29,11 +29,11 @@ $count  = count($val['posts']);
                                     <div class="card-title">
                                     <div class="title"><strong>Leadership Message</strong></div>
                                     </div>
-                                    <div style="float:left; margin-top:13pxpx; font-size:20px;"> 
+                                <!--    <div style="float:left; margin-top:13pxpx; font-size:20px;"> 
                                     <a href="postnews.php">
                  <button type="button" class="btn btn-primary btn-sm">Create New Message</button>
                                     </a>
-                                     </div>
+                                     </div>-->
                                 </div>
  
                                 <div class="card-body">
@@ -78,7 +78,7 @@ $action = 'Unpublish';
 
 <img src="<?php echo $val['posts'][$i]['post_img']; ?>"class="img img-rounded"id="news_images" onerror='this.src="images/u.png"'/> </td>
                                          <td><?php echo $val['posts'][$i]['TotalCount']; ?></td>
-										 <td><?php echo $val['posts'][$i]['ViewPostCount']; ?></td>
+					<td><?php echo $val['posts'][$i]['ViewPostCount']; ?></td>
                                                
                                                 <td class="padding_right_px"><?php 
                                                 $cont =  $val['posts'][$i]['post_title'];

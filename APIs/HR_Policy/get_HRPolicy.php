@@ -1,5 +1,6 @@
 <?php
-require_once('../Class_Library/Api_Class/class_hrpolicy.php');
+error_reporting(E_ALL ^ E_NOTICE);
+require_once('../../Class_Library/Api_Class/class_hrpolicy.php');
 
 if (isset($_SERVER['HTTP_ORIGIN'])) {
     header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
@@ -21,6 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 $jsonArr = json_decode(file_get_contents("php://input"), true);
+
+/*{
+    "clientid":"",
+            "value":""
+}*/
+//print_r($jsonArr);
 if(!empty($jsonArr)){
     if(!empty($jsonArr['clientid']))
     { 

@@ -38,18 +38,19 @@ class Bank {
             $stmt->bindParam(':empid', $employeeid, PDO::PARAM_STR);
             $stmt->execute();
             $result1 = $stmt->fetch(PDO::FETCH_ASSOC);
-
+           // print_r($result1);
             $response = array();
 
             if ($result1) {
-                $status = "Active";
+                $status = 1;
                 date_default_timezone_set("Asia/Kolkata");
                 $insertdate = date("Y-m-d H:i:s");
-                $query = "insert into Tbl_EmployeeBankDetails (bdId,clientId,employeeId,bankName,ifscCode,accountNo, cardHolderName, status,insertedDate,insertedby) values(:bd,:cli,:empid,:bnam,:ifs,:ano,:cnam,:sts,:insd,:insb) ON DUPLICATE KEY UPDATE bankName=:bnam,ifscCode=:ifs,accountNo=:ano, cardHolderName=:cnam,updatedDate =:insd,updatedBy =:insb";
+                $query = "insert into Tbl_EmployeeBankDetails (bdId,clientId,employeeId,emailId,bankName,ifscCode,accountNo, cardHolderName, status,insertedDate,insertedby) values(:bd,:cli,:empid,:eml,:bnam,:ifs,:ano,:cnam,:sts,:insd,:insb) ON DUPLICATE KEY UPDATE bankName=:bnam,ifscCode=:ifs,accountNo=:ano, cardHolderName=:cnam,updatedDate =:insd,updatedBy =:insb,emailId=:eml,status = :sts";
                 $stmt = $this->db_connect->prepare($query);
                 $stmt->bindParam(':bd', $bankid, PDO::PARAM_STR);
                 $stmt->bindParam(':cli', $clientid, PDO::PARAM_STR);
                 $stmt->bindParam(':empid', $employeeid, PDO::PARAM_STR);
+                 $stmt->bindParam(':eml', $result1['emailId'], PDO::PARAM_STR);
                 $stmt->bindParam(':bnam', $bname, PDO::PARAM_STR);
                 $stmt->bindParam(':ifs', $ifsc, PDO::PARAM_STR);
                 $stmt->bindParam(':ano', $aNumber, PDO::PARAM_STR);

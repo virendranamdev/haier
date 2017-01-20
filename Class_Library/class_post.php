@@ -69,8 +69,10 @@ class Post {
             trigger_error('Error occured fetching max autoid : ' . $e->getMessage(), E_USER_ERROR);
         }
     }
-           $clientid, $POST_ID, $POST_TITLE, $POST_IMG,$POST_THUMB_IMG, $POST_CONTENT, $DATE, $USERID, $BY, $FLAG, $like, $comment
-    function create_Post($cid, $pid, $ptitle, $pimg, $thumb_img, $pcontent, $pdate, $mail, $by, $flag, $like, $comment) {
+          // $clientid, $POST_ID, $POST_TITLE, $POST_IMG,$POST_THUMB_IMG, $POST_CONTENT, $DATE, $USERID, $BY, $FLAG, $like, $comment, $device
+    // note : teaser use only in case of welcome aboard
+    
+    function create_Post($cid, $pid, $ptitle, $pimg, $thumb_img, $teaser, $pcontent, $pdate, $mail, $by, $flag, $like, $comment, $device) {
         $this->postid = $pid;
         $this->posttitle = $ptitle;
         $this->imgpath = $pimg;
@@ -80,13 +82,13 @@ class Post {
         $this->flag = $flag;
         $stat = "Publish";
         $this->pdate = $pdate;
-        $this->like = $like;
+        $this->like = $like; 
         $this->comment = $comment;
         $this->client = $cid;
-
+//echo "this is device-".$devcie;
         try {
-            $query = "insert into Tbl_C_PostDetails(clientId,post_id,post_title,post_img,thumb_post_img,post_content,created_date,created_by,userUniqueId,flagcheck,likeSetting,comment,status)
-            values(:cid,:pid,:pt,:pi,:thumb_img,:pc,:cd,:cb,:em,:fl,:lk,:ck,:st)";
+            $query = "insert into Tbl_C_PostDetails(clientId,post_id,post_title,post_img,thumb_post_img,postTeaser,post_content,created_date,created_by,userUniqueId,flagcheck,likeSetting,comment,status,device)
+            values(:cid,:pid,:pt,:pi,:thumb_img,:teaser,:pc,:cd,:cb,:em,:fl,:lk,:ck,:st,:device)";
             $stmt = $this->DB->prepare($query);
             $stmt->bindParam(':cid', $this->client, PDO::PARAM_STR);
             $stmt->bindParam(':pid', $this->postid, PDO::PARAM_STR);
@@ -98,9 +100,11 @@ class Post {
             $stmt->bindParam(':cb', $this->author, PDO::PARAM_STR);
             $stmt->bindParam(':em', $this->email, PDO::PARAM_STR);
             $stmt->bindParam(':fl', $this->flag, PDO::PARAM_INT);
-            $stmt->bindParam(':lk', $this->like, PDO::PARAM_INT);
+            $stmt->bindParam(':lk', $this->like, PDO::PARAM_INT);   
             $stmt->bindParam(':ck', $this->comment, PDO::PARAM_INT);
             $stmt->bindParam(':st', $stat, PDO::PARAM_STR);
+              $stmt->bindParam(':teaser',$teaser, PDO::PARAM_STR);
+               $stmt->bindParam(':device', $device, PDO::PARAM_STR);
             if ($stmt->execute()) {
                 $ft = 'True';
                 return $ft;

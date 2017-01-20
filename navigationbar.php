@@ -13,7 +13,7 @@ if (!isset($_SESSION['user_session']) && $_SESSION['user_session'] == "") {
     <!-- Added by HTTrack -->
     <meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
     <head>
-        <link rel="shortcut icon" href="<?php echo SITE; ?>images/m.png" />
+        <link rel="shortcut icon" href="<?php echo SITE; ?>img/launchicon.png" />
         <title>Haier: Welcome </title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Fonts -->

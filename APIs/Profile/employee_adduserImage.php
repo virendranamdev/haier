@@ -22,19 +22,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 include("../../Class_Library/Api_Class/class_family.php");
 
 $postdata = file_get_contents("php://input");
+   $userdata = json_decode($postdata, true);
+   
+/*   {
+       "clientid":"",
+               "uploadImage":"",
+               "employeeid":""
+   }*/
 
 if (!empty($postdata)) {
     $obj = new Family();
     $dname = $obj->randomNumber(6);
-    $userdata = json_decode($postdata, true);
+   
 //print_r($userdata);
     $clientid = $userdata['clientid'];
     $uploadImage = $userdata['uploadImage'];
     $employeeid = $userdata['employeeid'];
 
-    $result = $obj->userImageUpload($clientid, $uploadImage, $employeeid, $dname);
+    $response = $obj->userImageUpload($clientid, $uploadImage, $employeeid, $dname);
 
-    echo $result;
 } else {
     $response['success'] = 0;
     $response['result'] = "Invalid json";

@@ -26,8 +26,8 @@ function addUserValidation()
 	var first_name = document.adduserform.first_name;
 	var last_name = document.adduserform.last_name;
 	var dob = document.adduserform.dob;
-	var fathername = document.adduserform.fathername;
-	var department = document.adduserform.department
+	var empid = document.adduserform.emp_code;
+	//var department = document.adduserform.department
 	if(first_name.value == "")
 	{
 		alert("Please Enter First Name");
@@ -46,18 +46,18 @@ function addUserValidation()
 		dob.focus();
 		return false;
 	}
-	if(fathername.value == "")
+	if(empid.value == "")
 	{
-		alert("Please Enter Date Of Birth");
-		fathername.focus();
+		alert("Please Enter Employee Id");
+		empid.focus();
 		return false;
 	}
-	if(department.value == "")
+	/*if(department.value == "")
 	{
 		alert("Please Enter Course");
 		department.focus();
 		return false;
-	}
+	}*/
 	return true;
 }
 </script>
@@ -150,8 +150,8 @@ function addUserValidation()
                                         </div></div>
                                     <div class="row">
                                         <div class="form-group col-sm-6">
-                                            <label for="exampleInputPassword1">Enrollment No.</label>
-                                            <input  style="color:#2d2a3b;" type="text" name="emp_code" class="form-control" id="exampleInputPassword1" placeholder="Enter Enrollment No.">
+                                       <label for="exampleInputPassword1">Employee Id<span style="color:red">*</span></label>
+                                       <input  style="color:#2d2a3b;" type="text" name="emp_code" class="form-control" id="exampleInputPassword1" placeholder="Enter Employee Id">
                                         </div>
                                         <div class="form-group col-sm-6">
                                             <label for="exampleInputEmail1">Date of Birth<span style="color:red">*</span></label>
@@ -164,7 +164,7 @@ function addUserValidation()
                                         </div></div>
                                     <div class="row">
                                         <div class="form-group col-sm-6">
-                                            <label for="exampleInputEmail1">Father's Name<span style="color:red">*</span></label>
+                                            <label for="exampleInputEmail1">Father's Name</label>
                                         <!--    <input type="date" name="doj" required class="form-control" id="exampleInputEmail1" placeholder="Enter Email id">-->
                                             <input style="color:#2d2a3b;" type="text" name="fathername" class="form-control" id="exampleInputEmail1" placeholder="Father Name" />
                                         </div>
@@ -178,8 +178,8 @@ function addUserValidation()
                                             <input style="color:#2d2a3b;" type="text" name="designation" class="form-control" id="designation" placeholder="Enter Designation">
                                         </div>
                                         <div class="form-group col-sm-6">
-                                            <label for="exampleInputPassword1">Course<span style="color:red">*</label>
-                                            <input  style="color:#2d2a3b;" type="text" name="department" class="form-control" id="department" placeholder="Enter Course">
+                                       <label for="exampleInputPassword1">Department</label>
+                                            <input  style="color:#2d2a3b;" type="text" name="department" class="form-control" id="department" placeholder="Enter Department">
                                         </div>
                                     </div> <div class="row">                
                                         <div class="form-group col-sm-6">
@@ -199,12 +199,13 @@ function addUserValidation()
 
                                         </div>
                                         <div class="form-group col-sm-6">
-                                            <label for="exampleInputPassword1">Batch</label>
-                                            <input style="color:#2d2a3b;" type="text" class="form-control" name="grade" placeholder="Enter Batch"></textarea>
+                                            <label for="exampleInputPassword1">Grade</label>
+                                            <input style="color:#2d2a3b;" type="text" class="form-control" name="grade" placeholder="Enter Grade"></textarea>
 
                                         </div>
 
-                                    </div>    <div class="row">              <div class="form-group col-sm-12">
+                                    </div>    <div class="row">              
+                                        <div class="form-group col-sm-12">
                                             <label for="exampleInputPassword1">Gender</label>
                                             <div>
                                                 <div class="radio3 radio-check radio-success radio-inline">

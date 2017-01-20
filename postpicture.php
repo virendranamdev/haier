@@ -185,7 +185,7 @@ $obj = new GetGroup();
 
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <h3><strong>Post Picture</strong></h3><hr>
+                    <h3><strong> Picture</strong></h3><hr>
                 </div>
                 <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2" style="margin-bottom:6px;">
 
@@ -288,9 +288,7 @@ $obj = new GetGroup();
 
                 </div>
             </div>
-            <br>
-
-
+           
             <div ng-app="" class="row">
                 <form role="form" name="postpictureform" action="Link_Library/link_post_picture.php" method="post" enctype="multipart/form-data" onsubmit="return check()">
                     <input type="hidden" name = "flag" value="3">
@@ -304,7 +302,7 @@ $obj = new GetGroup();
                         <div class="row">
                             <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
                                 <div class="form-group">
-                                    <label for="Articlecontent">GALLERY IMAGE</label><br>
+                                    <label for="Articlecontent"> IMAGE</label><br>
 
 
 

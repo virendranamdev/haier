@@ -92,7 +92,8 @@ class Like {
     function getTotalLikeANDcomment($clientid, $albumid, $imageid) {
         $status = 1;
 
-        $path = site_url;
+        $path = dirname(SITE_URL);
+        
         try {
             $query = "select *,DATE_FORMAT(createdDate,'%d %b %Y %h:%i %p') as likeDate from Tbl_Analytic_AlbumLike where albumId =:albumid AND imageId = :imgid and clientId=:cli AND status = :status";
             $stmt = $this->DB->prepare($query);
@@ -116,20 +117,21 @@ class Like {
                     $post["imageId"] = $row["imageId"];
                     $post["uuid"] = $row["userId"];
                     $employeeid = $row["userId"];
-
-
+                     
+                 
                     $query = "select Tbl_EmployeeDetails_Master.*,Tbl_EmployeePersonalDetails.*, IF(Tbl_EmployeePersonalDetails.userImage IS NULL OR Tbl_EmployeePersonalDetails.userImage='', '', if(Tbl_EmployeePersonalDetails.linkedIn = '1',Tbl_EmployeePersonalDetails.userImage, CONCAT('$path/',Tbl_EmployeePersonalDetails.userImage))) as userImage from Tbl_EmployeeDetails_Master join Tbl_EmployeePersonalDetails on Tbl_EmployeeDetails_Master.employeeId=Tbl_EmployeePersonalDetails.employeeId where Tbl_EmployeeDetails_Master.employeeId=:empid";
                     $stmt = $this->DB->prepare($query);
                     $stmt->bindParam(':empid', $employeeid, PDO::PARAM_STR);
                     $stmt->execute();
                     $rows = $stmt->fetch(PDO::FETCH_ASSOC);
-
+                  
                     $post["name"] = $rows["firstName"];
 //                    $post["userImage"] = !empty($rows["userImage"]) ? $path . $rows["userImage"] : "";
                     $post["userImage"] = $rows["userImage"];
                     $post["likeDate"] = $row["createdDate"];
                     $post["clientId"] = $row["clientId"];
                     array_push($response["Posts"], $post);
+                 
                 }
             } else {
                 $response["Success"] = 0;

@@ -155,7 +155,7 @@ class GetNotice {
 
     function getAllNoticesDetails($clientid, $empid, $val, $module = '') {
 
-        /*         * **************************************
+        /****************************************
           $module  = 1
           we consider flag value 1  for display data in web view of application
 
@@ -163,7 +163,7 @@ class GetNotice {
         $this->idclient = $clientid;
         $this->employeeId = $empid;
         $this->value = $val;
-        $path = SITE_URL;
+        $path = dirname(SITE_URL)."/";
 
         try {
             $query = "select * from Tbl_EmployeeDetails_Master where clientId=:cli and employeeId=:empid";
@@ -179,7 +179,7 @@ class GetNotice {
                 $getgroup = $group_object->groupBaseofUid($clientid, $empid);
                 $value = json_decode($getgroup, true);
                 //print_r($value);
-                /*                 * *********************************************************************************************** */
+                /************************************************************************************************* */
 
                 $count_group = count($value['groups']);
                 //echo "total group of empid =: ".$count_group."<br/>";
@@ -190,7 +190,7 @@ class GetNotice {
                     $in = implode("', '", array_unique($value['groups']));
                     //echo "group array : ".$in."<br/>";
 
-                    /*                     * ************************************************************************************************* */
+                    /************************************************************************************************** */
                     $query21 = "select count(distinct(noticeId)) as total_notices from Tbl_Analytic_NoticeSentToGroup where clientId=:cli and groupId IN ('" . $in . "')";
                     $stmt21 = $this->DB->prepare($query21);
                     $stmt21->bindParam(':cli', $this->idclient, PDO::PARAM_STR);
@@ -211,19 +211,19 @@ class GetNotice {
                     $nstmt->execute();
                     $noticerows1 = $nstmt->fetchAll(PDO::FETCH_ASSOC);
 
-                    //print_r($noticerows);
-
                     $response["total_notices"] = $rows2["total_notices"];
 
                     $response['notice'] = array();
                     $status = "Publish";
 
-                    if (count($noticerows1) > 0) {
+                    if (count($noticerows1) > 0) 
+                        {
                         $response["success"] = 1;
                         $response["message"] = "Notice data available for you";
-                        foreach ($noticerows1 as $noticerows) {
+                        foreach ($noticerows1 as $noticerows) 
+                            {
                             $noticeid = $noticerows['noticeid'];
-                            $query2 = "select *, DATE_FORMAT(createdDate,'%d %b %Y %h:%i %p') as createdDate,DATE_FORMAT(publishingTime,'%d %b %Y %h:%i %p') as publishingTime, 
+                            $query2 = "select *, DATE_FORMAT(createdDate,'%d %b %Y') as createdDate,DATE_FORMAT(publishingTime,'%d %b %Y %h:%i %p') as publishingTime, 
                             DATE_FORMAT(unpublishingTime,'%d %b %Y %h:%i %p') as unpublishingTime  
                             from Tbl_C_NoticeDetails where noticeId=:nid and clientId=:cli";
                             

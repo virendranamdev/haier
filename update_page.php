@@ -14,7 +14,7 @@
 	
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"style="margin:1px !important;">
-				<h4><strong>Update Page<strong></h4><hr>
+				<h4><strong>Update HR Policy<strong></h4><hr>
 				<?php 
 				if(isset($_SESSION['msg']))
 				{
@@ -52,7 +52,7 @@
                            <input type="hidden" name="pageid" value="<?php echo $_GET['pageid'];?>" />
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="form-group">
-						<label for="Articlecontent">Page Title</label>
+						<label for="Articlecontent"> Title</label>
 						<input type="text" name="pagetitle" class="form-control" value="<?php echo $result[0]['pageTitle']; ?>">
 					</div>
 					</div>

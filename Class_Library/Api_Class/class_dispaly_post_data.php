@@ -34,7 +34,7 @@ class PostDisplay {
                 $getgroup = $group_object->groupBaseofUid($clientid, $uid);
                 $value = json_decode($getgroup, true);
 
-                /*                 * *********************************************************************************************** */
+             /**************************************************************************************************/
 
                 $count_group = count($value['groups']);
                 //echo "total group of empid =: ".$count_group."<br/>";
@@ -51,7 +51,7 @@ class PostDisplay {
 
                     /*                     * ************************************************************************************************* */
 
-                    $eventquery1 = "select count(distinct(postId)) as total from Tbl_Analytic_PostSentToGroup where groupId IN('" . $in . "') and clientId =:cid and flagType = 1 and status = 1 order by autoId desc";
+                    $eventquery1 = "select count(distinct(postId)) as total from Tbl_Analytic_PostSentToGroup where groupId IN('" . $in . "') and clientId =:cid and flagType IN ('1','2','3') and status = 1 order by autoId desc";
 
                     $nstmt1 = $this->DB->prepare($eventquery1);
                     $nstmt1->bindParam(':cid', $this->idclient, PDO::PARAM_STR);
@@ -59,9 +59,9 @@ class PostDisplay {
                     $welrows11 = $nstmt1->fetch(PDO::FETCH_ASSOC);
                     $totalnews1 = $welrows11['total'];
                     // echo "total story".$totalnews1;		
-                    /*                     * ************************************************************************************************* */
+                    /** ************************************************************************************************* */
 
-                    $eventquery = "select distinct(postId) from Tbl_Analytic_PostSentToGroup where groupId IN('" . $in . "') and clientId = :cid and flagType = 1 and status = 1 order by autoId desc limit $val, 5";
+                    $eventquery = "select distinct(postId) from Tbl_Analytic_PostSentToGroup where groupId IN('" . $in . "') and clientId = :cid and flagType IN ('1','2','3') and status = 1 order by autoId desc limit $val, 5";
 
                     $nstmt = $this->DB->prepare($eventquery);
                     $nstmt->bindParam(':cid', $this->idclient, PDO::PARAM_STR);
@@ -167,6 +167,7 @@ class PostDisplay {
                         $post["likeSetting"] = $rows2["likeSetting"];
                         $post["comment"] = $rows2["comment"];
                         $post["userUniqueId"] = $rows2["userUniqueId"];
+                        $post["device"] = $rows2["device"];
                         $uui = $post["userUniqueId"];
 
                         $query = "select Tbl_EmployeeDetails_Master.firstName, concat('" . site_url . "',Tbl_EmployeePersonalDetails.userImage) as UserImage from Tbl_EmployeeDetails_Master join Tbl_EmployeePersonalDetails where Tbl_EmployeeDetails_Master.clientId=:cli and Tbl_EmployeePersonalDetails.employeeId=:empid and Tbl_EmployeeDetails_Master.employeeId=:empid";
@@ -181,7 +182,7 @@ class PostDisplay {
                         array_push($result["posts"], $post);
                     }
 
-                    /*                     * ********************************************************************************************* */
+                    /*********************************************************************************************** */
                     $datacount = count($post);
                     //echo $datacount;
                     if ($datacount < 1) {

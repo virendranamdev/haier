@@ -131,8 +131,9 @@ if (!empty($_POST)) {
         /*         * ************************************************************************************ */
 
         /*         * ********************* insert into database ************************************************ */
-
-        $result = $obj->create_Post($clientid, $POST_ID, $POST_TITLE, $POST_IMG, $POST_IMG_THUMB, $POST_CONTENT, $DATE, $USERID, $BY, $FLAG, $like, $comment);
+$teaser = "";
+$devcie = 1;
+        $result = $obj->create_Post($clientid, $POST_ID, $POST_TITLE, $POST_IMG, $POST_IMG_THUMB,$teaser, $POST_CONTENT, $DATE, $USERID, $BY, $FLAG, $like, $comment,$devcie);
 
         $type = 'News';
         $result1 = $obj->createWelcomeData($clientid, $POST_ID, $type, $POST_TITLE, $POST_IMG, $DATE, $USERID, $FLAG);

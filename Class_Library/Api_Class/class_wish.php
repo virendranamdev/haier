@@ -6,9 +6,9 @@
   Description :- Create Function for work and birth notification .
  */
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-include_once('class_connect_db_Communication.php');
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    include_once('class_connect_db_Communication.php');
 /* * ----- -----------------------   $db_connect     is object of connection page ---------------------------------* */
 
 class wish {
@@ -42,7 +42,7 @@ class wish {
         $img = imagecreatefromstring(base64_decode($encodedimage));
 
         $imgpath = base_path . '/images/wishimg/' . $num . '.jpg';
-        //echo $imgpath;
+        echo $imgpath;
         imagejpeg($img, $imgpath);
         $imgpath1 = $num . '.jpg';
         return $imgpath1;
@@ -94,8 +94,7 @@ class wish {
             $stmt->bindParam(':startlimit', $startlimit, PDO::PARAM_INT);
             if ($stmt->execute()) {
                 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                //echo "<pre>";
-                //print_r($rows);
+               
                 if ($rows) {
                     $response["success"] = 1;
                     $response["Data"] = $rows;
@@ -130,8 +129,7 @@ class wish {
             $stmt->bindParam(':url', $url, PDO::PARAM_STR);
             if ($stmt->execute()) {
                 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                //echo "<pre>";
-                //print_r($rows);
+               
                 $a = "";
                 if ($rows) {
                     $response["success"] = 1;

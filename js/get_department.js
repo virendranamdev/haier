@@ -1,7 +1,7 @@
 $(document).ready(function(){
     $("#sel_location").on('change', function dept(){
         var matchvalue = $(this).val(); // this.value
-      <!--  $.ajax({ 
+      /*  $.ajax({ 
             url: 'matchedit-data.php',
             data: { matchvalue: matchvalue },
             type: 'post'
@@ -9,7 +9,7 @@ $(document).ready(function(){
             console.log('Done: ', responseData);
         }).fail(function() {
             console.log('Failed');
-        });-->
+        }); */
         alert(matchvalue);
     });
 }); 

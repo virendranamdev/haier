@@ -38,7 +38,7 @@ $(document).ready(function(){
 <div id="preview_div">
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 closebtn">
 <button id="close_news_priview" type="button" class="btn btn-gray">X</button>
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 style="border:1px;"><img  style="height:547px;width:221px; margin-top:-47px;margin-left:-124px;" class="img-responsive" src="images/mobile.jpg" alt="Mobile" width="460" height="345"></div>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="border:1px;"><img  style="height:547px;width:221px; margin-top:-47px;margin-left:-124px;" class="img-responsive" src="images/mobile.jpg" alt="Mobile" width="460" height="345"></div>
 
 
 <div class="androidContentTab">

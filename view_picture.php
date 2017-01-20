@@ -33,11 +33,11 @@ $path = SITE;
                                     <div class="card-title">
                                     <div class="title"><strong>ALL Pictures Details</strong></div>
                                     </div>
-                                    <div style="float:left; margin-top:13px; font-size:20px;"> 
+                                 <!--   <div style="float:left; margin-top:13px; font-size:20px;"> 
                                     <a href="postpicture.php">
                  <button type="button" class="btn btn-primary btn-sm">Create New Picture</button>
                                     </a>
-                                     </div>
+                                     </div> -->
                                 </div>
                                 
 

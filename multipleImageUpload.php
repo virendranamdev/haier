@@ -25,7 +25,7 @@ include 'leftSideSlide.php';
 
 <div class="container" style="margin-left:10%;margin-top:80px;; border:1px solid #cdcdcd;padding:20px;margin-bottom:20px;" ><br>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <h3><strong>Add Media</strong></h3><hr>
+        <h3><strong>Add Gallery</strong></h3><hr>
     </div>
 
     <div class="row">

@@ -32,13 +32,13 @@ $count = count($val['posts']);
                         <div class="card-header">
 
                             <div class="card-title">
-                                <div class="title"><strong>All Album</strong></div>
+                                <div class="title"><strong>All Galleries</strong></div>
                             </div>
-                            <div style="float:left; margin-top:13px; font-size:20px;"> 
+                          <!--  <div style="float:left; margin-top:13px; font-size:20px;"> 
                                 <a href="multipleImageUpload.php">
                                     <button type="button" class="btn btn-primary btn-sm">Create New Album</button>
                                 </a>
-                            </div>
+                            </div>--->
                         </div>
 
                         <div class="card-body">

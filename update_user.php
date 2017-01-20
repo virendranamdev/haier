@@ -214,7 +214,7 @@ alert("hello ");
                                                 <a href="#step2" role="tab" id="step2-tab" data-toggle="tab" aria-controls="profile">
                                                     <div class="icon fa fa-user"></div>
                                                     <div class="step-title">
-                                                        <div class="title">Search Alumni For Updation</div>
+                                                        <div class="title">Search User For Updation</div>
                                                         <div class="description"></div>
                                                     </div>
                                                 </a>
@@ -269,8 +269,8 @@ alert("hello ");
 
                                     <form method="post" action="update_user.php">
                                         <div class="form-group col-sm-4">
-                                            <label for="exampleInputEmail1">Enter Name or Email Id or Enrollment No.<span style="color:red">*</span></label>
-                                            <input style="color:#2d2a3b;"type="text" name="first_name" required class="form-control" id="exampleInputEmail1" placeholder="First Name | Email id | Enrollment No." required>
+                                            <label for="exampleInputEmail1">Enter Name or Email Id or Employee Id<span style="color:red">*</span></label>
+                                            <input style="color:#2d2a3b;"type="text" name="first_name" required class="form-control" id="exampleInputEmail1" placeholder="First Name | Email id | Employee Id" required>
                                         </div>                                      
                                         <div class="form-group col-sm-12">
                                         <button type="submit" name="user_form" class="btn btn-success commonColorSubmitBtn">Submit</button>

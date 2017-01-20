@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL); ini_set('display_errors', 1);
+//error_reporting(E_ALL); ini_set('display_errors', 1);
 
 if ((!class_exists('Reading') && include("../../Class_Library/class_reading.php")) && (!class_exists("Post") && include("../../Class_Library/class_post.php")) && (!class_exists("PushNotification") && include("../../Class_Library/class_push_notification.php"))) {
 
@@ -31,10 +31,9 @@ if ((!class_exists('Reading') && include("../../Class_Library/class_reading.php"
             "title":"",
             "content":"",
            "device":""
-            
-}*/
-
-    /*     * ******************************START HERE************************************************ */
+ }*/
+//print_r($jsonArr);
+    /********************************START HERE************************************************ */
     if (!empty($jsonArr['client_id'])) {
         date_default_timezone_set('Asia/Calcutta');
         $post_date = date('Y-m-d H:i:s A');
@@ -71,6 +70,7 @@ if ((!class_exists('Reading') && include("../../Class_Library/class_reading.php"
         $POST_THUMB_IMG = "";
         $POST_TEASER = "";
         $POST_CONTENT = $jsonArr['content'];
+        $device = $jsonArr['device'];
         $DATE = $post_date;
         $FLAG = 2;
         $flag_name = "Message : ";
@@ -110,8 +110,9 @@ if ((!class_exists('Reading') && include("../../Class_Library/class_reading.php"
         /*         * ************************************************************************************ */
 
         /*         * ********************* insert into database ************************************************ */
-
-        $result = $obj->create_Post($clientid, $POST_ID, $POST_TITLE, $POST_IMG,$POST_THUMB_IMG, $POST_CONTENT, $DATE, $USERID, $BY, $FLAG, $like, $comment);
+//echo $device;
+$teaser = "";
+        $result = $obj->create_Post($clientid, $POST_ID, $POST_TITLE, $POST_IMG,$POST_THUMB_IMG, $teaser, $POST_CONTENT, $DATE, $USERID, $BY, $FLAG, $like, $comment, $device);
 
         $type = 'Message';
         $result1 = $obj->createWelcomeData($clientid, $POST_ID, $type, $POST_TITLE, $POST_IMG, $DATE, $USERID, $FLAG);
@@ -171,7 +172,7 @@ if ((!class_exists('Reading') && include("../../Class_Library/class_reading.php"
 //echo "post sent to empid:--".$uuid."<br/>";
             if (!empty($uuid)) {
 
-                $read->postSentTo($clientid, $maxid, $uuid);
+               $read->postSentTo($clientid, $maxid, $uuid);
             }
         }
         /*         * ******* insert into post sent to table for analytic sstart************ */
@@ -195,10 +196,13 @@ if ((!class_exists('Reading') && include("../../Class_Library/class_reading.php"
         foreach ($val as $line) {
             @fputcsv($file, @explode(',', $line));
         }
-        fclose($file);
+        @fclose($file);
         /*         * *******************Create file of user which this post send End******************** */
         /*         * *******************check push notificaticon enabale or disable******************** */
-        if ($PUSH_NOTIFICATION == 'PUSH_YES') {
+       // $PUSH_NOTIFICATION = "PUSH_NO";
+        
+        if ($PUSH_NOTIFICATION == 'PUSH_YES') 
+            {
             $hrimg = dirname(SITE_URL) . $image;
             $sf = "successfully send";
             $ids = array();
@@ -212,7 +216,7 @@ if ((!class_exists('Reading') && include("../../Class_Library/class_reading.php"
             }
 
             $data = array('Id' => $maxid, 'Title' => $POST_TITLE, 'Content' => $POST_CONTENT, 'SendBy' => $BY, 'Picture' => $hrimg, 'Date' => $post_date, 'flag' => $FLAG, 'flagValue' => $flag_name, 'success' => $sf, 'like' => $like_val, 'comment' => $comment_val);
-            $IOSrevert = $push->sendAPNSPush($data, $idsIOS, $googleapiIOSPem['iosPemfile']);
+          //  $IOSrevert = $push->sendAPNSPush($data, $idsIOS, $googleapiIOSPem['iosPemfile']);
             $revert = $push->sendGoogleCloudMessage($data, $ids, $googleapiIOSPem['googleApiKey']);
 
             $rt = json_decode($revert, true);

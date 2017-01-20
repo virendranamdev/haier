@@ -113,11 +113,12 @@ $(".noticetitle").html(title);
 	?>
 	
 <!------------------------------------------message portal start from here------------------------------------------------>	
+<form role="form" method="post" action="Link_Library/link_notice.php" >
  <div class="row">
 		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 	<!----------------------------------------message  start from here---------------------------------------->	
             <div class="row">
-			<form role="form" method="post" action="Link_Library/link_notice.php" >
+			
 			<input style="color:#2d2a3b;" type="hidden" name = "flag" value="7">
 			<input style="color:#2d2a3b;" type="hidden" name="uniqueuserid" value="<?php echo $_SESSION['user_unique_id']; ?>"/>
 			<input style="color:#2d2a3b;" type="hidden" name = "googleapi" value="<?php echo $_SESSION['gpk']; ?>">	
@@ -285,12 +286,14 @@ $(document).ready(function(){
   </div>
   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"id="rightpublicationdiv6">
     <div class="checkbox"style="margin-top:-10px;">
-    <label><input style="color:#2d2a3b;" type="checkbox" data-toggle="toggle" name="push" value="PUSH_YES" checked></label></div>
+    <label>
+        <input style="color:#2d2a3b;" type="checkbox" data-toggle="toggle" name="push" value="PUSH_YES" checked>
+    </label>
+    </div>
     
   </div>
  
 </div> 
-		
 		
 		</div>
 </div>
@@ -308,7 +311,7 @@ $(document).ready(function(){
 		
 		</div>
 					
-	
+</form>	
 </div>
                    
             </div>

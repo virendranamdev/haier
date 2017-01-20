@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 session_start();
 require_once('../Class_Library/class_notice.php');
 require_once('../Class_Library/class_push_notification.php');
@@ -12,17 +14,18 @@ $welcome_obj = new WelcomePage();
 
 if(!empty($_POST))
 { 
+    
 $title = $_POST['noticetitle'];
 $content = $_POST['noticecontent'];
 $User_Type = $_POST['user3'];
 $client = $_SESSION['client_id'];
-//echo "usertype ".$User_Type."<br/>";
+
 	if($User_Type == 'Selected')
 	{
 	$user1 = $_POST['selected_user'];
 	$user2 = rtrim($user1,',');
         $myArray = explode(',', $user2);
-       /* echo "<pre>";
+        /*echo "<pre>";
           print_r($myArray)."<br/>";
         echo "</pre>";*/
         }
@@ -31,11 +34,11 @@ $client = $_SESSION['client_id'];
        //$myArray[] = $User_Type; 
         // echo "all user"."<br/>";
         $User_Type = "Selected";
-        //echo "user type:-".$User_Type;
+       // echo "user type:-".$User_Type;
         $user1 = $_POST['all_user'];
 	$user2 = rtrim($user1,',');
         $myArray = explode(',', $user2);
-      /*   echo "<pre>";
+         /*echo "<pre>";
         print_r($myArray)."<br/>";
         echo "</pre>";*/
         }
@@ -67,12 +70,12 @@ if(empty($_POST['unpublish_date1']) || $_POST['unpublish_date1'] == "")
 $utime1 = date('Y-m-d', strtotime('+1 year'));
 }
 
-//echo "publish time1: - ".$ptime1."<br/>";
-//echo "unpublish time1: - ".$utime1."<br/>";
+echo "publish time1: - ".$ptime1."<br/>";
+echo "unpublish time1: - ".$utime1."<br/>";
 
 
-$push_ckeck = $_POST['push'];
-//echo "push check:-".$push_check."<br/>";
+$gt = $_POST["push"];
+echo "push check:-".$gt."<br/>";
 
 if(file_put_contents($target.$maxid.".html",$content))
 {
@@ -80,10 +83,10 @@ if(file_put_contents($target.$maxid.".html",$content))
   }
 else
 {
-   // echo "<script>alert('file not created')</script>";
+  //  echo "<script>alert('file not created')</script>";
    } 
  
-    if(isset($push_ckeck) && $push_ckeck == 'PUSH_YES') 
+    if(isset($gt)) 
     {   
         $PUSH_NOTIFICATION = 'PUSH_YES';
         }
@@ -92,14 +95,14 @@ else
        $PUSH_NOTIFICATION = 'PUSH_NO';
         }
     
- // echo $PUSH_NOTIFICATION; 
+  echo $PUSH_NOTIFICATION; 
   
    $result = $obj1->addNotice($client,$maxid,$title,$pagename,$createdby,$ptime1,$utime1,$post_date, $FLAG, $device);
-   
+   print_r($result);
    $type = 'Notice';
    $img = "";
 $result1 = $welcome_obj->createWelcomeData($client,$maxid,$type,$title,$img,$post_date,$createdby,$FLAG);
-
+echo $result1;
   // $result1 = $obj1->addNoticeLocation($client,$maxid,$User_Type,$myArray); //add location into database
      $groupcount = count($myArray);
 for($k=0;$k<$groupcount;$k++)
@@ -170,10 +173,9 @@ print_r($token1);
 echo "<pre>";*/
 
 
-
 /*********************check push notificaticon enabale or disable*********************/
 
-//echo "push Notification -:".$PUSH_NOTIFICATION;
+echo "push Notification -:".$PUSH_NOTIFICATION;
 
 if($PUSH_NOTIFICATION == 'PUSH_YES')
 {

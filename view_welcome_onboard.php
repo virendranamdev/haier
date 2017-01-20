@@ -30,7 +30,7 @@ $path = SITE_URL;
                     <div class="card-header">
 
                         <div class="card-title">
-                            <div class="title">Welcome Onboard</div>
+                            <div class="title">Welcome Aboard</div>
                         </div>
 
                     </div>
@@ -54,14 +54,14 @@ $path = SITE_URL;
                             <form name="form1" id="form1" method="post">
                                 <?php
                                 for ($i = 0; $i < $count; $i++) {
-                                    $k = $val[$i]['status'];
+                                   /* $k = $val[$i]['status'];
                                     //  echo $k;
 
                                     if ($k == 'Unpublish') {
                                         $action = 'Publish';
                                     } else {
                                         $action = 'Unpublish';
-                                    }
+                                    }*/
 
                                     // echo $path.$val[$i]['post_img']."<br/>";
                                     ?>       	

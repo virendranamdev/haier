@@ -15,7 +15,6 @@ $obj = new LoginAnalytic();
 	   */
 	   if(!empty($_POST["mydata"]))
 	   {
-		   
 		   $jsonArr = $_POST["mydata"];
 		   //echo $jsonArr;
 		   //print_r($jsonArr);

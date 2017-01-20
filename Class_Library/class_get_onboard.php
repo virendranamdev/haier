@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(E_ALL); ini_set('display_errors', 1);
 if (!class_exists('Connection_Communication')) {
     include_once('class_connect_db_Communication.php');
 }
@@ -92,7 +92,7 @@ class GetWelcomeOnboard {
     function getAllOnboardFORandroid($clientid, $val) {
         $this->idclient = $clientid;
         $this->value = $val;
-        $site_url = SITE_URL;
+        $site_url = dirname(SITE_URL)."/";
 //        echo $site_url;die;
         try {
             $query = "select *,if(post_img IS NULL OR post_img = '','', Concat('$site_url', post_img)) as post_img, DATE_FORMAT(Tbl_C_PostDetails.created_date,'%d %b %Y') as created_date from Tbl_C_PostDetails where clientId=:cli and flagCheck = 12 order by auto_id desc ";
@@ -155,7 +155,8 @@ class GetWelcomeOnboard {
         $this->id = $postid;
         $this->cli = $clientid;
         $site_url = SITE;
-        $query = "select post.*, DATE_FORMAT(post.created_date,'%d %b %Y') as created_date , if(post.thumb_post_img IS NULL or post.thumb_post_img='' , CONCAT('" . site_url . "',post.post_img), CONCAT('" . site_url . "',post.thumb_post_img)) as post_img, if(user.userImage IS NULL or user.userImage='','',CONCAT('" . site_url . "',user.userImage)) as userImage from Tbl_C_PostDetails as post join Tbl_EmployeePersonalDetails as user on post.userUniqueId = user.employeeId where post.post_id =:pid and post.clientId=:cli";
+      echo "this iss site url".$site_url;
+        $query = "select post.*, DATE_FORMAT(post.created_date,'%d %b %Y') as created_date , if(post.thumb_post_img IS NULL or post.thumb_post_img='' , CONCAT('" . $site_url . "',post.post_img), CONCAT('" . $site_url . "',post.thumb_post_img)) as post_img, if(user.userImage IS NULL or user.userImage='','',CONCAT('" . $site_url . "',user.userImage)) as userImage from Tbl_C_PostDetails as post join Tbl_EmployeePersonalDetails as user on post.userUniqueId = user.employeeId where post.post_id =:pid and post.clientId=:cli";
         try {
             $stmt = $this->DB->prepare($query);
             $stmt->bindParam(':pid', $this->id, PDO::PARAM_STR);

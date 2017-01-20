@@ -21,7 +21,10 @@ if (file_exists("../../Class_Library/Api_Class/class_employee_app_login.php") &&
     }
 
     $jsonArr = json_decode(file_get_contents("php://input"), true);
-
+ /*{
+     "clientid":"",
+             "uid":""
+ }*/
     if ($jsonArr["clientid"]) {
         $obj = new LoginUser();
         $cid = $jsonArr["clientid"];

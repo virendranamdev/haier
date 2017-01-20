@@ -25,22 +25,30 @@ if (file_exists("../../Class_Library/Api_Class/class_car.php") && include("../..
     }
 
     $jsonArr = json_decode(file_get_contents("php://input"), true);
-
+/*{
+    "clientid":"",
+            "employeeid":"",
+            "carModel":"",
+            "modelNo":"",
+            "RegisNo":"",
+            "name":""
+}*/
     if ($jsonArr["clientid"]) {
         $obj = new Car();
         $mail = new messageSent();
 
         extract($jsonArr);
         $response = $obj->addCar($clientid, $employeeid, $carModel, $modelNo, $RegisNo, $name);
+      
 
-//echo '<pre>';print_r($result['family']['posts']['emailId']);die;
-        if (!empty($result)) {
-            $mailid = "saurabh.jain@benepik.com,benepik@gmail.com";
+        if ($response['success'] == 1) {
+           $mailid = "saurabh.jain@benepik.com,benepik@gmail.com";
+           // $mailid = "webveeru@gmail.com";
             $sub = "Car details has been added";
 
             $mailMessage.="A new Car Has Been Added";
             $mailMessage.="<br/><br/><br/>";
-            $mailMessage.="Email :" . $result['family']['posts']['emailId'];
+            $mailMessage.="Email :" . $response['family']['posts']['emailId'];
             $mailMessage.="<br/>";
             $mailMessage.="Manufacture : " . $carModel;
             $mailMessage.="<br/>";
@@ -49,7 +57,7 @@ if (file_exists("../../Class_Library/Api_Class/class_car.php") && include("../..
             $mailMessage.="Registration no: " . $RegisNo;
             $mailMessage.="<br/> ";
             $mailMessage.="Owner name: " . $name . "<br><br><br>";
-            $mailMessage.="Regards<br>Team Manav-Rachna Connect";
+            $mailMessage.="Regards<br>Team Haier Connect";
 
             $from = "From: info@benepik.com";
 

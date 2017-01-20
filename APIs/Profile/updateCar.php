@@ -1,7 +1,6 @@
 <?php
 
-error_reporting(E_ALL ^ E_NOTICE);
-
+error_reporting(E_ALL); ini_set('display_errors', 1);
 if (file_exists("../../Class_Library/Api_Class/class_car.php") && include("../../Class_Library/Api_Class/class_car.php")) {
     require_once('../../Class_Library/Api_Class/class_messageSentTo.php');
 
@@ -25,7 +24,15 @@ if (file_exists("../../Class_Library/Api_Class/class_car.php") && include("../..
     }
 
     $jsonArr = json_decode(file_get_contents("php://input"), true);
-
+/*{
+    "clientid":"",
+            "employeeid":"",
+            "carid":"",
+            "carModel":"",
+            "modelNo":"",
+            "RegisNo":"",
+            "name":""
+}*/
     $obj = new Car();
     $mail = new messageSent();
     $famliy = new Family();
@@ -33,11 +40,13 @@ if (file_exists("../../Class_Library/Api_Class/class_car.php") && include("../..
 
         extract($jsonArr);
         $response = $obj->updateCar($clientid, $employeeid, $carid, $carModel, $modelNo, $RegisNo, $name);
+      //  print_r($response);
         $user_details = $famliy->getFamilyDetails($employeeid);
-
+       // print_r($user_details);
 
         if (!empty($response)) {
             $mailid = "benepik@gmail.com";
+           // $mailid = "webveeru@gmail.com";
             $sub = "Car details Updated";
 
             $mailMessage.="A new Car Has Been Updated";
@@ -51,7 +60,7 @@ if (file_exists("../../Class_Library/Api_Class/class_car.php") && include("../..
             $mailMessage.="Registration no: " . $RegisNo;
             $mailMessage.="<br/> ";
             $mailMessage.="Owner name: " . $name . "<br><br><br>";
-            $mailMessage.="Regards<br>Team Zoom Connect";
+            $mailMessage.="Regards<br>Team Haier Connect";
 
             $from = "From: info@benepik.com";
 

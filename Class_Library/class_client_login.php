@@ -1,6 +1,7 @@
 <?php
 /*******************************  database change *******************/
-
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 include_once('class_connect_db_Communication.php');
 class ClientLogin
 {
@@ -25,8 +26,8 @@ class ClientLogin
  // echo $this->loggedin;
      $user_password = md5($this->password);
    // echo "<br/>".$this->emailid;
-  //  echo "<br/>".$this->password;
-   // echo "<br/>".$user_password;
+//    echo "<br/>".$this->password;
+  //  echo "<br/>".$user_password;
      try{
      $query = "select C.*,CA.*,U.*,UP.* from Tbl_ClientAdminDetails as CA 
      join Tbl_ClientDetails_Master as C on C.client_id = CA.clientId 
@@ -36,8 +37,8 @@ class ClientLogin
            
              $stmt->execute(array(':mail'=>$this->emailid));
              
-             $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
-             
+             $userRow = $stmt->fetch(PDO::FETCH_ASSOC);
+           
               if($stmt->rowCount() > 0)
                {
             //  echo "mail match"."<br/>";

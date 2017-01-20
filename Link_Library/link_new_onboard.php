@@ -23,7 +23,7 @@ $folder = 'images/post_img/';      //folder name for add with image insert into 
 if (!empty($_POST)) {
 
     $flag_value = $_POST['flag'];
-    $flag_name = "Welcome Onboard : ";
+    $flag_name = "Welcome Aboard : ";
     $dev = $_POST['device'];
     if (isset($_POST['news_post'])) {
 
@@ -165,16 +165,17 @@ if (!empty($_POST)) {
         /*         * ********************************************** */
 
         /*         * ********************* insert into database *********************************************** */
-
-        $result = $obj->create_Post($clientid, $POST_ID, $POST_TITLE, $POST_IMG, $about, $POST_CONTENT, $DATE, $USERID, $BY, $FLAG, $like, $comment);
+$thumb_img = "";
+$device = 1;
+        $result = $obj->create_Post($clientid, $POST_ID, $POST_TITLE, $POST_IMG, $thumb_img, $about, $POST_CONTENT, $DATE, $USERID, $BY, $FLAG, $like, $comment,$device);
 
         $type = 'Onboard';
-        $result1 = $obj->createWelcomeData($clientid, $POST_ID, $type, $POST_TITLE, $POST_IMG, $DATE, $USERID);
+        $result1 = $obj->createWelcomeData($clientid, $POST_ID, $type, $POST_TITLE, $POST_IMG, $DATE, $USERID, $FLAG);
 
         $groupcount = count($myArray);
         for ($k = 0; $k < $groupcount; $k++) {
 //echo "group id".$myArray[$k];
-            $result1 = $read->postSentToGroup($clientid, $maxid, $myArray[$k]);
+            $result1 = $read->postSentToGroup($clientid, $maxid, $myArray[$k], $FLAG);
 //echo $result1;
         }
 
@@ -223,7 +224,7 @@ if (!empty($_POST)) {
             $uuid = $allempid1[$i];
 //echo "count no.:-".$i."->".$uuid."<br/>";
             if (!empty($uuid)) {
-                $read->postSentTo($clientid, $maxid, $uuid);
+                $read->postSentTo($clientid, $maxid, $uuid, $FLAG);
             } else {
                 continue;
             }
@@ -278,7 +279,8 @@ if (!empty($_POST)) {
             $data = array('Id' => $POST_ID, 'Title' => $POST_TITLE, 'Content' => $about, 'SendBy' => $BY, 'Picture' => $hrimg, 'image' => $fullpath, 'Date' => $DATE, 'flag' => $FLAG, 'flagValue' => $flag_name, 'success' => $sf, 'like' => $like_val, 'comment' => $comment_val);
 
             //echo '<pre>';print_r($ids);die;
-            $IOSrevert = $push->sendAPNSPush($data, $idsIOS, $getpush_keys['iosPemfile']);
+            $device = "Panel";
+            $IOSrevert = $push->sendAPNSPush($data, $idsIOS, $getpush_keys['iosPemfile'],$device);
             $revert = $push->sendGoogleCloudMessage($data, $ids, $getpush_keys['googleApiKey']);
             $rt = json_decode($revert, true);
 
@@ -288,14 +290,14 @@ if (!empty($_POST)) {
                     echo $rt;
                 } else {
                     echo "<script>alert('Post Successfully Send');</script>";
-// print_r($rt);
+//print_r($rt);
                     echo "<script>window.location='../create_onboard.php'</script>";
-//echo $revert;
+echo $revert;
                 }
             }
         } else {
             echo "<script>alert('Post Successfully Send');</script>";
-            echo "<script>window.location='../create_onboard.php'</script>";
+          //  echo "<script>window.location='../create_onboard.php'</script>";
         }
 
 

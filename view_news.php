@@ -31,13 +31,13 @@ $count = count($val);
                         <div class="card-header">
 
                             <div class="card-title">
-                                <div class="title"><strong>All Whats Up Details</strong></div>
+                                <div class="title"><strong>All News Details</strong></div>
                             </div>
-                            <div style="float:left; margin-top:13px; font-size:20px;"> 
+                         <!---   <div style="float:left; margin-top:13px; font-size:20px;"> 
                                 <a href="postnews.php">
                                     <button type="button" class="btn btn-primary btn-sm">Create New Whats Up</button>
                                 </a>
-                            </div>
+                            </div> --->
                         </div>
 
                         <div class="card-body">
