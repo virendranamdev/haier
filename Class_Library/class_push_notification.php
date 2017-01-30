@@ -157,7 +157,7 @@ class PushNotification {
         $keys->bindParam(':cli', $clientid, PDO::PARAM_STR);
         $keys->execute();
         $keyValues = $keys->fetch(PDO::FETCH_ASSOC);
-
+       // print_r($keyValues);
         return $keyValues;
     }
 
@@ -303,8 +303,8 @@ class PushNotification {
         curl_close($ch);
 
         // Debug GCM response   
-     //   $response['result'] = $result;
-     //   $response['postdata'] = $post;
+       $response['result'] = $result;
+        $response['postdata'] = $post;
         $response['success'] = 1;
         $response['msg'] = 'post send';
 
@@ -426,10 +426,10 @@ class PushNotification {
 
     function sendAPNSPush($post, $deviceToken, $pemFile, $device = '') {
       $apnsHost = 'gateway.sandbox.push.apple.com';       //dev
-     //   $apnsHost = 'gateway.push.apple.com';            //production
+       //$apnsHost = 'gateway.push.apple.com';            //production
         $apnsPort = '2195';
         $apnsCert = (empty($device) || $device = '') ? BASE_PATH . '/' . $pemFile : dirname(BASE_PATH) . '/' . $pemFile; //dev
-//        echo $apnsCert;die;
+       // echo $apnsCert;die;
         $passPhrase = 'benepik123';
         $streamContext = stream_context_create();
         stream_context_set_option($streamContext, 'ssl', 'local_cert', $apnsCert);

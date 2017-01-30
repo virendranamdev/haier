@@ -20,7 +20,7 @@ $fullcsvpath = $target1.$upload_file_name;
 	
 $result1 = $obj->uploadUserCsv($filename,$filtempname,$fullcsvpath);
 $result = json_decode($result1, true);
-//print_r($result);
+print_r($result);
 $message = $result['msg'];
 $suc = $result['success'];
 echo $suc;

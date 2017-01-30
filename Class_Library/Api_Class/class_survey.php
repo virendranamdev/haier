@@ -46,5 +46,72 @@ function getSurveyQuestion($clientid,$uuid,$date)
     
     return $response;
 }
+ function addSurveyAnswer($clientid, $employeeid, $surveyId,$noofquestion,$comment,$device,$ans)
+ {
+      date_default_timezone_set('Asia/Calcutta');
+        $cd =  date('Y-m-d H:i:s A');
+     $flag = 20;
+             $status = 1;
+    // $ans1 =  json_decode($ans,true);
+    // print_r($ans);
+     
+     $query1 = "select * from Tbl_Analytic_EmployeeHappiness where surveyId = :sid and useruniqueid = :uid";
+     $nstmt1 = $this->DB->prepare($query1);
+                   $nstmt1->bindParam(':uid',$employeeid, PDO::PARAM_STR);
+                     $nstmt1->bindParam(':sid',$surveyId, PDO::PARAM_STR);
+                    // $nstmt->bindParam(':status', $status, PDO::PARAM_STR);
+                      $nstmt1->execute();
+                   $resp  =  $nstmt1->fetchAll(PDO::FETCH_ASSOC);
+                    //print_r($resp);
+                  if(count($resp)>0)
+                  {
+                       $response['success'] = 0;
+                    $response['msg'] = "You already submitted this survey"; 
+                  }
+                  else
+                  {
+             $quesno = count($ans);
+     for($i = 0; $i<$quesno; $i++)
+     {
+         $value = $ans[$i]['feedback_id'];
+         $key = $ans[$i]['question_id'];
+         
+         if($ans[$i]['feedback_id'] == 's1')
+             { 
+             $value = -10;
+             }
+             elseif($value == 'a1')
+             {
+                 $value = 0;
+             }
+           else {$value = 10;
+                  }
+      //   echo "this is quesid-".$key;
+       //  echo "this is value - ".$value."\n";
+         $query = "insert into Tbl_Analytic_EmployeeHappiness(clientId,surveyId,questionId,value,comment,"
+                 . "useruniqueid,createdDate,flagetype,device,status)value(:cid,:sid,:qid,:ans,:cmnt,:uid,:dte,:flag,:device,:status)";
+           $nstmt = $this->DB->prepare($query);
+                    $nstmt->bindParam(':cid',$clientid, PDO::PARAM_STR);
+                     $nstmt->bindParam(':sid',$surveyId, PDO::PARAM_STR);
+                      $nstmt->bindParam(':qid',$key, PDO::PARAM_STR);
+                       $nstmt->bindParam(':ans',$value, PDO::PARAM_STR);
+                        $nstmt->bindParam(':cmnt',$comment, PDO::PARAM_STR);
+                         $nstmt->bindParam(':uid',$employeeid, PDO::PARAM_STR);
+                    $nstmt->bindParam(':dte', $cd, PDO::PARAM_STR);
+                    $nstmt->bindParam(':flag', $flag, PDO::PARAM_STR);
+                    $nstmt->bindParam(':device', $device, PDO::PARAM_STR);
+                    $nstmt->bindParam(':status', $status, PDO::PARAM_STR);
+                   if($nstmt->execute())
+                   {
+                      $res = 'True';
+                   }
+     }
+       $response['success'] = 1;
+                    $response['msg'] = "Survey Successfully Submitted"; 
+                  }
+                    return $response;
+    
+ }
+
 }
     

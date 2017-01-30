@@ -3,10 +3,13 @@ include 'navigationbar.php';
 include 'leftSideSlide.php'; 
 $clientid = $_SESSION['client_id'];
 ?>
+<script type="text/javascript" src="js/analytic/analyticLogingraph.js"></script>
+<script type="text/javascript" src="js/analytic/fusioncharts.js"></script>
+<script type="text/javascript" src="js/analytic/fusioncharts.charts.js"></script>
 <script type="text/javascript">
-    $(document).ready(function()
-    {
-		  
+    $(document).ready(function(){
+		$("#tablediv").show();
+		$("#graphdiv").hide();
 		//alert("hello");
         
 		$("button").click(function(){
@@ -35,7 +38,10 @@ $clientid = $_SESSION['client_id'];
 				//alert(response);
 				if(response.length !== 0)
 				{
-					
+				$("#tablediv").show();
+				$("#graphdiv").hide();
+				$('#jsres').val(resdata);
+				
 				var jsonData = JSON.parse(resdata);
 				$('#myTable tbody').remove();
 				for (var i = 0; i < resdata.length; i++) {
@@ -49,6 +55,10 @@ $clientid = $_SESSION['client_id'];
 				else
 					
 				{
+				$("#tablediv").show();
+				$("#graphdiv").hide();
+				$('#jsres').val(resdata);
+				$('#myTable tbody').remove();
 				var newRow = '<tbody><tr><td>No Record Found</td></tr><tbody>';
 				$('#tBody').html('<tr><td>No Record Found</td></tr>');
 				}
@@ -63,6 +73,76 @@ $clientid = $_SESSION['client_id'];
             });
    });
 });
+</script>
+<script>
+/********************** graph or export ****************************************************************/
+function graphorexport(){	
+	//alert("hi graph or export"); 
+	var device = $("#device").val(); //"Android";
+    var fromdte = $("#formdate").val();//"2016-12-01";
+	var enddte = $("#enddate").val();//"2016-12-30"; 
+	var clientid = $("#clientid").val();
+	
+	//var graphexport = $("#graphexport").val();
+	//alert(device + fromdte + enddte +clientid);
+	/*********** validate field *******************************/
+	/*if(fromdte == "")
+	{
+		alert('Please Select Date In Date From Field');
+		return false;
+	}
+	if(enddte == "")
+	{
+		alert('Please Select Date In Date To Field');
+		return false;
+	}
+	*/
+	var graphexport = document.getElementById("graphexport");
+    var graphexportoption = graphexport.options[graphexport.selectedIndex].value;
+	//alert(graphexport);
+	//alert(graphexportoption);
+	
+	if(graphexportoption == "")
+	{
+		//alert("Please Select Show Graph Or Export In CSV")
+		return false;
+	}
+	else if(graphexportoption == "graph")
+	{
+		var res = check();
+		//alert(res);
+		if(res == true)
+		{		
+		$("#tablediv").hide();
+		$("#graphdiv").show();
+		showGraphFunction();
+		}
+	}
+	else
+	{
+		var res = check();
+		if(res == true)
+		{
+		//alert("inside export");
+				if (confirm('Are You Sure, You want to Export Record?')) {
+					var jsonrestable = $("#jsres").val();
+					//alert(jsonrestable);
+					var jsonData = JSON.parse(jsonrestable);
+					if(jsonData.length > 0)
+					{
+					JSONToCSVConvertor(jsonrestable, "Login_Analytic", true);
+					}
+					return true;
+				} else {
+					return false;
+				}
+		
+		}		
+	}
+	
+	/********************************* end validate field **********************/
+	}
+/**************************** graph or export *************************************************/ 
 </script>
 <script>
 function check(){
@@ -108,13 +188,13 @@ function check(){
 
 		</div>
 		</div>
-		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
 		<div class="form-group">
 			<label for="pwd">Date From :</label>
 				<input type="date" name="formdate" id="formdate" class="form-control" style="color:#2d2a3b;">
 		</div>
 		</div>
-		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+		<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
 		<div class="form-group">
 			<label for="pwd">Date To :</label>
 				<input type="date" name="enddate" id="enddate" class="form-control" style="color:#2d2a3b;">
@@ -127,10 +207,22 @@ function check(){
 				<!--<input type="button" name="submit" class="form-control" style="color:#2d2a3b;">-->
 		</div>
 		</div>
+		
+		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+		<div class="form-group">
+			<label for="pwd"></label>
+			<!--<button type="button" id="0" class="form-control" onclick="return check();">Export</button>-->
+			<select style="color:#2d2a3b;" name="graphexport" class="form-control" id="graphexport" onchange="return graphorexport();">
+					<option value ="">Select</option>
+					<option value ="graph">Show Graph</option>
+					<option value ="export">Export In CSV</option>
+			</select>
+		</div>
+		</div>
 		</form>
 
 		
-			<div class="">
+			<div class="" id="tablediv">
 			<!---<div class="addusertest">
 			
 	</div>--->
@@ -140,6 +232,7 @@ function check(){
                         <div class="col-xs-12">
                             <div class="card">
 						  	    <div class="card-body">
+								<input type="hidden" name="jsres" id="jsres">
                                     <table class="datatable table table-responsive" cellspacing="2" width="100%" id="myTable">
                                         <thead>
                                             <tr>
@@ -173,6 +266,28 @@ function check(){
 			
 	
 </div>
+
+<!----------------------- chart --------->
+			 <div class="" id="graphdiv">
+                <div class="side-body">
+                    <div class="" style="border:1px solid #cdcdcd;padding:20px;margin-bottom:20px;margin-top:20px;">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div id="chart-container">Charts will render here</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<script>
+                if (window.parent && window.parent.parent) {
+                    window.parent.parent.postMessage(["resultsFrame", {
+                            height: document.body.getBoundingClientRect().height,
+                            slug: "wYj95"
+                        }], "*")
+                }
+            </script>
+			<!---------------- end chart ------------------------------------->
 </div>
 </div>
 				<?php include 'footer.php';?>	

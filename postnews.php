@@ -69,60 +69,7 @@
 <div id="testpopup" style="height: 558px;margin-top:-400px;">
 
     <p id="close_news_priview" ><button type="button"class="btn btn-gray">X</button></p><br><br>
-    <!--
-    <div id="leftone">
-    <p style=" margin-top: 10px; font-size: 19px;margin-left: 24Px;border-bottom:1px dotted gray;"><span class="glyphicon glyphicon-phone" id="Iphone6"> Android</span></p>
     
-    <p style="margin-top: 10px; font-size: 19px;margin-left: 24Px;border-bottom:1px dotted gray;"><span class="glyphicon glyphicon-phone" id="Iphone5"> iphone</span></p>
-    
-    
-    
-    
-    </div>-->
-    <!--
-    <div id="rightoneIphone5">
-    
-    <div id="iphone5">
-    <div id="inneriphone5">
-    <div class="iphoneSubParentDiv">
-    
-    
-    <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
-    <p class="titlePost NewsPriviewtitle"></p> 
-    <p class="author previewAuthor"><b>Author:</b> </p>
-    </div>
-    </div>
-    <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> <img class="post_img img img-responsive imagePost previewImage" /></div>
-    </div>
-    <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">  
-    <p class="contentPost previewContent"></p>
-     </div>
-    </div>
-    <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">  
-    <p class="date">Date:</p>
-     </div>
-    </div>
-    
-    <div class="row"style="margin:0px">
-    <div class="col-xs-10 col-md-10 col-sm-10 col-lg-10 ">   Like /  Commnets      </div>
-    <div class="col-xs-2 col-md-2 col-sm-2 col-lg-2 ">  <span class="glyphicon glyphicon-thumbs-up" style="float:right;"></span>        </div>
-    <hr style="height:1px;background-color:gray;width:92%;">
-    </div>
-    
-    
-    </div>
-    </div>
-    </div>
-    
-    </div>-->
-
-    <!--<div id="rightoneIphone6" style="height:0px;">
-    
-    <div id="iphone6DivMain"style="height:511;margin-top:51px;">-->
     <div id="iphone6">
         <div id="inneriphone6">
 
@@ -135,14 +82,9 @@
 
                         </div>
                     </div>
-                    <!--<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5"><i class="fa fa-signal white_color" aria-hidden="true"></i><i class="fa fa-pencil white_color" aria-hidden="true"></i></div>-->
+                   
                 </div>
-                <!--
-                <div class="row"><div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 "><font style="color:#e0e0e0;padding-left:8px;">Draft</font></div>
-                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8"><a href="#"><font style="color:#e0e0e0">FirstName LastName</font></a></div>
-                
-                </div>
-                -->
+               
 
 
                 <div class="row">
@@ -165,12 +107,7 @@
                     <div class="col-xs-12 col-md-12 col-sm-7 col-lg-7 "><font style="font-size:10px;"> 0 Comments</font><br> <button type="button" class="btn btn-xs"><i class="fa fa-commenting-o" aria-hidden="true"></i><font style="font-size:10px;">Comments</font></button></div
                     <hr style="height:1px;background-color:gray;width:92%;">
                 </div>
-                <!--
-                <div class="row"style="margin:0px">
-                <div class="col-xs-10 col-md-10 col-sm-10 col-lg-10 ">   Like /  Commnets      </div>
-                <div class="col-xs-2 col-md-2 col-sm-2 col-lg-2 ">  <span class="glyphicon glyphicon-thumbs-up" style="float:right;"></span>        </div>
-                <hr style="height:1px;background-color:gray;width:92%;">
-                </div>-->
+               
 
             </div>
         </div>
@@ -204,7 +141,7 @@
 
                 <form name="form1" role="form" action="Link_Library/link_post_news.php" method="post" enctype="multipart/form-data" onsubmit="return check();">
                     <input type="hidden" name = "flag" value="1">		
-                    <input type="hidden" name = "flagvalue" value="Whats Up : ">			
+                    <input type="hidden" name = "flagvalue" value="News : ">			
                     <input type="hidden" name = "device" value="d2">			
                     <input type="hidden" name = "useruniqueid" value="<?php echo $_SESSION['user_unique_id']; ?>">
                     <input type="hidden" name = "googleapi" value="<?php echo $_SESSION['gpk']; ?>">			
@@ -336,7 +273,7 @@
 
 
                                     var filtype = input.files[0].name.split('.').pop();
-                                    if (filtype == 'jpg' || filtype == 'png' || filtype == 'gif')
+                                    if (filtype == 'jpg'|| filtype == 'jpeg' || filtype == 'png' || filtype == 'gif')
                                     {
                                         $("#imgprvw").show();
                                         $("#videoPlayer").hide();
@@ -495,11 +432,6 @@
                             &nbsp;&nbsp;&nbsp;<a href="#meetop"><input type="button" name="preview_post"  id="preview_post" class="btn btn-md btn-info preview_postBtn" style="    text-shadow: none; font-weight: normal; position: absolute; left: 53.5%" value="Preview" />
                             </a>
 
-<!--                            <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2" style="margin-bottom:8px;"><center>
-                                    <a href="#meetop"><input type="button" name="preview_post"  id="preview_post" class="btn btn-md btn-info preview_postBtn" style="    text-shadow: none; font-weight: normal; position: absolute; left: 280%;" value="Preview" />
-                                    </a>
-                                </center>
-                            </div>-->
                         </div>
                     </center>
 
@@ -516,5 +448,6 @@
     </div>
 
     <!--tooltip script end here-->  
+</div>
     <?php include 'footer.php'; ?>
 	

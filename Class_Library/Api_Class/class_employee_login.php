@@ -55,7 +55,7 @@ UPPER(ud.employeeCode) =:eid and up.userDOB=:dob";
         return json_encode($response);
     }
 
-    /*     * ****************************************generate login otp********************************************* */
+    /*************************************generate login otp**********************************************/
 
     public $mobile;
     public $emailid;
@@ -121,7 +121,7 @@ UPPER(ud.employeeCode) =:eid and up.userDOB=:dob";
                 /*                 * *******************************send mail***************************************** */
                 $to = $emailid;
                 $subject = 'Haier Connect Login OTP';
-                $from = 'info@benepik.com';
+                $from = 'haierconnect@benepik.com';
 
                 // To send HTML mail, the Content-type header must be set
 
@@ -132,7 +132,7 @@ UPPER(ud.employeeCode) =:eid and up.userDOB=:dob";
 
                 // Create email headers
 
-                $headers .= 'From: Benepik <' . $from . ">\r\n" .
+                $headers .= 'From: Haier Connect <' . $from . ">\r\n" .
                         'Reply-To: ' . $from . "\r\n" .
                         'X-Mailer: PHP/' . phpversion();
 
@@ -174,6 +174,183 @@ UPPER(ud.employeeCode) =:eid and up.userDOB=:dob";
     }
 
     function randomPassword($length) {
+        $alphabet = "0123456789";
+        $pass = array(); //remember to declare $pass as an array
+        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        for ($i = 0; $i < $length; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+        return implode($pass); //turn the array into a string
+    }
+    
+    
+    /*************************** generate Temperory registration  ***********************************/
+    
+    function tempregistration($empid, $dob,$clientid = '' )
+    {  
+        date_default_timezone_set('Asia/Calcutta');
+        $c_date = date('Y-m-d H:i:s');
+        
+        $clientid = "CO-25";
+         $randomDigit = self::randomdigit(5);
+         $status = "Active";
+         $access = "User";
+    /***********************************************************************/     
+          try {
+            $query_client = "select * from Tbl_ClientDetails_Master where client_id =:cid7";
+            $stmt7 = $this->db_connect->prepare($query_client);
+            $stmt7->bindParam(':cid7', $clientid, PDO::PARAM_STR);
+            if ($stmt7->execute()) {
+                $row = $stmt7->fetch();
+                $program_name = $row['program_name'];
+                $dedicateemail = $row['dedicated_mail'];
+                $clientid = $row['client_id'];
+                $subdomain_link = $row['subDomainLink'];
+                $package_name = $row['packageName'];
+            }
+        } catch (PDOException $e) {
+            echo $e;
+            trigger_error('Error occured fetching max autoid : ' . $e->getMessage(), E_USER_ERROR);
+        }
+         
+    /***********************************************************************/          
+         
+        
+        try {
+
+            $max = "select max(autoId) from Tbl_EmployeeDetails_Master";
+            $query = $this->db_connect->prepare($max);
+            if ($query->execute()) {
+                $tr = $query->fetch();
+                $m_id = $tr[0];
+                $m_id1 = $m_id + 1;
+                $usid = "User-" . $m_id1;
+            }
+        } catch (PDOException $e) {
+            echo $e;
+            trigger_error('Error occured fetching max autoid : ' . $e->getMessage(), E_USER_ERROR);
+        }
+        /***********************************************************************/     
+        
+         try {
+            $qu = "insert into Tbl_EmployeeDetails_Master
+	(userId,clientId,employeeId,employeeCode,status,accessibility,createdDate,createdBy) 
+        values(:uid,:cid,:eid,:ecode,:sta,:acc,:cred,:creb)";
+
+            $stmt = $this->db_connect->prepare($qu);
+
+            $stmt->bindParam(':uid', $usid, PDO::PARAM_STR);
+            $stmt->bindParam(':cid', $clientid, PDO::PARAM_STR);
+            $stmt->bindParam(':eid', $randomDigit, PDO::PARAM_STR);
+             $stmt->bindParam(':ecode',$empid, PDO::PARAM_STR);
+            $stmt->bindParam(':sta', $status, PDO::PARAM_STR);
+            $stmt->bindParam(':acc', $access, PDO::PARAM_STR);
+             $stmt->bindParam(':cred', $c_date, PDO::PARAM_STR);
+            $stmt->bindParam(':creb', $empid, PDO::PARAM_STR);
+             if ($stmt->execute()) {
+
+                $query4 = "insert into Tbl_EmployeePersonalDetails(userid,clientId,employeeCode,employeeId,userDOB)values(:uid1,:cid1,:ecode1,:eid1,:dob)";
+                $stmt4 = $this->db_connect->prepare($query4);
+                $stmt4->bindParam(':uid1', $usid, PDO::PARAM_STR);
+                $stmt4->bindParam(':cid1', $clientid, PDO::PARAM_STR);
+                $stmt4->bindParam(':ecode1',$empid, PDO::PARAM_STR);
+                 $stmt4->bindParam(':eid1',$randomDigit, PDO::PARAM_STR);
+                $stmt4->bindParam(':dob', $dob, PDO::PARAM_STR);
+                if ($stmt4->execute()) {
+                   // $user_name = $this->first_name . " " . $this->middle_name . " " . $this->last_name;
+                  //  $SENDTO = $this->mail1;
+                    /** -----------------------------------------------**/
+                    $to = "virendra@benepik.com";
+
+                    /** ******************************************************************************************************************************************************************** */
+
+                    /* * ************************************************************************************************************************************************************* */
+                    $subject = 'Administrator added new User';
+
+                    $bound_text = "----*%$!$%*";
+                    $bound = "--" . $bound_text . "\r\n";
+                    $bound_last = "--" . $bound_text . "--\r\n";
+
+                    $headers = "From: " . $program_name . " <" . $dedicateemail . "> \r\n";
+                    $headers .= "MIME-Version: 1.0\r\n" .
+                            "Content-Type: multipart/mixed; boundary=\"$bound_text\"" . "\r\n";
+
+                    $message = " Now You Can Login With This Emailid & Password \r\n" .
+                            $bound;
+
+                    $message .=
+
+                            'Content-Type: text/html; charset=UTF-8' . "\r\n" .
+                            'Content-Transfer-Encoding: 7bit' . "\r\n\r\n" .
+                            '
+
+   <html>
+
+   <body>
+   <div style="width: 700;height: 200;background: white;">
+   <div style="width: 700;height: 100;background: white" >
+   </div >
+   
+   <div style="background: window;height: 120;  ">
+   <div style="width: 600; ">
+   <p>Dear Admin,</p>
+   <p ><b>' . $program_name . ' Administrator added new User</b></p> 
+   <p>Details are as follows</p>
+   <p>Employee Code : ' . $empid. '</p>
+   <p>Employee Name : ' . "" . ' ' . "" . '</p>
+    <p>Email Id : ' ."" . '</p>
+  
+ 
+   <p></p>
+ 
+   <br>
+
+   <p>Regards</p>
+    <p>Team Haier Connect</p>
+ 
+   
+   </div>
+   </div>
+   
+   
+   </div>
+   </body>
+   </html>
+   ' . "\n\n" .
+                            $bound_last;
+
+
+
+                    /*                     * *********************************************************************************************************************************************************************** */
+
+                    mail($to, $subject, $message, $headers);
+
+                   // echo "<script>alert('Data inserted successfully')</script>";
+                   // echo "<script>window.location='../add_user.php'</script>";
+                }
+            }
+                $response['success'] = 1;
+                    $response['msg'] = "valid user";
+          // $response['username'] = $row[0]['firstName'] . " " . $row[0]['middleName'] . " " . $row[0]['lastName'];
+                    $response['useruniqueid'] = $randomDigit;
+                    $response['mobileno'] = "";
+                    $response['emailid'] = "";
+                    $response['FatherName'] = "";
+                    $response['DOB'] = $dob;
+                    $response['employeeCode'] = $empid;    
+        
+         }
+         catch(PDOException $ex)
+         {
+             $response['success'] = 0;
+                    $response['msg'] = "Facing Trouble Please Write to us info@benepik.com";
+         }
+        return json_encode($response);
+    }
+    
+    
+     function randomdigit($length) {
         $alphabet = "0123456789";
         $pass = array(); //remember to declare $pass as an array
         $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache

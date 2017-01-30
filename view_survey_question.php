@@ -115,10 +115,10 @@ $status="Expire";
 
 $surveyid = $value[$i]['surveyId'];
 
-if($imagevalue!="")
+/*if($imagevalue!="")
 {$valueimage = $imagevalue; }
 else
-{$valueimage = "Poll/poll_img/dummy.png";}
+{$valueimage = "Poll/poll_img/dummy.png";}*/
 
                                      ?>       	
 					      <tr>
@@ -151,7 +151,12 @@ echo $value[$i]['question'];
     <a href="view_survey_question.php?ques_id=<?php echo $value[$i]['questionId'];?>&status=<?php echo $status; ?>">
 <button style="background-color:#fff;color:red" type="button" onclick="return confirm( 'Are you sure you want to unpublish this Survey Question?');" class="btn btn-sm" <?php echo $dis .">".$sta; ?></span></button></a>
 
-<!--<a href="view_poll_result.php?pollid=<?php echo $value[$i]['pollId']; ?>&clientid=<?php echo $value[$i]['clientId']; ?>" style="color:#00a4fd;margin-left:29px !important;">Result</a>  --->
+<a href="view_survey_result.php?qid=<?php echo $value[$i]['questionId']; ?>&clientid=<?php echo $value[$i]['clientId']; ?>&sid=<?php echo $surveyid; ?>" style="color:#00a4fd;margin-left:29px !important;">Result</a> 
+
+<a href="view_survey_respondent.php?qid=<?php echo $value[$i]['questionId']; ?>&clientid=<?php echo $value[$i]['clientId']; ?>&sid=<?php echo $surveyid; ?>" style="color:#00a4fd;margin-left:29px !important;">Respondent</a> 
+
+<!--<a href="view_survey_result1.php?qid=<?php echo $value[$i]['questionId']; ?>&clientid=<?php echo $value[$i]['clientId']; ?>&sid=<?php echo $surveyid; ?>" style="color:#00a4fd;margin-left:29px !important;">Result</a>   --->
+
  </td>
                                                
                                             </tr>

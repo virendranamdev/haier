@@ -51,11 +51,11 @@ $maxid = $obj1->maxID();
 
 $target = '../notice/';
 $folder = 'notice/';
-$img_name = $folder.$path_name;
+//$img_name = $folder.$path_name;
 $createdby =  $_POST['uniqueuserid'];
 $pagename = $folder.$maxid.".html";
 $FLAG = $_POST['flag'];
-$flag_name = $_POST['flagvalue'];
+$flag_name = "Notice : ";
 $device = 1; // 1: for panel 2 : Android 3: for ios;
 
 $ptime1 = $_POST['publish_date1']." ".$_POST['publish_time1'];
@@ -70,12 +70,12 @@ if(empty($_POST['unpublish_date1']) || $_POST['unpublish_date1'] == "")
 $utime1 = date('Y-m-d', strtotime('+1 year'));
 }
 
-echo "publish time1: - ".$ptime1."<br/>";
-echo "unpublish time1: - ".$utime1."<br/>";
+//echo "publish time1: - ".$ptime1."<br/>";
+//echo "unpublish time1: - ".$utime1."<br/>";
 
 
 $gt = $_POST["push"];
-echo "push check:-".$gt."<br/>";
+//echo "push check:-".$gt."<br/>";
 
 if(file_put_contents($target.$maxid.".html",$content))
 {
@@ -95,14 +95,16 @@ else
        $PUSH_NOTIFICATION = 'PUSH_NO';
         }
     
-  echo $PUSH_NOTIFICATION; 
-  
+  //echo $PUSH_NOTIFICATION; 
+   /** ******************************* Get GoogleAPIKey and IOSPEM file ********************************* */
+        $googleapiIOSPem = $push_obj->getKeysPem($client);
+        /*         * ************************************************************************************ */
    $result = $obj1->addNotice($client,$maxid,$title,$pagename,$createdby,$ptime1,$utime1,$post_date, $FLAG, $device);
-   print_r($result);
+   //print_r($result);
    $type = 'Notice';
    $img = "";
 $result1 = $welcome_obj->createWelcomeData($client,$maxid,$type,$title,$img,$post_date,$createdby,$FLAG);
-echo $result1;
+//echo $result1;
   // $result1 = $obj1->addNoticeLocation($client,$maxid,$User_Type,$myArray); //add location into database
      $groupcount = count($myArray);
 for($k=0;$k<$groupcount;$k++)
@@ -175,7 +177,7 @@ echo "<pre>";*/
 
 /*********************check push notificaticon enabale or disable*********************/
 
-echo "push Notification -:".$PUSH_NOTIFICATION;
+//echo "push Notification -:".$PUSH_NOTIFICATION;
 
 if($PUSH_NOTIFICATION == 'PUSH_YES')
 {
@@ -185,31 +187,31 @@ if($PUSH_NOTIFICATION == 'PUSH_YES')
 $hrimg = dirname(SITE_URL).$_SESSION['image_name'];
 $sf = "successfully send";
 $ids = array();
-foreach($token1 as $row)
-{
- array_push($ids,$row["registrationToken"]);
-}
+$idsIOS = array();
+ foreach ($token1 as $row) {
+
+                if ($row['deviceName'] == 3) {
+                    array_push($idsIOS, $row["registrationToken"]);
+                } else {
+                    array_push($ids, $row["registrationToken"]);
+                }
+            }
 
 
-$data = array('Id' =>$maxid,'Content' => $content, 'SendBy'=> $createdby, 'Picture'=> $hrimg, 'image' => $fullpath, 
-'Publishing_time'=>$ptime,'Unpublishing_time'=>$utime, 'flag'=>$FLAG,'flagvalue'=>$flag_name,'success'=>$sf);
+$data = array('Id' =>$maxid,'Title' => $title,'Content' => $title, 'SendBy'=> $createdby, 'Picture'=> $hrimg, 
+'Publishing_time'=>$ptime1,'Unpublishing_time'=>$utime1,'Date' => $post_date, 'flag'=>$FLAG,'flagValue'=>$flag_name,'success'=>$sf);
 
- $revert = $push_obj->sendGoogleCloudMessage($data,$ids,$googleapi);
- $rt = json_decode($revert,true);
-
+ $IOSrevert = $push_obj->sendAPNSPush($data, $idsIOS, $googleapiIOSPem['iosPemfile']);
+  $revert = $push_obj->sendGoogleCloudMessage($data, $ids, $googleapiIOSPem['googleApiKey']);
+  $rt = json_decode($revert, true);
+            $iosrt = json_decode($IOSrevert, true);
  if($rt['success'] == 1)
  {
- if($dev == 'd1')
-{
-echo "<script>alert('Notice Successfully Created');</script>";
-echo $rt;
-}
-else
-{
+ 
  echo "<script>alert('Notice Successfully Created');</script>";
  echo "<script>window.location='../create_notice.php'</script>";
 //print_r($rt);
-}
+
 
  }
  }

@@ -292,7 +292,7 @@ $obj = new GetGroup();
             <div ng-app="" class="row">
                 <form role="form" name="postpictureform" action="Link_Library/link_post_picture.php" method="post" enctype="multipart/form-data" onsubmit="return check()">
                     <input type="hidden" name = "flag" value="3">
-                    <input type="hidden" name = "flagvalue" value="Picture">
+                    <input type="hidden" name = "flagvalue" value="Picture : ">
                     <input type="hidden" name = "device" value="d2">
                     <input type="hidden" name = "useruniqueid" value="<?php echo $_SESSION['user_unique_id']; ?>">	
                     <input type="hidden" name = "googleapi" value="<?php echo $_SESSION['gpk']; ?>">
@@ -456,5 +456,6 @@ $obj = new GetGroup();
             });
         </script>
     </div>
+</div>
     <!--tooltip script end here-->
     <?php include 'footer.php'; ?>

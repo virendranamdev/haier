@@ -20,7 +20,7 @@ class LoginAnalytic
          //$contractDateEnd = date('Y-m-d', strtotime($enddate));
 		// echo $contractDateBegin;
 		//echo $contractDateEnd;
-		try
+		try 
 		{
 			if($device == "All")
 			{

@@ -1,5 +1,4 @@
 <?php
-
 //error_reporting(E_ALL);
 //ini_set("display_errors", -1);
 require_once('../../Class_Library/class_push_notification.php');
@@ -26,10 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 $jsonArr = json_decode(file_get_contents("php://input"), true);
-/*{
-    "clientid":"",
-            "enployeeid":""
-}*/
+/* {
+  "clientid":"",
+  "enployeeid":""
+  } */
 
 if (!empty($jsonArr['clientid'])) {
     $comments = new Comment();
@@ -43,7 +42,7 @@ if (!empty($jsonArr['clientid'])) {
 
     $maxid = $obj->maxID();  //---------get latest post_id
 
-    /********************************************* Get GoogleAPIKey and IOSPEM file ********************************* */
+    /*     * ******************************************* Get GoogleAPIKey and IOSPEM file ********************************* */
 
     $googleapiIOSPem = $push->getKeysPem($clientid);
 
@@ -144,9 +143,9 @@ if (!empty($jsonArr['clientid'])) {
         //array_push($ids,$row["registrationToken"]);
     }
     $content = str_replace("\r\n", "", strip_tags($POST_CONTENT));
-    $data = array('Id' => $POST_ID, 'Title' => $POST_TITLE, 'Content' => $POST_CONTENT, 'SendBy' => $BY, 'Picture' => $hrimg,'image' => $fullpath, 'Date' => $DATE, 'flag' => $FLAG, 'flagValue' => $flag_name, 'success' => $sf, 'like' => $like_val, 'comment' => $comment_val);
+    $data = array('Id' => $POST_ID, 'Title' => $POST_TITLE, 'Content' => $POST_CONTENT, 'SendBy' => $BY, 'Picture' => $hrimg, 'image' => $fullpath, 'Date' => $DATE, 'flag' => $FLAG, 'flagValue' => $flag_name, 'success' => $sf, 'like' => $like_val, 'comment' => $comment_val);
 
-    $IOSrevert = $push->sendAPNSPush($data, $idsIOS, $googleapiIOSPem['iosPemfile'], 'device');
+    $IOSrevert = $push->sendAPNSPush($data, $idsIOS, $googleapiIOSPem['iosPemfile'], $device);
     $revert = $push->sendGoogleCloudMessage($data, $ids, $googleapiIOSPem['googleApiKey']);
 //
     $rt = json_decode($revert, true);

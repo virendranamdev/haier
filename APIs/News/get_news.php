@@ -20,8 +20,8 @@ if (file_exists("../../Class_Library/Api_Class/class_dispaly_post_data.php") && 
 
         exit(0);
     }
-
-    $jsonArr = json_decode(file_get_contents("php://input"), true);
+          
+   // $jsonArr = json_decode(file_get_contents("php://input"), true);
 
     if (!empty($jsonArr['clientid'])) {
         $obj = new PostDisplay();

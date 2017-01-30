@@ -140,7 +140,7 @@ try
 	try
 		{
 $qu = "insert into Tbl_EmployeeDetails_Master
-	(userId,clientId,firstName,middleName,lastName,gender,emailId,employeeCode,department,designation,location,branch,grade,createdDate,createdBy) values(:uid,:cid,:fname,:mname,:lname,:gen,:email,:ecode,:dep,:des, :loc,:bra,:gra,:cred,:creb) ON DUPLICATE KEY UPDATE firstName =:fname,middleName=:mname, lastName=:lname,gender=:gen, employeeCode=:ecode,department=:dep,designation=:des,location=:loc,branch=:bra,grade=:gra,updatedDate=:cred,updatedBy=:creb";
+	(userId,clientId,firstName,middleName,lastName,gender,emailId,employeeCode,department,designation,location,branch,grade,createdDate,createdBy) values(:uid,:cid,:fname,:mname,:lname,:gen,:email,:ecode,:dep,:des, :loc,:bra,:gra,:cred,:creb) ON DUPLICATE KEY UPDATE firstName =:fname,middleName=:mname, lastName=:lname,gender=:gen,department=:dep,designation=:des,location=:loc,branch=:bra,grade=:gra,updatedDate=:cred,updatedBy=:creb";
                 $stmt = $this->DB->prepare($qu);
 
                 $stmt->bindParam(':uid',$usid, PDO::PARAM_STR);
@@ -164,9 +164,11 @@ $qu = "insert into Tbl_EmployeeDetails_Master
                 { 
 
 
-	     $query4 = "insert into Tbl_EmployeePersonalDetails(userid,emailId,userDOB,userDOJ)values(:uid1,:emailid1,:dob,:doj) ON DUPLICATE KEY UPDATE userDOB=:dob,userDOJ=:doj";
+	     $query4 = "insert into Tbl_EmployeePersonalDetails(userid,clientId,employeeCode,emailId,userDOB,userDOJ)values(:uid1,:cid1,:ecode1,:emailid1,:dob,:doj) ON DUPLICATE KEY UPDATE userDOB=:dob,userDOJ=:doj";
 		$stmt4 = $this->DB->prepare($query4);
                 $stmt4->bindParam(':uid1',$usid, PDO::PARAM_STR);
+                $stmt4->bindParam(':cid1',$clientid, PDO::PARAM_STR);
+                 $stmt4->bindParam(':ecode1',$userdata[$row][6], PDO::PARAM_STR);
                 $stmt4->bindParam(':emailid1',$userdata[$row][12], PDO::PARAM_STR);
                 $stmt4->bindParam(':dob',$userdata[$row][4], PDO::PARAM_STR);
                 $stmt4->bindParam(':doj',$userdata[$row][5], PDO::PARAM_STR);

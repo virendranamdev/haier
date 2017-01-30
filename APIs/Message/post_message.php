@@ -208,7 +208,7 @@ $teaser = "";
             $ids = array();
             $idsIOS = array();
             foreach ($token1 as $row) {
-                if ($row['deviceName'] == 'ios') {
+                if ($row['deviceName'] == 3) {
                     array_push($idsIOS, $row["registrationToken"]);
                 } else {
                     array_push($ids, $row["registrationToken"]);
@@ -216,7 +216,7 @@ $teaser = "";
             }
 
             $data = array('Id' => $maxid, 'Title' => $POST_TITLE, 'Content' => $POST_CONTENT, 'SendBy' => $BY, 'Picture' => $hrimg, 'Date' => $post_date, 'flag' => $FLAG, 'flagValue' => $flag_name, 'success' => $sf, 'like' => $like_val, 'comment' => $comment_val);
-          //  $IOSrevert = $push->sendAPNSPush($data, $idsIOS, $googleapiIOSPem['iosPemfile']);
+            $IOSrevert = $push->sendAPNSPush($data, $idsIOS, $googleapiIOSPem['iosPemfile'],$device);
             $revert = $push->sendGoogleCloudMessage($data, $ids, $googleapiIOSPem['googleApiKey']);
 
             $rt = json_decode($revert, true);

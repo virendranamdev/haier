@@ -122,7 +122,8 @@ class Comment {
 
     function Comment_display($clientid, $albumid, $imageid) {
         $status = 1;
-        $path = site_url;
+        $path = dirname(SITE_URL);
+      //  echo $path;
         try {
             $query = "select *,DATE_FORMAT(createdDate,'%d %b %Y %h:%i %p') as commentDate from Tbl_Analytic_AlbumComment where albumId =:albumid AND imageId = :imgid and clientId=:cli and 	status=:status order by commentId desc";
             $stmt = $this->DB->prepare($query);
@@ -176,7 +177,7 @@ class Comment {
                     $post["userImage"] = $rows["userImage"];
                     $post["designation"] = $rows["designation"];
                     $post["comment"] = $row["comments"];
-                    $post["commentDate"] = $row["createdDate"];
+                    $post["commentDate"] = $row["commentDate"];
                     array_push($response["Posts"], $post);
                 }
             } else {

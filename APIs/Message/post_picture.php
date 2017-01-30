@@ -117,7 +117,7 @@ if (!empty($postdata)) {
 
     $number = $obj->randomNumber(12);
     $imgname = $obj->convertintoimage($POST_IMG, $number);
-//    echo $imgname;die;
+//   echo $imgname;die;
     $target = '../images/post_img/';
     $thumbimgname = explode('/', $imgname);
     $path_name =  $thumbimgname[2];
@@ -217,7 +217,7 @@ if (!empty($postdata)) {
     $idsIOS = array();
 
     foreach ($token1 as $row) {
-        if ($row['deviceName'] == 'ios') {
+        if ($row['deviceName'] == 3) {
             array_push($idsIOS, $row["registrationToken"]);
         } else {
             array_push($ids, $row["registrationToken"]);
@@ -225,11 +225,11 @@ if (!empty($postdata)) {
 //array_push($ids,$row["registrationToken"]);
     }
 
-    $path = SITE_URL . $imgname;
-//echo $path;
+    $path = dirname(SITE_URL)."/". $imgname;
+//echo $path; die;
     $data = array('Id' => $maxid, 'Content' => $POST_CONTENT, 'SendBy' => $BY, 'Picture' => $hrimg, 'image' => $path, 'Date' => $post_date, 'flag' => $FLAG, 'flagValue' => $flag_name, 'success' => $sf, 'comment' => $comment1, 'like' => $like1);
 
- //   $IOSrevert = $push->sendAPNSPush($data, $idsIOS, $googleapiIOSPem['iosPemfile']);
+   $IOSrevert = $push->sendAPNSPush($data, $idsIOS, $googleapiIOSPem['iosPemfile'],$device);
     $revert = $push->sendGoogleCloudMessage($data, $ids, $googleapiIOSPem['googleApiKey']);
 
 

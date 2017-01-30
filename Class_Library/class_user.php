@@ -353,7 +353,8 @@ location,branch,grade,status,accessibility,createdDate,createdBy) values(:uid,:c
         /*         * ********************************file csv start  end ********************************** */
     }
 
-    function createAdmin($empCode, $cid, $uniqId, $access, $createBy) {
+    function createAdmin($empCode, $cid, $uniqId, $access, $createBy) 
+     {
         //echo'<pre>';print_r($empCode.'---'.$cid.'---'.$uniqId.'---'.$access.'---'.$createBy);die;
         $this->empCode = $empCode;
         $this->cid = $cid;
@@ -367,7 +368,6 @@ location,branch,grade,status,accessibility,createdDate,createdBy) values(:uid,:c
 
         /*         * ******************************* fetch maxid********************************************* */
         try {
-
             $max = "select max(autoId) from Tbl_ClientAdminDetails";
             $query = $this->DB->prepare($max);
             if ($query->execute()) {
@@ -610,7 +610,7 @@ location,branch,grade,status,accessibility,createdDate,createdBy) values(:uid,:c
 
                     /** ******************************************************************************************************************************************************************** */
 
-                    /*                     * ************************************************************************************************************************************************************* */
+                    /* * ************************************************************************************************************************************************************* */
                     $subject = 'Administrator added new User';
 
                     $bound_text = "----*%$!$%*";
@@ -652,7 +652,7 @@ location,branch,grade,status,accessibility,createdDate,createdBy) values(:uid,:c
    <br>
 
    <p>Regards</p>
-    <p>Team Zoom Connect</p>
+    <p>Team Haier Connect</p>
  
    
    </div>
@@ -667,7 +667,7 @@ location,branch,grade,status,accessibility,createdDate,createdBy) values(:uid,:c
 
 
 
-                    /*                     * *********************************************************************************************************************************************************************** */
+        /*********************************************************************************** */
 
                     mail($to, $subject, $message, $headers);
 

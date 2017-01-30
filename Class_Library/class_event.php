@@ -393,7 +393,7 @@ class Event {
         try {
             $site_url = dirname(SITE_URL) . '/';
 
-            $query = "select event.*,if(event.imageName IS NULL or event.imageName='', '', CONCAT('" . $site_url . "', event.imageName)) as imageName,if(user.userImage IS NULL or user.userImage='','',CONCAT('" . $site_url . "',user.userImage)) as userImage, Concat(user_master.firstName, ' ', user_master.lastName) as createdBy from Tbl_C_EventDetails as event join Tbl_EmployeePersonalDetails as user on event.createdBy = user.employeeId join Tbl_EmployeeDetails_Master as user_master on user_master.employeeId=event.createdBy where event.eventId=:eventId and event.clientId=:cli and event.status='Active' and event.flagCheck=:flag";
+            $query = "select event.*,DATE_FORMAT(event.eventTime,'%d %b %Y %h:%i %p') as eventTime,DATE_FORMAT(event.createdDate,'%d %b %Y %h:%i %p') as createdDate, if(event.imageName IS NULL or event.imageName='', '', CONCAT('" . $site_url . "', event.imageName)) as imageName,if(user.userImage IS NULL or user.userImage='','',CONCAT('" . $site_url . "',user.userImage)) as userImage, Concat(user_master.firstName, ' ', user_master.lastName) as createdBy from Tbl_C_EventDetails as event join Tbl_EmployeePersonalDetails as user on event.createdBy = user.employeeId join Tbl_EmployeeDetails_Master as user_master on user_master.employeeId=event.createdBy where event.eventId=:eventId and event.clientId=:cli and event.status='Active' and event.flagCheck=:flag";
             $stmt = $this->DB->prepare($query);
             $stmt->bindParam(':cli', $clientid, PDO::PARAM_STR);
             $stmt->bindParam(':eventId', $eventId, PDO::PARAM_STR);
@@ -405,9 +405,9 @@ class Event {
             $response['message'] = "data found";
             $response['data'] = $rows;
         } catch (Exception $ex) {
-            echo $e;
+            echo $ex;
             $response['success'] = 0;
-            $response['message'] = "data not found " . $e;
+            $response['message'] = "data not found " . $ex;
         }
         return $response;
     }

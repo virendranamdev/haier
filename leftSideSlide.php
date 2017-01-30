@@ -322,7 +322,7 @@
                                         </li>
                                         <li><a href="view_survey_question.php"><span class="glyphicon glyphicon-plus"></span> View Survey Question</a>
                                         </li>
-                                        <li>
+                                       <li>
                              <a href="backup_emp_happiness.php?clientid=<?php echo $_SESSION['client_id']; ?>">
                                                 <span class="glyphicon glyphicon-plus"></span><span class="title"> View Survey Analytic</span>
                                             </a>						
@@ -334,7 +334,7 @@
                         </li>
                       
 
-                      <li class="panel panel-default dropdown">
+                  <!---    <li class="panel panel-default dropdown">
                           <a data-toggle="collapse" href="#poll">
                               <span class="icon fa fa-industry" aria-hidden="true"></span><span class="title"> Poll</span>
                           </a>
@@ -351,7 +351,7 @@
                                   </ul>
                               </div>
                           </div>
-                      </li>  
+                      </li>  --->
 
                     
                                  <!--       <li class="panel panel-default dropdown">
@@ -391,12 +391,12 @@
                                 </ul>
                             </div>
                         </div>
-                    </li>					
+                    </li>				
                     <li>
                         <a href="view_jobs_directory.php">
                             <span class="icon fa fa-dollar"></span><span class="title">Opportunities</span>
                         </a>						
-                    </li>
+                    </li>  --->	
                     <li class="panel panel-default dropdown">
                         <a data-toggle="collapse" href="#analyticlogin">
                             <span class="icon fa fa-user" aria-hidden="true"></span><span class="title">Analytic</span>
@@ -413,7 +413,7 @@
                             </div>
                         </div>
                     </li>
-                    <li>
+                <!--    <li>
                         <a href="view_alumni_memory.php">
                             <span class="icon fa fa-mortar-board"></span><span class="title">Alumni Memory</span>
                         </a>						

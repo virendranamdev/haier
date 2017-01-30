@@ -128,7 +128,7 @@ class Like {
                     $post["name"] = $rows["firstName"];
 //                    $post["userImage"] = !empty($rows["userImage"]) ? $path . $rows["userImage"] : "";
                     $post["userImage"] = $rows["userImage"];
-                    $post["likeDate"] = $row["createdDate"];
+                    $post["likeDate"] = $row["likeDate"];
                     $post["clientId"] = $row["clientId"];
                     array_push($response["Posts"], $post);
                  

@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL); ini_set('display_errors', 1);
 @session_start();
 require_once('../Class_Library/class_reading.php');
 require_once('../Class_Library/class_post.php');
@@ -114,7 +115,7 @@ if (!empty($_POST)) {
             $user1 = $_POST['all_user'];
             $user2 = rtrim($user1, ',');
             $myArray = explode(',', $user2);
-            /* echo "<pre>";
+           /* echo "<pre>";
               print_r($myArray)."<br/>";
               echo "</pre>"; */
         }
@@ -126,8 +127,10 @@ if (!empty($_POST)) {
 
 
 
-        /*         * ******************************************* Get GoogleAPIKey and IOSPEM file ********************************* */
+        /** ******************************* Get GoogleAPIKey and IOSPEM file ********************************* */
         $googleapiIOSPem = $push->getKeysPem($clientid);
+       // print_r($googleapiIOSPem);
+        
         /*         * ************************************************************************************ */
 
         /*         * ********************* insert into database ************************************************ */
@@ -199,11 +202,11 @@ $devcie = 1;
         /*         * *** get all registration token  for sending push **************** */
         $reg_token = $push->getGCMDetails($allempid1, $clientid);
         $token1 = json_decode($reg_token, true);
-        /* echo "----regtoken------";
+       /*  echo "----regtoken------";
           echo "<pre>";
           print_r($token1);
-          echo "<pre>"; */
-        /*         * *******************Create file of user which this post send  start******************** */
+          echo "<pre>";*/
+        /*********************Create file of user which this post send  start******************** */
         $val[] = array();
         foreach ($token1 as $row) {
             array_push($val, $row["clientId"] . "," . $row["userUniqueId"] . "," . $row["registrationToken"]);
@@ -231,7 +234,7 @@ $devcie = 1;
 
             foreach ($token1 as $row) {
 
-                if ($row['deviceName'] == 'ios') {
+                if ($row['deviceName'] == 3) {
                     array_push($idsIOS, $row["registrationToken"]);
                 } else {
                     array_push($ids, $row["registrationToken"]);
@@ -240,25 +243,26 @@ $devcie = 1;
             $content = str_replace("\r\n", "", strip_tags($POST_CONTENT));
             $data = array('Id' => $POST_ID, 'Title' => $POST_TITLE, 'Content' => $content, 'SendBy' => $BY, 'Picture' => $hrimg, 'image' => $fullpath, 'Date' => $DATE, 'flag' => $FLAG, 'flagValue' => $flag_name, 'success' => $sf, 'like' => $like_val, 'comment' => $comment_val);
 
-            $IOSrevert = $push->sendAPNSPush($data, $idsIOS, $googleapiIOSPem['iosPemfile']);
+           $IOSrevert = $push->sendAPNSPush($data, $idsIOS, $googleapiIOSPem['iosPemfile']);
             $revert = $push->sendGoogleCloudMessage($data, $ids, $googleapiIOSPem['googleApiKey']);
 
             $rt = json_decode($revert, true);
             $iosrt = json_decode($IOSrevert, true);
-
+//echo "<pre>";
+//print_r($rt);
             if ($rt) {
                 if ($dev == 'd1') {
                     echo "<script>alert('Post Successfully Send');</script>";
 //echo $rt;
                 } else {
                     echo "<script>alert('Post Successfully Send');</script>";
-                    //print_r($rt);
-                    echo "<script>window.location='../postnews.php'</script>";
+                  //  print_r($rt);
+                  echo "<script>window.location='../postnews.php'</script>";
                 }
             }
         } else {
             echo "<script>alert('Post Successfully Send');</script>";
-            echo "<script>window.location='../postnews.php'</script>";
+           // echo "<script>window.location='../postnews.php'</script>";
         }
 
 

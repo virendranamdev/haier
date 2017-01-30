@@ -88,62 +88,6 @@ $(document).ready(function(){
 
 <p id="close_news_priview"style="margin-top:0px;" ><button type="button"class="btn btn-gray">X</button></p><br><br>
 
-<div id="leftone">
-<p style=" margin-top: 10px; font-size: 19px;margin-left: 24Px;border-bottom:1px dotted gray;"><span class="glyphicon glyphicon-phone" id="Iphone6"> Android</span></p>
-
-<p style="margin-top: 10px; font-size: 19px;margin-left: 24Px;border-bottom:1px dotted gray;"><span class="glyphicon glyphicon-phone" id="Iphone5"> iphone</span></p>
-
-
-
-
-</div>
-
-<div id="rightoneIphone5">
-
-<div id="" >
-<div id="">
-<div class="iphoneSubParentDiv">
-
-<div class="row">
-<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12" >
-
-</div>
-</div>
-
-<div class="row">
-
-<div class="col-xs-12 col-md-4 col-sm-4 col-lg-4"><img src="images/usericon.png"class="img img-responsive"id="user_image_priview_news"/></div>
-<div class="col-xs-12 col-md-8 col-sm-8  col-lg-8 "><p id="HRnamenewsPriview">HR Name</p><p id="Date_newsPriview">Date : <?php echo date("d/m/Y"); ?></sub> </div>
-
-</div>
-<div class="titlePost"></div>
-<div class="imagePost"><img class="post_img" /></div>
-<div class="useraboutPost"></div>
-
-<div class="designationPost"></div>
-<div class="dojPost"></div>
-<div class="locationPost"></div>
-<div class="drinksPost"></div>
-<div class="foodPost"></div>
-<div class="placeiseenPost"></div>
-<div class="projectdonePost"></div>
-<div class="mypersonalPost"></div>
-
-
-<!--<div class="contentPost"></div>-->
-<div class="row"style="margin:0px">
-<div class="col-xs-10 col-md-10 col-sm-10 col-lg-10 ">   Like /  Commnets      </div>
-<div class="col-xs-2 col-md-2 col-sm-2 col-lg-2 ">  <span class="glyphicon glyphicon-thumbs-up" style="float:right;"></span>        </div>
-<hr style="height:1px;background-color:gray;width:92%;">
-</div>
-
-
-</div>
-</div>
-</div>
-
-</div>
-
 <div id="rightoneIphone6">
 
 <div id="iphone6DivMain"style="background-color:white;height:0px;margin-top:22px;">
@@ -158,12 +102,6 @@ $(document).ready(function(){
 <div class="mobile_articals"><i class="fa fa-arrow-left"style="color:#fff !important;    padding-top: 8px;"></i><font class="white_color">Article</font></div>
 </div>
 </div>
-
-
-
-
-
-
 
 
 <div class="row">
@@ -185,17 +123,11 @@ $(document).ready(function(){
 <div class="mypersonalPost"></div>
 
 <div class="contentPost"></div>
-<!--
-<div class="row"style="margin:0px">
-<div class="col-xs-10 col-md-10 col-sm-10 col-lg-10 ">   Like /  Commnets      </div>
-<div class="col-xs-2 col-md-2 col-sm-2 col-lg-2 ">  <span class="glyphicon glyphicon-thumbs-up" style="float:right;"></span>        </div>
-<hr style="height:1px;background-color:gray;width:92%;">
-</div>
--->
+
 <br/>
 <div class="row"style="margin:0px">
 <div class="col-xs-12 col-md-12 col-sm-5 col-lg-5 "><font style="font-size:10px;">0 Likes</font><br> <button type="button" class="btn btn-xs"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><font style="font-size:10px;">Like</font></button> </div>
-<div class="col-xs-12 col-md-12 col-sm-7 col-lg-7 "><font style="font-size:10px;"> 12 Comments</font><br> <button type="button" class="btn btn-xs"><i class="fa fa-commenting-o" aria-hidden="true"></i><font style="font-size:10px;">Comments</font></button></div
+<div class="col-xs-12 col-md-12 col-sm-7 col-lg-7 "><font style="font-size:10px;"> 0 Comments</font><br> <button type="button" class="btn btn-xs"><i class="fa fa-commenting-o" aria-hidden="true"></i><font style="font-size:10px;">Comments</font></button></div
 <hr style="height:1px;background-color:gray;width:92%;">
 </div>
 
@@ -212,9 +144,7 @@ $(document).ready(function(){
 
 
 
-</div>
-
-</div>    
+</div>  
  
   <div class="side-body padding-top"  style="border:1px solid #cdcdcd;margin-bottom:100px;margin-top:80px;padding-left:10px;padding-right:10px;">
     
@@ -228,78 +158,7 @@ $(document).ready(function(){
   </div>
   
   
-<!--****************************code start for PopUp**************************************-->
-<!--
 
-<script>
-$(document).ready(function(){
-    $("#hide").click(function(){
-        $(".sony").hide();
-    });
-    $("#show").click(function(){
-        $(".sony").show();
-    });
-});
-</script>
-
-<style>
-.sony{display:none;height:554;width:221px;}
-</style>
-
-
-<div style="background-color:red;">
-<div class="sony" >
-
-<div class="row">
-<div class="col-xs-12 col-sm-12 col-md-12 col-md-12" style="margin-top:-133px;background-color:#fff;margin-left:350px;box-shadow: -1px 1px 5px 2px #888888;height:552px;width:310px;position: absolute;
-    z-index: 200;">
-<button id="hide" class="btn btn-gray" style="float:right;">X</button>
-
-
-<div class="" style="background-image:url('images/mobile.jpg');height: 547px; width: 221px;background-size:100% 100%;    padding-top: 101px;    margin-top: 3px;
-    padding-left: 26px;margin-left:26px;">
-	
-	
-
-	<div style="height:360px;width:181px;background-color:#fff;margin-left:-6px;margin-top:-3px;"> 
-	<div class="row mobile_articals"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 "><i class="fa fa-arrow-left"style="color:#fff !important;    padding-top: 8px;"></i><font class="white_color">Article</font></div>
-<div class="row">
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
-<p class="titlePost NewsPriviewtitle" style="margin-top:-13px ! important;"></p> 
-<p class="author previewAuthor"><font style="color:#acacac;">Author:</font> <font style="font-size:10px;"><?php echo $username = $_SESSION['user_name']; ?></font></p>
-
-</div>
-</div>
-
-</div>
-	</div>
-	
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">  
-<p class="date" style="margin-top:-235px;" >Date: <?php echo date("d/m/Y"); ?></p>
- </div>
-
- <div class="row">
-<div class="col-xs-12 col-md-12 col-sm-4 col-lg-4 " style="margin-top:-112px;margin-left: 10px;"><font style="font-size:10px;">0 Likes</font><br> <button type="button" class="btn btn-xs"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><font style="font-size:10px;">Like</font></button> </div>
-<div class="col-xs-12 col-md-12 col-sm-8 col-lg-8 " style="margin-top:-112px;margin-left:96px;"><font style="font-size:10px;"> 12 Comments</font><br> <button type="button" class="btn btn-xs"><i class="fa fa-commenting-o" aria-hidden="true"></i><font style="font-size:10px;">Comments</font></button></div
-<hr style="height:1px;background-color:red;width:92%;padding-top:-23px;">
-</div>
-
-
-</div>
- 
-</div>
-
-	
-	
-</div>
-</div>
-
-
-
-</div>
-</div>
--->
-<!--****************************code end of popup**************************************-->
 
 <div class="row">
 

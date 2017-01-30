@@ -242,7 +242,7 @@ if (!empty($_POST)) {
 
         foreach ($token1 as $row) {
 
-            if ($row['deviceName'] == 'ios') {
+            if ($row['deviceName'] == 3) {
                 array_push($idsIOS, $row["registrationToken"]);
             } else {
                 array_push($ids, $row["registrationToken"]);
@@ -257,7 +257,7 @@ if (!empty($_POST)) {
         $usersname = "";
         $image = "";
 		
-        $data = array('Id' => $albumid, 'Title' => $title, 'Content' => $desc, 'SendBy' => $usersname, 'Picture' => $hrimg, 'image' => $image, 'Date' => $date, 'flag' => $FLAG, 'flagValue' => $flag_name, 'success' => $sf, 'like' => $like_val, 'comment' => $comment_val);
+        $data = array('Id' => $albumid, 'Title' => $title, 'Content' => $title, 'SendBy' => $usersname, 'Picture' => $hrimg, 'image' => $image, 'Date' => $date, 'flag' => $FLAG, 'flagValue' => $flag_name, 'success' => $sf, 'like' => $like_val, 'comment' => $comment_val);
 
         $IOSrevert = $push->sendAPNSPush($data, $idsIOS, $googleapiIOSPem['iosPemfile']);
         $revert = $push->sendGoogleCloudMessage($data, $ids, $googleapiIOSPem['googleApiKey']);

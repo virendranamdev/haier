@@ -6,6 +6,7 @@
 	<!-------------------------------SCRIPT START FROM HERE   --------->	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="angularjs/updateGroup1.js"></script>
+<script src="js/validation/createPostValidation.js"></script>
 <script src="js/display_group.js"></script>
 	<!-------------------------------SCRIPT END FROM HERE   --------->	
 	<script>
@@ -61,7 +62,7 @@ $(".noticetitle").html(title);
 						<div class="wholeAndroidContentHolder">
 						
 					<div class="noticetitle" style="font-weight:bold;"></div>
-					<div class="noticecontent" style="height:333px;overflow-y:scroll;"></div>		
+					<div class="noticecontent" style="height:315px;overflow-y:scroll;"></div>		
 							
 						</div>
 					</div>
@@ -106,14 +107,13 @@ $(".noticetitle").html(title);
 				</div>
 
 			</div>
-	<br>
 	
 	<?php
 	unset($_SESSION['msg']);
 	?>
 	
 <!------------------------------------------message portal start from here------------------------------------------------>	
-<form role="form" method="post" action="Link_Library/link_notice.php" >
+<form name="notice" role="form" method="post" action="Link_Library/link_notice.php" onsubmit="return check();">
  <div class="row">
 		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 	<!----------------------------------------message  start from here---------------------------------------->	
@@ -126,7 +126,7 @@ $(".noticetitle").html(title);
 					<div class="form-group">
 						<label for="Articlecontent">Title</label>
 						<input style="color:#2d2a3b;" type="text" name="noticetitle" id="titlenotice" class="form-control" required>
-					</div>
+					</div>  
 					
 					
 					<script src="http://cdn.ckeditor.com/4.5.7/standard-all/ckeditor.js"></script>
@@ -302,7 +302,7 @@ $(document).ready(function(){
 		<div class="form-group col-sm-12">
 		<center>
 <input style="color:#2d2a3b;" type="button"  class="btn btn-md btn-info publishnowBtn" id="createNoticePubliceBtn"style="text-shadow:none;font-weight:normal;" value="Preview" />
-						<input style="color:#2d2a3b;"type="submit" name ="news_post" class="btn btn-md btn-info publishnowBtn" style="text-shadow:none;font-weight:normal;" value="Publish" id="getData" onclick= "return check();" />
+						<input style="color:#2d2a3b;"type="submit" name ="news_post" class="btn btn-md btn-info publishnowBtn" style="text-shadow:none;font-weight:normal;" value="Publish" id="getData" onclick= "return ValidatePostNotice();" required/>
 </center>
 					</div>
 		

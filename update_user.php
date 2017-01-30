@@ -142,7 +142,7 @@ alert("hello ");
 </div>
 <div class="row">
 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-<label for="Department_Name">Course :<span style="color:red">*</span></label><input style="color:#2d2a3b;" type="text"  class="form-control"  name="temp_depar" id="temp_depar"/></div>
+<label for="Department_Name">Department:<span style="color:red">*</span></label><input style="color:#2d2a3b;" type="text"  class="form-control"  name="temp_depar" id="temp_depar"/></div>
 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"><label for="Designation">Designation :</label><input  style="color:#2d2a3b;"type="text"class="form-control"  name="emp_desig" id="emp_desig"/></div>
 </div>
 
@@ -153,7 +153,7 @@ alert("hello ");
 </div>
 
 <div class="row">
-<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"><label for="Grade"> Batch :</label><input style="color:#2d2a3b;" type="text"class="form-control"  name="emp_gra" id="emp_gra"/></div>
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"><label for="Grade"> Grade :</label><input style="color:#2d2a3b;" type="text"class="form-control"  name="emp_gra" id="emp_gra"/></div>
 </div>
 
 <div class="row">
@@ -291,7 +291,7 @@ $count = count($value);
 
 if($count>0)
 {
-echo "<table border='1' style='width: 100%;border: 1px solid #ADA4A4;font-size: 14px;'><tr><th>First Name</th><th>Last Name</th><th>Email Id</th><th>Enrollment No.</th><th>Course</th><th>Designation</th><th>Location</th><th>Branch</th><th>Batch</th><th>Action</th></tr>";
+echo "<table border='1' style='width: 100%;border: 1px solid #ADA4A4;font-size: 14px;'><tr><th>First Name</th><th>Last Name</th><th>Email Id</th><th>Employee Id</th><th>Department</th><th>Designation</th><th>Location</th><th>Branch</th><th>Grade</th><th>Action</th></tr>";
 for($i=0;$i<$count;$i++)
 {
 $name = $value[$i]['firstName'];

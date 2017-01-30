@@ -1,6 +1,7 @@
 <?php
 error_reporting(E_ALL); ini_set('display_errors', 1);
-if (!class_exists('ClientEmployeeLogin') && include("../../Class_Library/Api_Class/class_employee_login.php")) {
+if (!class_exists('ClientEmployeeLogin') && include("../../Class_Library/Api_Class/class_employee_login.php")) 
+    {
 
     if (isset($_SERVER['HTTP_ORIGIN'])) {
         header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
@@ -37,6 +38,7 @@ if (!class_exists('ClientEmployeeLogin') && include("../../Class_Library/Api_Cla
         //$doj = $jsonArr['doj'];
 
         $response = $obj->checkEmployeeLogin($empid, $dob);
+       // $response = $obj->tempregistration($empid, $dob);
     } else {
         $result['success'] = 0;
         $result['result'] = "Invalid json";

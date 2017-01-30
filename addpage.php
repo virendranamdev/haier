@@ -65,7 +65,7 @@ $(".contentpage").html(content);
 
 <div class="row">
 <div class="col-xs-12 col-md-12 col-lg-12 col-sm-12">
-<div class="contentpage"  style="overflow-y:scroll;height:200px;"></div>										
+<div class="contentpage"  style="overflow-y:scroll;height:271px;"></div>										
 </div>
 </div>	
 						</div>
@@ -76,7 +76,7 @@ $(".contentpage").html(content);
 						<img src="images/i6.png"class="img img-responsive IphoneImage"/>
 					</div>
 					<div class="iphoneContentTab">
-						<div class="wholeIOSContentHolder">
+					<div class="wholeIOSContentHolder">
 
 						
 <div class="row">

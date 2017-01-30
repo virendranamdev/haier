@@ -64,67 +64,60 @@ $(document).ready(function(){
 });
 </script>
 <div id="meetop">	</div>
-<div id="testpopup" style="top:7% ! important">
+<div id="testpopup" style="height: 558px;margin-top:-400px;">
 
-<p id="close_news_priview"style="margin-top:0px;" ><button type="button"class="btn btn-gray">X</button></p><br><br>
+    <p id="close_news_priview" ><button type="button"class="btn btn-gray">X</button></p><br><br>
+    
+    <div id="iphone6">
+        <div id="inneriphone6">
 
-<div id="rightoneIphone5">
-</div>
+            <div class="iphoneSubParentDiv">
+                <div class="row mobile_articals"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 "><i class="fa fa-arrow-left"style="color:#fff !important;    padding-top: 8px;"></i><font class="white_color">Article</font></div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
+                            <p class="titlePost NewsPriviewtitle" style="margin-top:-13px ! important;"></p> 
+                            <p class="author previewAuthor"><font style="color:#acacac;">Author:</font> <font style="font-size:10px;"><?php echo $username = $_SESSION['user_name']; ?></font> </p>
 
-<div id="rightoneIphone6">
-
-<div id="iphone6DivMain"style="height: 0px;margin-top:-73px;">
-<div id="iphone6" style="width: 221px;
-    height: 547px;
-    margin: 26% 0% 0px 18%;
-   
-    background-repeat: no-repeat;
-    position: relative;
-    background-size: 100% 100%;
-    margin-top: 67px;">
-<div id="inneriphone6">
-
-<div class="iphoneSubParentDiv">
-<div class="row">
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left:20px;background-color: #5cb85c;
-    height: 32px;
-    margin-left: 0px;
-    margin-right: 0px;
-    border: 1px solid #5cb85c;padding-left:25px;"><i class="fa fa-arrow-left"style="color:#fff !important;    padding-top: 12px;">&nbsp;&nbsp;&nbsp;</i><font style="color:#ffffff;">Article</font> <p class="titlePost">title will be show </p>  <p class="author"><font style="color:#acacac;">Author :</font> <font style="font-size:10px;"><?php echo $username = $_SESSION['user_name']; ?></font> </p> </div>
-</div>
-<div class="row">
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> <img class="post_img"class="img img-responsive" />   </div>
-</div>
-<div class="row">
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> <p class="contentPost">doscription will be shown here</p>  <p class="date">Date: <?php echo date("d/m/Y"); ?></p></div>
-</div>
+                        </div>
+                    </div>
+                   
+                </div>
+               
 
 
-<div class="row"style="margin:0px">
-<div class="col-xs-12 col-md-12 col-sm-5 col-lg-5 "><font style="font-size:10px;">0 Likes</font><br> <button type="button" class="btn btn-xs"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><font style="font-size:10px;">Like</font></button> </div>
-<div class="col-xs-12 col-md-12 col-sm-7 col-lg-7 "><font style="font-size:10px;"> 0 Comments</font><br> <button type="button" class="btn btn-xs"><i class="fa fa-commenting-o" aria-hidden="true"></i><font style="font-size:10px;">Comments</font></button></div
-<hr style="height:1px;background-color:gray;width:92%;">
-</div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> <img class="post_img img img-responsive imagePost previewImage" /></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">  
+                        <p class="contentPost previewContent"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">  
+                        <p class="date" style="margin-top:-30px;" >Date: <?php echo date("d/m/Y"); ?></p>
+                    </div>
+                </div>
 
-</div>
 
-</div>
-</div>
-</div>
+                <div class="row"style="margin:0px">
+                    <div class="col-xs-12 col-md-12 col-sm-5 col-lg-5 "><font style="font-size:10px;">0 Likes</font><br> <button type="button" class="btn btn-xs"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><font style="font-size:10px;">Like</font></button> </div>
+                    <div class="col-xs-12 col-md-12 col-sm-7 col-lg-7 "><font style="font-size:10px;"> 0 Comments</font><br> <button type="button" class="btn btn-xs"><i class="fa fa-commenting-o" aria-hidden="true"></i><font style="font-size:10px;">Comments</font></button></div
+                    <hr style="height:1px;background-color:gray;width:92%;">
+                </div>
+               
 
-
-
-</div>
-
+            </div>
+        </div>
+    </div>
 
 
 
 </div>
-
-</div>    
+  
  
   <div class="side-body padding-top">
-    <div class="" style="border:1px solid #cdcdcd;padding:20px;margin-bottom:100px;margin-top:80px;">
+    <div class="" style="border:1px solid #cdcdcd;padding:20px;margin-bottom:25px;">
   <div class="bs-example">
 
   <div class="row">

@@ -219,7 +219,7 @@ if (!empty($_POST)) {
                 $idsIOS = array();
                 foreach ($token1 as $row) {
 
-                    if ($row['deviceName'] == 'ios') {
+                    if ($row['deviceName'] == 3) {
                         array_push($idsIOS, $row["registrationToken"]);
                     } else {
                         array_push($ids, $row["registrationToken"]);

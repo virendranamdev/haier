@@ -15,7 +15,7 @@
 
 .titlepage{    font-size: 15px;
     font-weight: bold;
-    text-transform: capitalize;
+   // text-transform: capitalize;
     text-align: justify;}
 .pageimg{
 width: 100%;

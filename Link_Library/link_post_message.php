@@ -224,7 +224,7 @@ $device = 1;
 
         foreach ($token1 as $row) {
 
-            if ($row['deviceName'] == 'ios') {
+            if ($row['deviceName'] == 3) {
                 array_push($idsIOS, $row["registrationToken"]);
             } else {
                 array_push($ids, $row["registrationToken"]);
@@ -242,8 +242,7 @@ $device = 1;
 		
 		//print_r($rt);
 		//print_r($IOSrevert);
-		
-		
+				
 //echo $IOSrevert;
         if ($rt['success'] == 1) {
             if ($dev == 'd2') {

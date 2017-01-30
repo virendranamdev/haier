@@ -179,6 +179,26 @@ function ValidatePostCeoMessage()
     return true;
 }
 
+function ValidatePostNotice()
+{
+    var title = document.notice.noticetitle;
+    var content = document.notice.noticecontent;
+    if (title.value == "")
+    {
+        window.alert("Please enter Notice Title.");
+        noticetitle.focus();
+        return false;
+    }
+    if (content.value == "")
+    {
+        window.alert("Please enter Notice Message.");
+        noticecontent.focus();
+        return false;
+    }
+
+    return true;
+}
+
 
 
 
