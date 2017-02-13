@@ -42,7 +42,8 @@ if (file_exists("../../Class_Library/Api_Class/class_dispaly_post_data.php") && 
 
             if (!empty($value)) {
 
-                foreach ($value as $values) {
+                foreach ($value as $values) 
+                    {
                     $post_content_keys = explode("#Benepik#", $values['post_content']);
 
                     //echo '<pre>';print_r($post_content_keys);die;

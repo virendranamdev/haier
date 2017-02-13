@@ -92,8 +92,8 @@ class Like {
     function getTotalLikeANDcomment($clientid, $albumid, $imageid) {
         $status = 1;
 
-        $path = dirname(SITE_URL);
-        
+        $path = dirname(site_url);
+       // echo "this is path-".$path;
         try {
             $query = "select *,DATE_FORMAT(createdDate,'%d %b %Y %h:%i %p') as likeDate from Tbl_Analytic_AlbumLike where albumId =:albumid AND imageId = :imgid and clientId=:cli AND status = :status";
             $stmt = $this->DB->prepare($query);

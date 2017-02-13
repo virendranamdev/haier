@@ -208,7 +208,10 @@ class PostDisplay {
 
     public function post_details($clientid, $postid, $flag) {
         try {
-            $query = "select post.*, DATE_FORMAT(post.created_date,'%d %b %Y') as created_date,if(user.userImage IS NULL or user.userImage='','',CONCAT('" . site_url . "',user.userImage)) as userImage, if(post.thumb_post_img IS NULL or post.thumb_post_img='' , CONCAT('" . site_url . "',post.post_img), CONCAT('" . site_url . "',post.thumb_post_img)) as post_img from Tbl_C_PostDetails as post join Tbl_EmployeePersonalDetails as user on post.userUniqueId = user.employeeId where post.clientId=:cli and post.flagCheck=:flag and post.post_id=:postid ";
+           // $query = "select post.*, DATE_FORMAT(post.created_date,'%d %b %Y') as created_date,if(user.userImage IS NULL or user.userImage='','',CONCAT('" . site_url . "',user.userImage)) as userImage, if(post.thumb_post_img IS NULL or post.thumb_post_img='' , CONCAT('" . site_url . "',post.post_img), CONCAT('" . site_url . "',post.thumb_post_img)) as post_img from Tbl_C_PostDetails as post join Tbl_EmployeePersonalDetails as user on post.userUniqueId = user.employeeId where post.clientId=:cli and post.flagCheck=:flag and post.post_id=:postid ";
+            
+            $query = "select post.*, DATE_FORMAT(post.created_date,'%d %b %Y') as created_date,if(user.userImage IS NULL or user.userImage='','',CONCAT('" . site_url . "',user.userImage)) as userImage,if(post.post_img IS NULL or post.post_img='' ,'', CONCAT('" . site_url . "',post.post_img)) as post_img from Tbl_C_PostDetails as post join Tbl_EmployeePersonalDetails as user on post.userUniqueId = user.employeeId where post.clientId=:cli and post.flagCheck=:flag and post.post_id=:postid";
+            
             $stmt = $this->DB->prepare($query);
             $stmt->bindParam(':cli', $clientid, PDO::PARAM_STR);
             $stmt->bindParam(':postid', $postid, PDO::PARAM_STR);
@@ -220,9 +223,8 @@ class PostDisplay {
             $response['message'] = "data found";
             $response['data'] = $rows;
         } catch (Exception $ex) {
-            echo $e;
             $response['success'] = 0;
-            $response['message'] = "data not found " . $e;
+            $response['message'] = "there is some error please write us to info@benepik.com " . $ex;
         }
         return $response;
     }

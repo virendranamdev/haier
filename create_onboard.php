@@ -232,46 +232,63 @@ filerdr.readAsDataURL(input.files[0]);
 		<div><input style="color:#2d2a3b;" type="date" class="form-control"  id="area5"  name="doj" placeholder="Short paragraph to draw attention to the article... "></div>
       </div>
     </div>
+      
+       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="form-group">
+        <label for="Articlecontent">Email Id</label>
+      <div>
+         <input style="color:#2d2a3b;" type="text" name="email" id="emailid" class="form-control" placeholder="Joinee's Email Id" />
+      </div>
+      </div>
+    </div>
+   
+   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="form-group">
+        <label for="Articlecontent">Contact No.</label>
+      <div>
+       <input style="color:#2d2a3b;" type="text" name="contact" id="contact" class="form-control" placeholder="Joinee's Contact no." />
+      </div>
+      </div>
+    </div>
     
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="form-group">
         <label for="Articlecontent">Location</label>
-		<div><textarea style="color:#2d2a3b;" class="form-control" rows="1" id="location" cols="3" name="location" placeholder="Short paragraph to draw attention to the article... "></textarea></div>
+		<div>
+                 <input style="color:#2d2a3b;" type="text" name="location" id="location" class="form-control" placeholder="Joinee's Location" />
+                </div>
       </div>
     </div>
     
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <div class="form-group">
-        <label for="Articlecontent">Drinks you like</label>
-      <div><textarea style="color:#2d2a3b;"class="form-control" rows="1" id="drinks" cols="3" name="drinks" placeholder="Short paragraph to draw attention to the article... "></textarea></div>
-      </div>
-    </div>
+   
     
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="form-group">
         <label for="Articlecontent">Food you like</label>
-      <div><textarea style="color:#2d2a3b;"class="form-control" rows="2" id="food" cols="3" name="food" placeholder="Short paragraph to draw attention to the article... "></textarea></div>
+      <div><textarea style="color:#2d2a3b;"class="form-control" rows="1" id="food" cols="3" name="food" placeholder="Short paragraph to draw attention to the article... "></textarea></div>
       </div>
     </div>
     
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="form-group">
-        <label for="Articlecontent">Places I have Seen</label>
-      <div><textarea style="color:#2d2a3b;"  class="form-control" rows="1" id="placeiseen" cols="3" name="placeiseen" placeholder="Short paragraph to draw attention to the article... "></textarea></div>
+        <label for="Articlecontent">Holiday</label>
+      <div><textarea style="color:#2d2a3b;"  class="form-control" rows="1" id="hoiday" cols="3" name="holiday" placeholder="Short paragraph to draw attention to the article... "></textarea></div>
       </div>
     </div>
     
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="form-group">
-        <label for="Articlecontent">Personal Achievements</label>
-      <div><textarea style="color:#2d2a3b;" class="form-control" rows="1" id="projectdone" cols="3" name="projectdone" placeholder="Short paragraph to draw attention to the article... "></textarea></div>
+        <label for="Articlecontent">Hobby</label>
+      <div><textarea style="color:#2d2a3b;" class="form-control" rows="1" id="hobby" cols="3" name="hobby" placeholder="Short paragraph to draw attention to the article... "></textarea></div>
       </div>
     </div>
     
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+   
+   
+   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="form-group">
-        <label for="Articlecontent">My Personal Interests</label>
-      <div><textarea style="color:#2d2a3b;"class="form-control" rows="1" id="mypersonal" cols="3" name="mypersonal" placeholder="Short paragraph to draw attention to the article... "></textarea></div>
+        <label for="Articlecontent">Comment</label>
+      <div><textarea style="color:#2d2a3b;"class="form-control" rows="1" id="usercomment" cols="3" name="usercomment" placeholder="Short paragraph to draw attention to the article... "></textarea></div>
       </div>
     </div>
     

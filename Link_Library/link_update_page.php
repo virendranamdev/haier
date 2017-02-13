@@ -53,7 +53,7 @@ else
 $result = $obj->updatePage($cid,$pid,$title,$post_date);
 if($result['success'] == 1)
 {
-echo "<script>alert('Page Updated successfully');</script>";
+echo "<script>alert('HR Policy Updated successfully');</script>";
 echo "<script>window.location = '../view_page.php'</script>";
 }
 }

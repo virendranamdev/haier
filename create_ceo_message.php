@@ -199,15 +199,13 @@ filerdr.readAsDataURL(input.files[0]);
 </div>
 
       
-    </div>
-    
-    
- <!--   <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
+    </div> 
+    <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
     <div class="form-group">
-<label for="comment">TEASER TEXT</label>
-<textarea style="color:#2d2a3b;" class="form-control" rows="8" id="comment"cols="8" name="teasertext" placeholder="Short paragraph to draw attention to the article... " ></textarea>
+<label for="comment">Leader Name</label>
+<input style="color:#2d2a3b;" type="text" name="leadername" id="leadername" class="form-control" placeholder="Leader Name" />
 </div>
-    </div>-->
+    </div>
   </div>
   
   <div class="row">

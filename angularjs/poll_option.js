@@ -6,8 +6,8 @@
 
             $scope.makeArray = function () {
                 $scope.allOptions.length = 0;
-                if(parseInt($scope.totalNumberOfOptions) > 4)
-                    alert("Sorry, there can not be more than 3 Questions");
+                if(parseInt($scope.totalNumberOfOptions) > 5)
+                    alert("Sorry, there can not be more than 5 Questions");
                 else{
                     //console.log(parseInt($scope.cols));
                     for (var i = 0; i < parseInt($scope.totalNumberOfOptions) ; i++) {

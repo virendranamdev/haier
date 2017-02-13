@@ -56,7 +56,7 @@ $path = "http://admin.benepik.com/employee/virendra/benepik_client/";
                                     <table class="datatable table table-responsive" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>Page Name</th>
+                                                <th>Policy Name</th>
                                               
                                                 <th>Created by</th>
                                                 <th>Created Date</th>
@@ -67,7 +67,7 @@ $path = "http://admin.benepik.com/employee/virendra/benepik_client/";
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                               <th>Page Name</th>
+                                               <th>Policy Name</th>
                                               
                                                 <th>Created by</th>
                                                 <th>Created Date</th>

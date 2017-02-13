@@ -9,7 +9,7 @@ include_once('../Class_Library/class_get_group.php');  // for getting all group
 //require_once('../Class_Library/class_welcomeTable.php');
 
 $survey_obj = new HappinessQuestion();
-$obj_group = new Group();                  //class_get_group.php
+$obj_group = new Group();           //class_get_group.php
 
 //$read = new Reading();
 $push_obj = new PushNotification();
@@ -24,34 +24,38 @@ if (!empty($_POST))
     $dev = $_POST['device'];
     $flag_name = "Survey : ";
     $USERID = $_POST['useruniqueid'];
-    $POST_TITLE = "Please Submit Your Survey";
+    $POST_TITLE = "";
     $username = $_SESSION['user_name'];
     $clientid = $_SESSION['client_id'];
     $createdby = $_SESSION['user_unique_id'];
-
+      $surveytitle = $_POST['surveytitle'];
     $enableComment = $_POST['surveychoice'];
     $ptime1 = $_POST['publish_date1'];
     $utime1 = $_POST['publish_date2'];
-      $content = "";
-    $surveyid = $survey_obj->surveyMaxId($clientid);
+     $content = "Request Feedback";
+  
    // echo "this si ssurvey question-".$surveyid; 
-    if ($ptime1 == "") {
+    if ($ptime1 == "") 
+        {
         $ptime = date("Y-m-d");
-    } else {
+      } 
+    else {
         $ptime = $ptime1;
     }
-    if ($_POST['publish_date2'] == "") {
-
-        $utime = date('Y-m-d', strtotime("+1 month"),$ptime);
-    } else {
+    if ($utime1 === "") 
+        {       
+        $time = strtotime($ptime);
+         $utime = date("Y-m-d", strtotime("+1 month", $time));     
+    } 
+    else {
         $timestamp1 = strtotime($utime1);
         $utime = date("Y-m-d", $timestamp1);
     }
     $startdate = (!empty($ptime)) ? $ptime : date('Y-m-d', now());
     $expiryDate = $utime;
     $createddate = $post_date;
-    echo "publish Time before format :" . $ptime . "<br/>";
-    echo "unpublish Time before format :" . $utime . "<br/>";
+   // echo "publish Time before format :" . $ptime . "<br/>";
+   // echo "unpublish Time before format :" . $utime . "<br/>";
 
      $User_Type = "Selected";
     
@@ -66,9 +70,6 @@ if (!empty($_POST))
         array_push($wholegroup, $groupid['groupId']);
     }
 
-    echo "this is user group";
-    print_r($wholegroup);
-    
     $PUSH_NOTIFICATION = "";
     $push = "";
     // echo $push_noti;
@@ -84,56 +85,46 @@ if (!empty($_POST))
       }
 
     /************************* option  start ****************** */
-
-
-    $total_option = $_POST['option'];
-
-    echo "this is total option-:" . $total_option . "<br/>";
+     
+    $countsurvey = $survey_obj->checkSurveyAvailablity($clientid,$startdate);
+    
+    $value1 = json_decode($countsurvey,true);
+   
+    if($value1["success"] === 1)
+            {
+                 echo "<script>alert('survey is Available');</script>";
+                 echo "<script>window.location='../createHappinessQuestion.php'</script>";
+            }
+ else {
+     $total_option = $_POST['option'];
+     $status = 1;
+     $value = $survey_obj->createSurvey($clientid, $surveytitle, $total_option, $createdby, $createddate, $expiryDate,$startdate,$status);
+    
+     $surveyid = $value['lastid'];
+     
     for ($t = 1; $t <= $total_option; $t++) 
     {
-
         $textname = "text" . $t;
         //echo $textname;
         $questiontext = $_POST[$textname];
         // echo "queq :".$t.$optiontext;
         $ansdbimage = "";
 
-       $response = $survey_obj->createSurvey($surveyid,$clientid, $questiontext, $enableComment, $startdate, $expiryDate, $createdby, $createddate);
+$response = $survey_obj->createSurvey1($surveyid,$clientid, $questiontext, $enableComment, $startdate, $expiryDate, $createdby, $createddate);
     }
-    echo "this si response";
-   
+     
     /************************************* Get GoogleAPIKey and IOSPEM file ********************************* */
     $googleapiIOSPem = $push_obj->getKeysPem($clientid);
    
-    /*********************** insert into database ************************************************ */
-  
-  /*  $type = "Poll";
-  $result1 = $welcome_obj->createWelcomeData($clientid, $poll_maxid, $type, $ques, $img, $post_date, $USERID, $FLAG);*/
-
-   /* 
-    if ($pollresult == 'True') 
-    {
-//echo "data send";
-    }
-    $groupcount = count($wholegroup);
-    for ($k = 0; $k < $groupcount; $k++) {
-//echo "group id".$myArray[$k];
-        $result1 = $read->pollSentToGroup($clientid, $poll_maxid, $myArray[$k], $FLAG);
-//echo $result1;
-    }*/
-
     /******************  fetch all user employee id from user detail start **************************** */
 
     $gcm_value = $push_obj->get_Employee_details($User_Type, $wholegroup, $clientid);
     $token = json_decode($gcm_value, true);
-  /*   echo "hello user  id";
-      echo "<pre>";
-      print_r($token);
-      echo "</pre>"; 
-    */
+ 
     /*************get group admin uuid  form group admin table if user type not= all ************** */
       
-    if ($User_Type != 'All') {
+    if ($User_Type != 'All') 
+        {
         $groupadminuuid = $push_obj->getGroupAdminUUId($wholegroup, $clientid);
 
         $adminuuid = json_decode($groupadminuuid, true);
@@ -147,7 +138,8 @@ if (!empty($_POST))
        /* echo "admin id";
           echo "<pre>";
           print_r($allempid);
-          echo "<pre>";*/
+          echo "<pre>";
+        */
 
         /** ** "--------------all unique employee id---------"********** */
 
@@ -189,12 +181,11 @@ if (!empty($_POST))
         $idsIOS = array();
         foreach ($token1 as $row) {
 
-            if ($row['deviceName'] == 'ios') {
+            if ($row['deviceName'] == 3) {
                 array_push($idsIOS, $row["registrationToken"]);
             } else {
                 array_push($ids, $row["registrationToken"]);
             }
-            //array_push($ids,$row["registrationToken"]);
         }
 
        // $content = str_replace("\r\n", "", strip_tags($ques));
@@ -204,23 +195,22 @@ if (!empty($_POST))
         $IOSrevert = $push_obj->sendAPNSPush($data, $idsIOS, $googleapiIOSPem['iosPemfile']);
         $revert = $push_obj->sendGoogleCloudMessage($data, $ids, $googleapiIOSPem['googleApiKey']);
         $rt = json_decode($revert, true);
-print_r($rt);
+//print_r($rt);
         if ($rt) {
-            if ($dev == 'd2') {
-                echo "<script>alert('Post Successfully Send');</script>";
-              //  echo "<script>window.location='../create_poll.php'</script>";
-echo $revert;
-            } else {
-               // echo "<script>alert('Post Successfully Send');</script>";
-                echo $rt;
-            }
+          
+               echo "<script>alert('Survey Successfully Created');</script>";
+             //   echo $rt;
+                 echo "<script>window.location='../createHappinessQuestion.php'</script>";
+            
         }
     } 
     else {
-        echo "<script>alert('Post Successfully Send');</script>";
-      //  echo "<script>window.location='../create_poll.php'</script>";
+        echo "<script>alert('Survey Successfully Created');</script>";
+        echo "<script>window.location='../createHappinessQuestion.php'</script>";
+       }
     }
-} else {
+} 
+else {
     ?>
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml">

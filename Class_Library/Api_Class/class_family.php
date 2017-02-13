@@ -429,7 +429,7 @@ class Family {
                     $response["userImage"] = "";
                     $response["message"] = "image update failed";
                 }
-                return json_encode($response);
+                return $response;
             }
         }      //--------------------------------------------- end of try block
         catch (PDOException $e) {

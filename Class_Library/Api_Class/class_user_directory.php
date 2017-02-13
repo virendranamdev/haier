@@ -92,7 +92,7 @@ class UserDirectory {
         try {
             if ($this->department != "") {
 
-                $query = "select edm.*,if(epd.userImage IS NULL or epd.userImage='','', ConCat('$server_name',epd.userImage)) as imgpath from  Tbl_EmployeeDetails_Master  as edm left join Tbl_EmployeePersonalDetails as epd on "
+                $query = "select edm.*,epd.*,if(epd.userImage IS NULL or epd.userImage='','', ConCat('$server_name',epd.userImage)) as imgpath from  Tbl_EmployeeDetails_Master  as edm left join Tbl_EmployeePersonalDetails as epd on "
                         . "epd.employeeCode = edm.employeeCode where edm.clientId =:id1 and edm.location=:loc and edm.department = :dep";
                 $stmt = $this->db_connect->prepare($query);
 
@@ -101,7 +101,7 @@ class UserDirectory {
                 $stmt->bindParam(':dep', $this->department, PDO::PARAM_STR);
                 $stmt->execute();
             } else {
-                $query = "select edm.*,if(epd.userImage IS NULL or epd.userImage='','', ConCat('$server_name',epd.userImage)) as imgpath from  Tbl_EmployeeDetails_Master  as edm left join Tbl_EmployeePersonalDetails as epd on "
+                $query = "select edm.*,epd.*,if(epd.userImage IS NULL or epd.userImage='','', ConCat('$server_name',epd.userImage)) as imgpath from  Tbl_EmployeeDetails_Master  as edm left join Tbl_EmployeePersonalDetails as epd on "
                         . "epd.employeeCode = edm.employeeCode where edm.clientId =:id1 and edm.location=:loc";
                 $stmt = $this->db_connect->prepare($query);
                 $stmt->bindParam(':id1', $this->clientids, PDO::PARAM_STR);
@@ -111,7 +111,7 @@ class UserDirectory {
 
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-//            	print_r($rows);die;
+            //   	print_r($rows);die;
 
             if ($rows) {
 

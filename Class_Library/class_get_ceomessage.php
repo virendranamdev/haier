@@ -19,9 +19,10 @@ class GetCEOMessage {
         $this->eid = $eid;
         $this->uid = $usertype;
         $server_name = SITE;
+       // echo $server_name;
         if ($this->uid == "SubAdmin") {
             $query = 
-"SELECT Tbl_C_PostDetails . *, Concat('".SITE_URL."', Tbl_C_PostDetails.post_img ) AS post_img , DATE_FORMAT(Tbl_C_PostDetails.created_date,'%d %b %Y %h:%i %p') as created_date , (
+"SELECT Tbl_C_PostDetails . *, Concat('".$server_name."', Tbl_C_PostDetails.post_img ) AS post_img , DATE_FORMAT(Tbl_C_PostDetails.created_date,'%d %b %Y %h:%i %p') as created_date , (
 
 SELECT COUNT(distinct userUniqueId) 
 FROM Tbl_Analytic_PostView
@@ -50,7 +51,7 @@ FROM Tbl_C_PostDetails where Tbl_C_PostDetails.flagCheck = 9 and Tbl_C_PostDetai
             $response["posts"] = $rows;
         } 
 		else {
-            $query = "SELECT Tbl_C_PostDetails . *, Concat('".SITE_URL."', Tbl_C_PostDetails.post_img ) AS post_img , DATE_FORMAT(Tbl_C_PostDetails.created_date,'%d %b %Y %h:%i %p') as created_date , (
+            $query = "SELECT Tbl_C_PostDetails . *, Concat('".$server_name."', Tbl_C_PostDetails.post_img ) AS post_img , DATE_FORMAT(Tbl_C_PostDetails.created_date,'%d %b %Y %h:%i %p') as created_date , (
 
 SELECT COUNT(distinct userUniqueId) 
 FROM Tbl_Analytic_PostView

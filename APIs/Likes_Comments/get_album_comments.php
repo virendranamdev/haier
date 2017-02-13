@@ -22,10 +22,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 $jsonArr = json_decode(file_get_contents("php://input"), true);
+
+/*{
+    "clientid":"CO-25",
+            "albumid":"",
+            "imageid":""
+}*/
 if (!empty($jsonArr['clientid'])) {
     $obj = new Comment();
 //$read = new Reading();
-
+    
     extract($jsonArr);
     $response = $obj->Comment_display($clientid,$albumid,$imageid);
 } else {

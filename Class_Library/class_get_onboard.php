@@ -154,9 +154,11 @@ class GetWelcomeOnboard {
     function getSingleOnboard($postid, $clientid) {
         $this->id = $postid;
         $this->cli = $clientid;
-        $site_url = SITE;
-      echo "this iss site url".$site_url;
-        $query = "select post.*, DATE_FORMAT(post.created_date,'%d %b %Y') as created_date , if(post.thumb_post_img IS NULL or post.thumb_post_img='' , CONCAT('" . $site_url . "',post.post_img), CONCAT('" . $site_url . "',post.thumb_post_img)) as post_img, if(user.userImage IS NULL or user.userImage='','',CONCAT('" . $site_url . "',user.userImage)) as userImage from Tbl_C_PostDetails as post join Tbl_EmployeePersonalDetails as user on post.userUniqueId = user.employeeId where post.post_id =:pid and post.clientId=:cli";
+        $site_url = site_url;
+      //    echo "this iss site url".$site_url;
+     //   $query = "select post.*, DATE_FORMAT(post.created_date,'%d %b %Y') as created_date , if(post.thumb_post_img IS NULL or post.thumb_post_img='' , CONCAT('" . $site_url . "',post.post_img), CONCAT('" . $site_url . "',post.thumb_post_img)) as post_img, if(user.userImage IS NULL or user.userImage='','',CONCAT('" . $site_url . "',user.userImage)) as userImage from Tbl_C_PostDetails as post join Tbl_EmployeePersonalDetails as user on post.userUniqueId = user.employeeId where post.post_id =:pid and post.clientId=:cli";
+        
+        $query = "select post.*, DATE_FORMAT(post.created_date,'%d %b %Y') as created_date , if(post.post_img IS NULL or post.post_img='','', CONCAT('" . $site_url . "',post.post_img)) as post_img, if(user.userImage IS NULL or user.userImage='','',CONCAT('" . $site_url . "',user.userImage)) as userImage from Tbl_C_PostDetails as post join Tbl_EmployeePersonalDetails as user on post.userUniqueId = user.employeeId where post.post_id =:pid and post.clientId=:cli";
         try {
             $stmt = $this->DB->prepare($query);
             $stmt->bindParam(':pid', $this->id, PDO::PARAM_STR);

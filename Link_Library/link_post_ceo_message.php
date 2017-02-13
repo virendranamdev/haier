@@ -22,7 +22,8 @@ $folder = 'images/post_img/';      //folder name for add with image insert into 
 /* * ******************************START HERE************************************************ */
 //echo'<pre>';
 //print_r($_POST);die;
-if (!empty($_POST)) {
+if (!empty($_POST)) 
+    {
 
     $flag_value = $_POST['flag'];
     $flag_name = "Leadership : ";
@@ -84,7 +85,7 @@ if (!empty($_POST)) {
         $POST_ID = $maxid;
         $POST_TITLE = $_POST['title'];
         $POST_IMG = $folder . $path_name;
-        $POST_TEASER = $_POST['teasertext'];
+        $POST_TEASER = $_POST['leadername'];
         $POST_CONTENT = $_POST['content'];
         $POST_IMG_THUMB = $thumb_img;
         $DATE = $post_date;
@@ -117,7 +118,7 @@ if (!empty($_POST)) {
         /*         * ************************************************************************************ */
 
         /*         * ********************* insert into database ************************************************ */
-        $result = $obj->create_Post($clientid, $POST_ID, $POST_TITLE, $POST_IMG, $POST_IMG_THUMB, $POST_CONTENT, $DATE, $USERID, $BY, $FLAG, $like, $comment);
+        $result = $obj->create_Post($clientid, $POST_ID, $POST_TITLE, $POST_IMG, $POST_IMG_THUMB,$POST_TEASER,$POST_CONTENT, $DATE, $USERID, $BY, $FLAG, $like, $comment);
 
         $type = 'CEOMessage';
         $result1 = $obj->createWelcomeData($clientid, $POST_ID, $type, $POST_TITLE, $POST_IMG, $DATE, $USERID, $FLAG);

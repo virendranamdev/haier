@@ -37,8 +37,9 @@ if (!class_exists('ClientEmployeeLogin') && include("../../Class_Library/Api_Cla
         $dob = $jsonArr['dob'];
         //$doj = $jsonArr['doj'];
 
-        $response = $obj->checkEmployeeLogin($empid, $dob);
-       // $response = $obj->tempregistration($empid, $dob);
+       // $response = $obj->checkEmployeeLogin($empid, $dob);
+       $response = $obj->tempregistration($empid, $dob);
+      // print_r($response);
     } else {
         $result['success'] = 0;
         $result['result'] = "Invalid json";

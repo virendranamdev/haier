@@ -68,10 +68,10 @@ $ques = json_decode($ques1, true);
                 </div>
             </div>
      </div>
-			
-			<script src="js/analytic/questionresult.js"></script>
-<script src="js/analytic/fusioncharts.charts.js"></script>
+			<script src="js/analytic/fusioncharts.charts.js"></script>
 <script src="js/analytic/fusioncharts.js"></script>
+			<script src="js/analytic/questionresult.js"></script>
+
 <script type="text/javascript">
  var quid = $("#qid").val(); //"Android";
     var sid = $("#sid").val();//"2016-12-30"; 

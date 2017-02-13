@@ -22,6 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 $jsonArr = json_decode(file_get_contents("php://input"), true);
+/*{
+    "clientid":"CO-25",
+            "albumid":"Album-2",
+            "imageid":""
+}*/
 
 if (!empty($jsonArr['clientid'])) {
 

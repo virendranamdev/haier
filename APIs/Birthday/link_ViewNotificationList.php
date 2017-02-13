@@ -46,9 +46,11 @@ if (!empty($indata)) {
 
     $notilistdetails = $obj->workAndBirthNotiListDetails($clientid, $empid, $startlimit);
     $Data = json_decode($notilistdetails, true);
-    
+    echo "<pre>";
+    print_r($Data);
     $Count = count($Data['Data']);
-    for ($intRow = 0; $intRow < $Count; $intRow++) {
+    for ($intRow = 0; $intRow < $Count; $intRow++) 
+    {
         $Data['Data'][$intRow]['userImage'] = (!empty($Data['Data'][$intRow]['userImage']))?site_url . $Data['Data'][$intRow]['userImage']:"";
         $wishFlag = $Data['Data'][$intRow]['wishFlag'];
 

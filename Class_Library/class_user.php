@@ -41,11 +41,12 @@ class User {
         } else 
 		{
             $handle = fopen($this->filetempname, "r");
-            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) 
+                {
                 $userdata[] = $data;
             }
 
-            /*             * ************start insert into database ************************************************* */
+            /**************start insert into database ************************************************* */
 
             // print_r($userdata);
             $countrows = count($userdata);
@@ -124,8 +125,8 @@ class User {
 
                 try {
                     $qu = "insert into Tbl_EmployeeDetails_Master
-(userId,clientId,employeeId,firstName,middleName,lastName,gender,emailId,password,employeeCode,contact,department,designation,
-location,branch,grade,status,accessibility,createdDate,createdBy) values(:uid,:cid,:eid,:fname,:mname,:lname,:gen,:email,:pass,:ecode,:mob,:dep,:des, :loc,:bra,:gra,:sta,:acc,:cred,:creb) ON DUPLICATE KEY UPDATE firstName =:fname,middleName=:mname, lastName=:lname,gender=:gen,emailId=:email,contact=:mob, department=:dep,designation=:des,location=:loc,branch=:bra,grade=:gra,status=:sta, accessibility=:acc,createdDate=:cred,createdBy=:creb";
+(userId,clientId,employeeId,firstName,middleName,lastName,gender,emailId,password,employeeCode,contact,officeno,reportingmanager,department,designation,
+location,branch,grade,status,accessibility,createdDate,createdBy) values(:uid,:cid,:eid,:fname,:mname,:lname,:gen,:email,:pass,:ecode,:mob,:officeno,:rm,:dep,:des, :loc,:bra,:gra,:sta,:acc,:cred,:creb) ON DUPLICATE KEY UPDATE firstName =:fname,middleName=:mname, lastName=:lname,gender=:gen,emailId=:email,contact=:mob, department=:dep,designation=:des,location=:loc,branch=:bra,grade=:gra,status=:sta, accessibility=:acc,createdDate=:cred,createdBy=:creb";
                     $stmt = $this->DB->prepare($qu);
 
                     $stmt->bindParam(':uid', $usid, PDO::PARAM_STR);
@@ -139,12 +140,14 @@ location,branch,grade,status,accessibility,createdDate,createdBy) values(:uid,:c
                     $stmt->bindParam(':gen', $userdata[$row][3], PDO::PARAM_STR);
                     $stmt->bindParam(':email', $userdata[$row][12], PDO::PARAM_STR);
                     $stmt->bindParam(':mob', $userdata[$row][13], PDO::PARAM_STR);
+                    $stmt->bindParam(':officeno', $userdata[$row][14], PDO::PARAM_STR);
+                    $stmt->bindParam(':rm', ucfirst($userdata[$row][15]), PDO::PARAM_STR);
                     $stmt->bindParam(':pass', $md5password, PDO::PARAM_STR);
                     $stmt->bindParam(':ecode', $userdata[$row][6], PDO::PARAM_STR);
                     $stmt->bindParam(':dep', $userdata[$row][7], PDO::PARAM_STR);
                     $stmt->bindParam(':des', $userdata[$row][8], PDO::PARAM_STR);
-                    $stmt->bindParam(':loc', $userdata[$row][10], PDO::PARAM_STR);
-                    $stmt->bindParam(':bra', $userdata[$row][11], PDO::PARAM_STR);
+                    $stmt->bindParam(':loc', ucfirst($userdata[$row][10]), PDO::PARAM_STR);
+                    $stmt->bindParam(':bra', ucfirst($userdata[$row][11]), PDO::PARAM_STR);
                     $stmt->bindParam(':gra', $userdata[$row][9], PDO::PARAM_STR);
                     $stmt->bindParam('sta', $status, PDO::PARAM_STR);
                     $stmt->bindParam(':acc', $access, PDO::PARAM_STR);
@@ -154,8 +157,8 @@ location,branch,grade,status,accessibility,createdDate,createdBy) values(:uid,:c
                     if ($stmt->execute()) 
 					{
 
-                        $query4 = "insert into Tbl_EmployeePersonalDetails(userid,clientId,employeeCode,employeeId,emailId,userDOB,userFatherName)
-	                                         values(:uid1,:cid1,:ecode1,:eid1,:emailid1,:dob,:father)
+                        $query4 = "insert into Tbl_EmployeePersonalDetails(userid,clientId,employeeCode,employeeId,emailId,userDOB,address,userFatherName)
+	                                         values(:uid1,:cid1,:ecode1,:eid1,:emailid1,:dob,:addr,:father)
 	      ON DUPLICATE KEY UPDATE userDOB=:dob,userFatherName=:father,emailId=:emailid1";
                         $stmt4 = $this->DB->prepare($query4);
                         $stmt4->bindParam(':uid1', $usid, PDO::PARAM_STR);
@@ -164,12 +167,14 @@ location,branch,grade,status,accessibility,createdDate,createdBy) values(:uid,:c
                         $stmt4->bindParam(':eid1', $randomempid, PDO::PARAM_STR);
                         $stmt4->bindParam(':emailid1', $userdata[$row][12], PDO::PARAM_STR);
                         $stmt4->bindParam(':dob', $userdata[$row][4], PDO::PARAM_STR);
+                        $stmt4->bindParam(':addr', $userdata[$row][16], PDO::PARAM_STR);
                         $stmt4->bindParam(':father', $userdata[$row][5], PDO::PARAM_STR);
+                        
                         //echo $userdata[$row][4].' '.$userdata[$row][5];
                         if ($stmt4->execute()) 
 						{
                             if ($useremail != $ADMINEMAIL) 
-							{
+							{   
                                 $SENDTO = $useremail;
                             }
                         }

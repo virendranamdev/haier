@@ -11,12 +11,12 @@ class ForgotPassword {
         $this->db_connect = $dbh->getConnection_Communication();
     }
 
-    function forgotPasswordSentTo($packName, $empcode) {
+    function    forgotPasswordSentTo($packName, $empcode) {
         //$username = strtoupper($username);
         try {
-            $query = "select ud.firstName, ud.middleName, ud.lastName, ud.emailId, ud.contact,ud.employeeId,ud.employeeCode,cd.dedicated_mail,cd.client_id,cd.responseDecider,cd.program_name from Tbl_ClientDetails_Master as cd join Tbl_EmployeeDetails_Master as ud where cd.packageName=:package and cd.client_id= ud.clientId and (UPPER(ud.employeeCode)=:empcode or UPPER(ud.contact)=:empcode)";
+            $query = "select ud.firstName, ud.middleName, ud.lastName, ud.emailId, ud.contact,ud.employeeId,ud.employeeCode,cd.dedicated_mail,cd.client_id,cd.responseDecider,cd.program_name from Tbl_ClientDetails_Master as cd join Tbl_EmployeeDetails_Master as ud where cd.packageName=:package and cd.client_id= ud.clientId and (UPPER(ud.employeeCode)=:empcode or UPPER(ud.contact)=:empcode OR UPPER(ud.emailId)=:empcode)";
             $stmt = $this->db_connect->prepare($query);
-            $stmt->bindParam(':empcode', $empcode, PDO::PARAM_STR);
+            $stmt->bindParam(':empcode',  trim(strtoupper($empcode)), PDO::PARAM_STR);
             $stmt->bindParam(':package', $packName, PDO::PARAM_STR);
 
             if ($stmt->execute()) {
@@ -158,7 +158,7 @@ class ForgotPassword {
             }
         } catch (PDOException $e) {
             $response["success"] = 0;
-            $response["message"] = "Some Error Occured Please Try Again Later To Report Please write to us at info@benepik.com";
+            $response["message"] = "Some Error Occured Please Try Again Later, To Report Please write to us at info@benepik.com";
             $response["posts"] = $e;
             return $response;
         }

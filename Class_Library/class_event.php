@@ -389,10 +389,10 @@ class Event {
 
     /*     * ************************************ end view single event *************************************************** */
 
-    public function event_details($clientid, $eventId, $flag) {
+    public function event_details($clientid, $eventId, $empid, $flag) {
         try {
             $site_url = dirname(SITE_URL) . '/';
-
+            
             $query = "select event.*,DATE_FORMAT(event.eventTime,'%d %b %Y %h:%i %p') as eventTime,DATE_FORMAT(event.createdDate,'%d %b %Y %h:%i %p') as createdDate, if(event.imageName IS NULL or event.imageName='', '', CONCAT('" . $site_url . "', event.imageName)) as imageName,if(user.userImage IS NULL or user.userImage='','',CONCAT('" . $site_url . "',user.userImage)) as userImage, Concat(user_master.firstName, ' ', user_master.lastName) as createdBy from Tbl_C_EventDetails as event join Tbl_EmployeePersonalDetails as user on event.createdBy = user.employeeId join Tbl_EmployeeDetails_Master as user_master on user_master.employeeId=event.createdBy where event.eventId=:eventId and event.clientId=:cli and event.status='Active' and event.flagCheck=:flag";
             $stmt = $this->DB->prepare($query);
             $stmt->bindParam(':cli', $clientid, PDO::PARAM_STR);
@@ -400,10 +400,38 @@ class Event {
             $stmt->bindParam(':flag', $flag, PDO::PARAM_STR);
             $stmt->execute();
             $rows = $stmt->fetch(PDO::FETCH_ASSOC);
-            // print_r($rows);
-            $response['success'] = 1;
+           // echo "this is copunt".$rows;
+            if(!empty($rows))
+            {
+             $query1 = "select * from Tbl_Analytic_EventRegister where clientid=:cid and userUniqueId=:uid and eventId=:eid";
+               $stmt1 = $this->DB->prepare($query1);
+            $stmt1->bindParam(':cid', $clientid, PDO::PARAM_STR);
+            $stmt1->bindParam(':eid', $eventId, PDO::PARAM_STR);
+            $stmt1->bindParam(':uid', $empid, PDO::PARAM_STR);
+            $stmt1->execute();
+            $rows1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
+             
+            if(count($rows1)>0)
+            {
+                 $rows['userregistration'] = 1;
+            }
+            else
+            {
+                $rows['userregistration'] = 0;
+            }
+            
+             $response['success'] = 1;
             $response['message'] = "data found";
             $response['data'] = $rows;
+            }
+            else
+            {
+                 $response['success'] = 0;
+            $response['message'] = "data not found";
+            }
+          //  echo "<pre>";
+         //    print_r($rows);
+           
         } catch (Exception $ex) {
             echo $ex;
             $response['success'] = 0;

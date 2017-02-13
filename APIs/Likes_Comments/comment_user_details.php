@@ -115,13 +115,13 @@ if (!empty($jsonArr['clientid'])) {
     $reg_token = $push->getGCMDetails($allempid1, $clientid);
     $token1 = json_decode($reg_token, true);
 
-    /** *******************Create file of user which this post send  start******************** */
+    /** *******************Create file of user which this post send  start******************** *
     $val = array();
     foreach ($token1 as $row) {
         array_push($val, $row["clientId"] . "," . $row["userUniqueId"] . "," . $row["registrationToken"]);
     }
 
-    $file = @fopen("../send_push_datafile/" . $maxid . ".csv", "w");
+   // $file = @fopen("../send_push_datafile/" . $maxid . ".csv", "w");
 
     foreach ($val as $line) {
         @fputcsv($file, @explode(',', $line));
@@ -146,8 +146,8 @@ if (!empty($jsonArr['clientid'])) {
 
     $data = array('Id' => $POST_ID, 'Title' => $POST_TITLE, 'Content' => $POST_CONTENT, 'SendBy' => $BY, 'Picture' => $hrimg, 'image' => $fullpath,'Date' => $DATE, 'flag' => $FLAG, 'flagValue' => $flag_name, 'success' => $sf, 'like' => $like_val, 'comment' => $comment_val);
 
-    $IOSrevert = $push->sendAPNSPush($data, $idsIOS, $googleapiIOSPem['iosPemfile'], $device);
-    $revert = $push->sendGoogleCloudMessage($data, $ids, $googleapiIOSPem['googleApiKey']);
+ //   $IOSrevert = $push->sendAPNSPush($data, $idsIOS, $googleapiIOSPem['iosPemfile'], $device);
+ //   $revert = $push->sendGoogleCloudMessage($data, $ids, $googleapiIOSPem['googleApiKey']);
 
     $rt = json_decode($revert, true);
     $iosrt = json_decode($IOSrevert, true);

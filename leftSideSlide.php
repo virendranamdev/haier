@@ -182,7 +182,7 @@
                                     </li>
                                      <li><a href="postpicture.php"><span class="icon fa fa-picture-o"></span> Picture</a>
                                     </li>
-                                     <li><a href="create_ceo_message.php"><span class="icon fa fa-newspaper-o" aria-hidden="true"></span>Leadership Connect</a>
+                                     <li><a href="create_ceo_message.php"><span class="icon fa fa-newspaper-o" aria-hidden="true"></span>Leadership Talk</a>
                                     </li>
                                  <!--   <li><a href="postpopup.php"><span class="icon fa fa-picture-o"></span> PopUp</a>
                                     </li>-->
@@ -233,7 +233,7 @@
                                    <!-- <li><a href="view_welcome_onboard.php"><span class="icon fa fa-newspaper-o" aria-hidden="true"></span>Welcome Onboard</a></li>  -->  
                                     <li><a href="view_event.php"><span class="icon fa fa-newspaper-o "></span>View Event</a>
                                     </li>
- <li><a href="view_ceo_message.php"><span class="icon fa fa-newspaper-o" aria-hidden="true"></span>View Leadership Connect
+ <li><a href="view_ceo_message.php"><span class="icon fa fa-newspaper-o" aria-hidden="true"></span>View Leadership Talk
                                         </a></li>          
                                     <li><a href="view_welcome_onboard.php"><span class="icon fa fa-newspaper-o" aria-hidden="true"></span> View Welcome Aboard</a></li>          
                                  <!--   <li><a href="view_poll.php"><span class="icon fa fa-picture-o"></span>View Feedbacks</a>
@@ -311,22 +311,22 @@
                                         
                             <li class="panel panel-default dropdown">
                             <a data-toggle="collapse" href="#happiness">
-                                <span class="icon fa fa-smile-o" aria-hidden="true"></span><span class="title"> Employee Satisfaction Survey</span>
+                                <span class="icon fa fa-smile-o" aria-hidden="true"></span><span class="title"> Dipstics Survey</span>
                             </a>  
 
                             <div id="happiness" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <ul class="nav navbar-nav">
 
-                                        <li><a href="createHappinessQuestion.php"><span class="glyphicon glyphicon-plus"></span> Create Satisfaction Survey</a>
+                                        <li><a href="createHappinessQuestion.php"><span class="glyphicon glyphicon-plus"></span> Create Survey</a>
                                         </li>
-                                        <li><a href="view_survey_question.php"><span class="glyphicon glyphicon-plus"></span> View Survey Question</a>
+                                        <li><a href="view_survey.php"><span class="glyphicon glyphicon-plus"></span> View Survey</a>
                                         </li>
-                                       <li>
+                                     <!--  <li>
                              <a href="backup_emp_happiness.php?clientid=<?php echo $_SESSION['client_id']; ?>">
                                                 <span class="glyphicon glyphicon-plus"></span><span class="title"> View Survey Analytic</span>
                                             </a>						
-                                        </li>
+                                        </li>  -->
 
                                     </ul>
                                 </div>
@@ -406,7 +406,7 @@
                             <div class="panel-body">
                                 <ul class="nav navbar-nav">
 
-                                    <li><a href="analytic_login.php"><span class="glyphicon glyphicon-plus"></span> Add Analytic</a>
+                                    <li><a href="analytic_login.php"><span class="glyphicon glyphicon-plus"></span> Login Analytic</a>
                                     </li>
 
                                 </ul>

@@ -23,12 +23,16 @@ if (!empty($_POST["mydata"]))
             $user = $res['data'][$i]['label'];
           //  echo  $user;
             if ($user == 10) {
-                $user = 'Happy';
+                $user = 'Extra Happy';
             }
-            elseif($user == -10)
+            elseif($user == -5)
             {
                 $user = 'Sad';
-            }   
+            } 
+            elseif($user == 5)
+            {
+                $user = 'Happy';
+            } 
                 else {  
                 $user = 'Average';
             }

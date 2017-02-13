@@ -46,6 +46,8 @@ else {
 
     $result = $obj->getAllOnboardFORandroid($clientid, $val);
     $value = json_decode($result, true);
+   //    print_r($value);
+    
 }
 ?>
 
@@ -86,8 +88,8 @@ $get = json_decode($resp, true);
 
 $resul = count($get['posts']);
 
-if ($dev == 'd2') {
-
+if ($dev == 'd2') 
+    {
     echo $resul;
     ?>
 
@@ -110,7 +112,7 @@ if ($dev == 'd2') {
                     $final_data_value = array();
                     foreach ($post_content_keys as $keys => $val) {
 
-                        $key_data = explode("###", $val);
+                        $key_data = explode("###", $val);           
 
                         array_push($final_data_keys, trim($key_data[0], " "));
                         array_push($final_data_value, strip_tags(trim($key_data[1], " "), ""));
@@ -118,7 +120,17 @@ if ($dev == 'd2') {
                         <div style="font-size: 16px;font-family: calibri, sans-serif; text-align: justify;"><?php echo "<b>" . $final_data_keys[$keys] . "</b> <p>" . $final_data_value[$keys] . "</p>"; ?></div>
                         <?php
                     }
-                } else {
+                }
+               
+                else {
+                     if($value['success'] === 0) 
+                  {
+                      $response['success'] = 0;
+                        $response['message'] = "Onboard Data Unavailable"; 
+                        echo json_encode($response);
+                    die;
+                   }   
+                    
                     foreach ($value['posts'] as $values) {
                         //echo '<pre>';print_r($values);die;
                         $post_content_keys = explode("#Benepik#", $values['post_content']);
@@ -138,8 +150,8 @@ if ($dev == 'd2') {
                             array_push($final_data_value, strip_tags(trim($key_data[1], " \n\t\t "), ""));
                         }
 
-                        array_push($final_data_keys, 'user_image', 'user_name', 'postid', 'flagCheck');
-                        array_push($final_data_value, $values['post_img'], $values['post_title'], $values['post_id'], "12");
+                        array_push($final_data_keys, 'user_image', 'user_name', 'postid', 'flagCheck','like','comment');
+                        array_push($final_data_value, $values['post_img'], $values['post_title'], $values['post_id'], "12",$values['likeSetting'],$values['comment']);
                         $final_data_value[2] = date('d M Y', strtotime($final_data_value[2]));
 
                         $response_data[] = array_combine($final_data_keys, $final_data_value);
@@ -157,8 +169,9 @@ if ($dev == 'd2') {
                     echo json_encode($response);
                     die;
                 }
+                
                 ?>
-
+                        
 
             </div>
         </div>

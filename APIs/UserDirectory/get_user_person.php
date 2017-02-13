@@ -29,7 +29,7 @@ if (file_exists("../../Class_Library/Api_Class/class_user_directory.php") && inc
 		"departmentid":""
 	}*/
     if (!empty($jsonArr['clientid'])) {
-		
+		$departmentid = "";
         extract($jsonArr);
         $location_obj = new UserDirectory();  // create object of class cl_module.php
         $response = $location_obj->viewContactDetails($clientid, $locationid, $departmentid);

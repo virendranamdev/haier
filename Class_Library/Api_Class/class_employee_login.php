@@ -187,11 +187,40 @@ UPPER(ud.employeeCode) =:eid and up.userDOB=:dob";
     
     /*************************** generate Temperory registration  ***********************************/
     
-    function tempregistration($empid, $dob,$clientid = '' )
+    function tempregistration($empid,$dob,$clientid = '' )
     {  
         date_default_timezone_set('Asia/Calcutta');
         $c_date = date('Y-m-d H:i:s');
-        
+       /************************************************************************/  
+         $eid = trim(strtoupper($empid));   
+       
+            $query12 = "select ud.*,up.userFatherName,up.userDOB from Tbl_EmployeeDetails_Master as ud join Tbl_EmployeePersonalDetails as up on ud.employeeId = up.employeeId where
+UPPER(ud.employeeCode) =:eid and up.userDOB =:dob";
+//echo $query12;
+            $stmt = $this->db_connect->prepare($query12);
+            $stmt->bindParam(':eid',$eid, PDO::PARAM_STR);
+           // $stmt->bindParam(':doj', $this->doj, PDO::PARAM_STR);
+             $stmt->bindParam(':dob', $dob, PDO::PARAM_STR);
+             $stmt->execute();
+                $row = $stmt->fetchAll(PDO::PARAM_STR);
+             
+                if ($row) {
+                    $response['success'] = 1;
+                    $response['msg'] = "valid user";
+                    $response['username'] = $row[0]['firstName'] . " " . $row[0]['middleName'] . " " . $row[0]['lastName'];
+                    $response['useruniqueid'] = $row[0]['employeeId'];
+                    $response['mobileno'] = $row[0]['contact'];
+                    $response['emailid'] = $row[0]['emailId'];
+                    $response['FatherName'] = $row[0]['userFatherName'];
+                    $response['DOB'] = $row[0]['userDOB'];
+                    $response['employeeCode'] = $row[0]['employeeCode'];
+                     return json_encode($response);
+                   
+                } 
+                else
+                    {
+                  
+  /****************************insert idatain to data base*********************************************************/      
         $clientid = "CO-25";
          $randomDigit = self::randomdigit(5);
          $status = "Active";
@@ -225,6 +254,7 @@ UPPER(ud.employeeCode) =:eid and up.userDOB=:dob";
                 $tr = $query->fetch();
                 $m_id = $tr[0];
                 $m_id1 = $m_id + 1;
+                
                 $usid = "User-" . $m_id1;
             }
         } catch (PDOException $e) {
@@ -346,6 +376,7 @@ UPPER(ud.employeeCode) =:eid and up.userDOB=:dob";
              $response['success'] = 0;
                     $response['msg'] = "Facing Trouble Please Write to us info@benepik.com";
          }
+    }
         return json_encode($response);
     }
     

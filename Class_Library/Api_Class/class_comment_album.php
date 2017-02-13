@@ -122,10 +122,11 @@ class Comment {
 
     function Comment_display($clientid, $albumid, $imageid) {
         $status = 1;
-        $path = dirname(SITE_URL);
-      //  echo $path;
+        $path = dirname(SITE_URL)."/";
+       // $path = site_url;
+     //   echo "thi si img path".$path;
         try {
-            $query = "select *,DATE_FORMAT(createdDate,'%d %b %Y %h:%i %p') as commentDate from Tbl_Analytic_AlbumComment where albumId =:albumid AND imageId = :imgid and clientId=:cli and 	status=:status order by commentId desc";
+            $query = "select *,DATE_FORMAT(createdDate,'%d %b %Y %h:%i %p') as commentDate from Tbl_Analytic_AlbumComment where albumId =:albumid AND imageId = :imgid and clientId=:cli and status=:status order by commentId desc";
             $stmt = $this->DB->prepare($query);
             $stmt->bindParam(':cli', $clientid, PDO::PARAM_STR);
             $stmt->bindParam(':albumid', $albumid, PDO::PARAM_INT);
@@ -167,7 +168,7 @@ class Comment {
                     $employeeid = $row["userId"];
 
 
-                    $query = "select Tbl_EmployeeDetails_Master.*,Tbl_EmployeePersonalDetails.*,IF(Tbl_EmployeePersonalDetails.userImage IS NULL OR Tbl_EmployeePersonalDetails.userImage='', '', if(Tbl_EmployeePersonalDetails.linkedIn = '1',Tbl_EmployeePersonalDetails.userImage, CONCAT('$path/',Tbl_EmployeePersonalDetails.userImage))) as userImage from Tbl_EmployeeDetails_Master join Tbl_EmployeePersonalDetails on Tbl_EmployeeDetails_Master.employeeId=Tbl_EmployeePersonalDetails.employeeId where Tbl_EmployeeDetails_Master.employeeId=:empid";
+                    $query = "select Tbl_EmployeeDetails_Master.*,Tbl_EmployeePersonalDetails.*,IF(Tbl_EmployeePersonalDetails.userImage IS NULL OR Tbl_EmployeePersonalDetails.userImage='', '', if(Tbl_EmployeePersonalDetails.linkedIn = '1',Tbl_EmployeePersonalDetails.userImage, CONCAT('$path',Tbl_EmployeePersonalDetails.userImage))) as userImage from Tbl_EmployeeDetails_Master join Tbl_EmployeePersonalDetails on Tbl_EmployeeDetails_Master.employeeId=Tbl_EmployeePersonalDetails.employeeId where Tbl_EmployeeDetails_Master.employeeId=:empid";
                     $stmt = $this->DB->prepare($query);
                     $stmt->bindParam(':empid', $employeeid, PDO::PARAM_STR);
                     $stmt->execute();

@@ -212,8 +212,7 @@ class PostDisplayWelcome {
                                 break;  */
 
 //                        Display News Code                                                                                            
-                            case "News":
-                             case ($weltype == "News" || $weltype == "Message" || $weltype == "Picture"):
+                             case ($weltype == "News" || $weltype == "Picture" || $weltype == "Message"):
 
 
 //$status = "Publish";
@@ -226,7 +225,9 @@ class PostDisplayWelcome {
 //                                Concat('$site_url', post_img) as post_img
                                 if (count($postrows) > 0) 
                                     {
-                                    $newsquery = "select *, Concat(:type,'') as type ,  if(thumb_post_img IS NULL or thumb_post_img='' , Concat('$site_url',post_img),Concat('$site_url',thumb_post_img) ) as post_img, DATE_FORMAT(created_date,'%d %b %Y') as created_date from Tbl_C_PostDetails  where post_id =:id and clientId =:cid";
+                                   // $newsquery = "select *, Concat(:type,'') as type ,  if(thumb_post_img IS NULL or thumb_post_img='' , Concat('$site_url',post_img),Concat('$site_url',thumb_post_img) ) as post_img, DATE_FORMAT(created_date,'%d %b %Y') as created_date from Tbl_C_PostDetails  where post_id =:id and clientId =:cid";
+                                    
+                                     $newsquery = "select *, Concat(:type,'') as type , Concat('$site_url',post_img) as post_img, DATE_FORMAT(created_date,'%d %b %Y') as created_date from Tbl_C_PostDetails  where post_id =:id and clientId =:cid";
                                     $nstmt = $this->DB->prepare($newsquery);
                                     $nstmt->bindParam(':cid', $this->idclient, PDO::PARAM_STR);
                                     $nstmt->bindParam(':id', $welid, PDO::PARAM_STR);
@@ -468,7 +469,7 @@ class PostDisplayWelcome {
                 }
             }
         } else {
-            $result['success'] = 0;
+            $result['success'] = 2;
             $result['message'] = "Sorry !! You are not Authorized user";
         }
         return $result;

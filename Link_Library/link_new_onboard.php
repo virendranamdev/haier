@@ -7,7 +7,8 @@ require_once('../Class_Library/class_push_notification.php');
 date_default_timezone_set('Asia/Calcutta');
 $post_date = date('Y-m-d H:i:s');
 
-
+//echo'<pre>';
+//  print_r($_POST);die;
 $obj = new Post();                                        // object of class post page
 $push = new PushNotification();                         // object of class push notification page
 //$db = new Connection_Client();
@@ -23,7 +24,7 @@ $folder = 'images/post_img/';      //folder name for add with image insert into 
 if (!empty($_POST)) {
 
     $flag_value = $_POST['flag'];
-    $flag_name = "Welcome Aboard : ";
+    $flag_name = "Welcome Aboard : ";   
     $dev = $_POST['device'];
     if (isset($_POST['news_post'])) {
 
@@ -88,16 +89,17 @@ if (!empty($_POST)) {
 //echo "user about : ".$about."<br/>";
         $designation = $_POST['designation'];
         $doj = $_POST['doj'];
-        $location = $_POST['location'];
+        $email = $_POST['email'];
+         $contact = $_POST['contact'];
+          $location = $_POST['location'];
 //echo "MY LIFE : ".$POST_CONTENT1."<br/>";
-        $drinks = $_POST['drinks'];
         $food = $_POST['food'];
 //echo "MY AS USUAL WORK DAY : ".$POST_CONTENT2."<br/>";
-        $my_project = $_POST['projectdone'];
+        $holiday = $_POST['holiday'];
 //echo "PROJECT I HAVE DONE : ".$POST_CONTENT3."<br/>";
-        $my_place = $_POST['placeiseen'];
+        $hobby = $_POST['hobby'];
 //echo "PLACES I HAVE SEEN : ".$POST_CONTENT4."<br/>";
-        $mypersonal = $_POST['mypersonal'];
+        $usercomment = $_POST['usercomment'];
 //echo "MY PERSONAL LIFE : ".$POST_CONTENT5."<br/>";
 
         /*
@@ -120,16 +122,18 @@ if (!empty($_POST)) {
         $POST_CONTENT .=!empty($doj) ? "#Benepik#doj###" . $doj . "<br>" : "#Benepik#doj###";
 
         $POST_CONTENT .=!empty($location) ? "#Benepik#location###" . $location . "<br>" : "#Benepik#location###";
+         $POST_CONTENT .=!empty($email) ? "#Benepik#email###" . $email . "<br>" : "#Benepik#email###";
+          $POST_CONTENT .=!empty($contact) ? "#Benepik#contact###" . $contact . "<br>" : "#Benepik#contact###";
 
-        $POST_CONTENT .=!empty($drinks) ? "#Benepik#drinks###" . $drinks . "<br>" : "#Benepik#drinks###";
+        //$POST_CONTENT .=!empty($drinks) ? "#Benepik#drinks###" . $drinks . "<br>" : "#Benepik#drinks###";
 
         $POST_CONTENT .=!empty($food) ? "#Benepik#food###" . $food . "<br>" : "#Benepik#food###";
 
-        $POST_CONTENT .=!empty($my_project) ? "#Benepik#achievements###" . $my_project . "<br>" : "#Benepik#achievements###";
+        $POST_CONTENT .=!empty($holiday) ? "#Benepik#holiday###" . $holiday . "<br>" : "#Benepik#holiday###";
 
-        $POST_CONTENT .=!empty($my_place) ? "#Benepik#placeseen###" . $my_place . "<br>" : "#Benepik#placeseen###";
+        $POST_CONTENT .=!empty($hobby) ? "#Benepik#hobby###" . $hobby . "<br>" : "#Benepik#hobby###";
 
-        $POST_CONTENT .=!empty($mypersonal) ? "#Benepik#interests###" . $mypersonal : "#Benepik#interests###";
+        $POST_CONTENT .=!empty($usercomment) ? "#Benepik#usercomment###" . $usercomment : "#Benepik#usercomment###";
 
 
 //echo $POST_CONTENT;die;
