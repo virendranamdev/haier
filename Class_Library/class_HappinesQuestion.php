@@ -271,6 +271,12 @@ class HappinessQuestion
             $stmt1->bindParam(':sid1', $this->sid, PDO::PARAM_STR);
             $stmt1->bindParam(':sta', $this->status, PDO::PARAM_STR);
             $stmt1->execute();
+			
+			$query2 = "update Tbl_Analytic_PostSentToGroup set status=:sta2 where postId =:sid2 and flagType = 20";
+            $stmt2 = $this->DB->prepare($query2);
+            $stmt2->bindParam(':sid2', $this->sid, PDO::PARAM_STR);
+            $stmt2->bindParam(':sta2', $this->status, PDO::PARAM_STR);
+            $stmt2->execute();
             
             $query = "update Tbl_C_HappinessQuestion set status=:sta where surveyId =:sid";
             $stmt = $this->DB->prepare($query);
@@ -375,8 +381,60 @@ class HappinessQuestion
         }
         return json_encode($response);
     }
+   
     
+    /************************************************/
     
+     function getSurveyReminderUser($clientid, $sid) 
+                {
+   
+        try {
+            $query = "select * from Tbl_C_SurveyDetails where clientId=:cli and surveyId = :sid and questionId = :qid status = 1";
+            $stmt = $this->DB->prepare($query);
+            $stmt->bindParam(':cli', $clientid, PDO::PARAM_STR);
+            $stmt->bindParam(':sid', $sid, PDO::PARAM_STR);
+            $stmt->execute();
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+               print_r($rows);
+             if(count($rows)>0)
+                 {
+            
+                 $query2 = "select gcm.registrationToken from Tbl_EmployeeGCMDetails as gcm join Tbl_Analytic_PostSentTo as postsent on postsent.userUniqueId= gcm.userUniquId join Tbl_Analytic_EmployeeHappiness as happyresp on happyresp.userUniquId != postsent.userUniqueId and where happyresp.surveyid = :sid";
+                   $stmt1 = $this->DB->prepare($query2);
+            $stmt1->bindParam(':qid', $qid, PDO::PARAM_STR);
+            $stmt1->bindParam(':cli', $clientid, PDO::PARAM_STR);
+            $stmt1->bindParam(':sid', $sid, PDO::PARAM_STR);
+            $stmt1->execute();
+            $rows2 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
+            print_r($rows2);
+                 
+            die;
+    /*************************************************************************************************/             
+            $query = "select *,DATE_FORMAT(createdDate,'%d %b %Y %h:%i %p') as createdDate from Tbl_Analytic_EmployeeHappiness where clientId=:cli and surveyId = :sid";
+            $stmt = $this->DB->prepare($query);
+            $stmt->bindParam(':qid', $qid, PDO::PARAM_STR);
+            $stmt->bindParam(':cli', $clientid, PDO::PARAM_STR);
+            $stmt->bindParam(':sid', $sid, PDO::PARAM_STR);
+            $stmt->execute();
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+           // print_r($rows);
+                 if(count($rows)>0)
+                 {
+                $response["success"] = 1;
+                $response["data"] = $rows;
+               // $response["question"] = $value;
+                 }
+                 else{
+                     $response["success"] = 0;
+                     $response["msg"] = "No Rresponse Found";
+                 }
+                 }
+         }   
+        catch (PDOException $e) {
+            echo $e;
+        }
+        return json_encode($response);
+    }
 
     }
   
